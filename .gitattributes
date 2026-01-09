@@ -1,0 +1,51 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Source code - LF line endings
+*.cs text eol=lf
+*.csproj text eol=lf
+*.sln text eol=lf
+*.props text eol=lf
+*.targets text eol=lf
+
+# Configuration and data files - LF line endings
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.xml text eol=lf
+*.config text eol=lf
+
+# Documentation - LF line endings
+*.md text eol=lf
+*.txt text eol=lf
+
+# Scripts - platform-specific
+*.sh text eol=lf
+*.bash text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Web files - LF line endings
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+
+# Binary files - no text processing
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.nupkg binary
+*.snupkg binary
+*.dll binary
+*.exe binary
+*.pdb binary
+
+# Git files
+.gitattributes text eol=lf
+.gitignore text eol=lf
