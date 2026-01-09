@@ -4,7 +4,7 @@ summary: No telemetry policy and privacy-first principles for the project
 audience: [developer, agent, user]
 topics: [privacy, telemetry, data-collection]
 prerequisites: []
-related: [docs/adr/0007-telemetry.md]
+related: [adr/0007-telemetry.md]
 last_validated: 2026-01-09
 ---
 

@@ -1,3 +1,13 @@
+---
+title: Security Policy
+summary: Vulnerability reporting policy and security measures for the project
+audience: [user, security-researcher, contributor]
+topics: [security, vulnerabilities, reporting, disclosure]
+prerequisites: []
+related: [docs/adr/0005-security-scanning.md]
+last_validated: 2026-01-09
+---
+
 # Security Policy
 
 ## Supported Versions

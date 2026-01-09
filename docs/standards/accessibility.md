@@ -4,7 +4,7 @@ summary: WCAG 2.1 AA compliance requirements for documentation and CLI output
 audience: [developer, agent]
 topics: [accessibility, wcag, documentation, cli]
 prerequisites: []
-related: [docs/adr/0006-accessibility.md]
+related: [adr/0006-accessibility.md]
 last_validated: 2026-01-09
 ---
 
