@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need observability for:
+
 1. Debugging issues in production
 2. Capturing diagnostic information for bug reports
 3. Testing log-based behavior
@@ -31,6 +32,7 @@ We need observability for:
 Structured logging library with rich sink ecosystem.
 
 **Pros:**
+
 - Structured logging (named parameters)
 - File sink for non-console logging
 - InMemory sink for test capture
@@ -38,6 +40,7 @@ Structured logging library with rich sink ecosystem.
 - Active community
 
 **Cons:**
+
 - Additional dependency
 - Configuration complexity
 
@@ -46,11 +49,13 @@ Structured logging library with rich sink ecosystem.
 Built-in .NET logging abstraction.
 
 **Pros:**
+
 - No additional dependency
 - Familiar API
 - DI integration
 
 **Cons:**
+
 - Less powerful sinks
 - No bootstrap logger pattern
 - Harder to test
@@ -61,11 +66,11 @@ Built-in .NET logging abstraction.
 
 ### Logging Strategy
 
-| Mode | Console | File |
-|------|---------|------|
-| Default | Errors only | Bootstrap errors |
-| `--verbose` | None (PTY passthrough) | Full debug |
-| Exception | Error + log path | Full stack trace |
+| Mode        | Console                | File             |
+| ----------- | ---------------------- | ---------------- |
+| Default     | Errors only            | Bootstrap errors |
+| `--verbose` | None (PTY passthrough) | Full debug       |
+| Exception   | Error + log path       | Full stack trace |
 
 ### Structured Logging
 
@@ -77,6 +82,7 @@ Log.Warning(Strings.RateLimitDetected, resetTime); // "Detected limit, resets at
 ### Platform Context
 
 Captured at startup for diagnostics:
+
 - .NET version, runtime identifier
 - OS description, architecture
 - Command line arguments (sanitized)
@@ -123,12 +129,14 @@ public void Detect_WhenLimitReached_LogsExpectedMessage()
 ## Consequences
 
 ### Positive
+
 - Structured, searchable logs
 - No console interference
 - Test-capturable behavior
 - Rich diagnostics for bug reports
 
 ### Negative
+
 - Additional dependency
 - File I/O overhead
 - Log file management

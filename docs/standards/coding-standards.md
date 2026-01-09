@@ -10,7 +10,20 @@ last_validated: 2026-01-09
 
 # Coding Standards
 
-C# coding standards for McjCoderOrg.ClaudeAutoResume. Violations are caught by analyzers or code review.
+C# coding standards for McjCoderOrg.ClaudeAutoResume. Violations are caught by analyzers, linting or code review.
+
+- Automated Enforcement/Fixing >> Manual Inspection
+- SOLID, DRY, YAGNI - less code >> more code
+- TDD First - Red, Green, Refactor - every bug should start with a failing test, every userjourney a failing BDD
+
+## Standards Priorities
+
+| Priority | Category                 | Examples                             |
+| -------- | ------------------------ | ------------------------------------ |
+| P0       | Safety & Integrity       | Security, traceability, issue-driven |
+| P1       | Quality & Correctness    | Clean builds, test validity          |
+| P2       | Consistency & Governance | Conventions, versioning              |
+| P3       | Delivery & Flow          | Incremental execution, DX            |
 
 ## Language Settings
 
@@ -28,7 +41,7 @@ C# coding standards for McjCoderOrg.ClaudeAutoResume. Violations are caught by a
 
 Within groups, order by accessibility: public → internal → protected → private
 
-See [file-organisation.md](coding/file-organisation.md) for examples.
+See [file-organisation.md](coding-standards/file-organisation.md) for examples.
 
 ## Naming Conventions
 
@@ -51,7 +64,7 @@ See [file-organisation.md](coding/file-organisation.md) for examples.
 - Boolean names should be questions: `isEnabled`, `hasValue`, `canRetry`
 - Consistent terminology: `RateLimit` not `ThrottleLimit`
 
-See [naming-examples.md](coding/naming-examples.md) for detailed guidance.
+See [naming-examples.md](coding-standards/naming-examples.md) for detailed guidance.
 
 ## Code Style
 
@@ -69,7 +82,7 @@ See [naming-examples.md](coding/naming-examples.md) for detailed guidance.
 
 **Pattern matching:** Prefer switch expressions, type patterns, property patterns.
 
-See [code-style-examples.md](coding/code-style-examples.md) for examples.
+See [code-style-examples.md](coding-standards/code-style-examples.md) for examples.
 
 ## Asynchronous Programming
 
@@ -77,10 +90,11 @@ See [code-style-examples.md](coding/code-style-examples.md) for examples.
 - Suffix async methods with `Async`
 - Pass `CancellationToken` through call chain
 - Use `ConfigureAwait(false)` in library code
+- Use `ConfigureAwait(true)` in Durable Function Orchestrations and Test Libraries
 - Never use `.Result` or `.Wait()`
 - Use `ValueTask<T>` when often completing synchronously
 
-See [async-patterns.md](coding/async-patterns.md) for examples.
+See [async-patterns.md](coding-standards/async-patterns.md) for examples.
 
 ## Error Handling
 
@@ -122,16 +136,20 @@ _logger.LogInformation("Rate limit detected, resets at {ResetTime}", resetTime);
 
 **Test types:**
 
-| Project        | Purpose            | Framework       |
-| -------------- | ------------------ | --------------- |
-| `.Tests`       | Unit tests         | xUnit           |
-| `.SystemTests` | BDD system tests   | Reqnroll        |
-| `.ArchTests`   | Architecture tests | ArchUnitNET     |
-| `.Benchmarks`  | Performance tests  | BenchmarkDotNet |
+| Project        | Purpose            | Framework                              | Scope            |
+| -------------- | ------------------ | -------------------------------------- | ---------------- |
+| `.Tests`       | Unit tests         | xUnit, Moq                             | Project          |
+| `.SystemTests` | BDD system tests   | Reqnroll, xUnit                        | Project          |
+| `.E2ETests`    | BDD E2E Tests      | Reqnroll, xUnit, TestContainers/Aspire | Project/Solution |
+| `.ArchTests`   | Architecture tests | ArchUnitNET                            | Solution         |
+| `.Benchmarks`  | Performance tests  | BenchmarkDotNet                        | Project/Solution |
+
+- Test project root namespaces should omit the `*.Tests` or `.Benchmarks` suffix
+- Project internals should be exposed to the Arch, Unit and System Test Projects
 
 **Coverage target:** 80% line, 70% branch on changed code
 
-See [testing-examples.md](coding/testing-examples.md) for patterns and BDD guidance.
+See [testing-examples.md](coding-standards/testing-examples.md) for patterns and BDD guidance.
 
 ## Documentation
 
@@ -155,16 +173,16 @@ Skip docs for: private members, self-documenting code, test methods, unchanged o
 - Use `Span<T>` for slicing without allocation
 - Use `StringBuilder` for concatenation in loops
 
-See [performance-examples.md](coding/performance-examples.md) for patterns.
+See [performance-examples.md](coding-standards/performance-examples.md) for patterns.
 
 ## Security
 
 - Validate all external input
 - Never pass unsanitised input to process commands
-- Never log secrets
+- Never log secrets (apply OWASP Logging Standards)
 - Use `ArgumentList` for process arguments (auto-escapes)
 
-See [security-examples.md](coding/security-examples.md) for examples.
+See [security-examples.md](coding-standards/security-examples.md) for examples.
 
 ## Code Review Checklist
 

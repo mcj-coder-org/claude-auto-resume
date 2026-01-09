@@ -10,7 +10,8 @@ Proposed
 
 ## Context
 
-We need a versioning and changelog strategy for this .NET project that can scale to organizational use across monorepos. The strategy must support:
+We need a versioning and changelog strategy for this .NET project that can scale to
+organizational use across monorepos. The strategy must support:
 
 1. **Semantic versioning** based on conventional commits
 2. **Independent prerelease versions per feature branch** (e.g., `feature/auth` → `1.0.0-auth.1`)
@@ -25,12 +26,14 @@ We need a versioning and changelog strategy for this .NET project that can scale
 Google's release automation tool that generates release PRs from conventional commits.
 
 **Pros:**
+
 - Single tool for versioning + changelog generation
 - Excellent monorepo support with workspace plugins
 - Native conventional commits support
 - Auto-generated changelogs and release PRs
 
 **Cons:**
+
 - No native support for dynamic branch-based prerelease identifiers
 - Feature branch prereleases require workarounds (dynamic config generation)
 - Transitioning between prerelease phases (alpha → beta → rc) has known issues
@@ -40,11 +43,13 @@ Google's release automation tool that generates release PRs from conventional co
 Git height-based versioning with per-project `version.json` files.
 
 **Pros:**
+
 - Excellent monorepo support via path filters
 - Simple setup
 - Source-generated version info
 
 **Cons:**
+
 - No conventional commits support
 - No changelog generation
 - Manual version bumps for major/minor
@@ -54,10 +59,12 @@ Git height-based versioning with per-project `version.json` files.
 Tag-based versioning with minimal configuration.
 
 **Pros:**
+
 - Simplest setup
 - Explicit control via tags
 
 **Cons:**
+
 - No conventional commits support
 - No changelog generation
 - Manual tagging required
@@ -68,6 +75,7 @@ Tag-based versioning with minimal configuration.
 GitVersion for semantic versioning with git-cliff for changelog generation.
 
 **Pros:**
+
 - Native branch-based prerelease identifiers (`feature/auth` → `1.0.0-auth.1`)
 - Conventional commits support via configurable regex patterns
 - Excellent monorepo support (`ignore.paths`, `tag-prefix`)
@@ -76,37 +84,40 @@ GitVersion for semantic versioning with git-cliff for changelog generation.
 - Flexible configuration for organizational standards
 
 **Cons:**
+
 - Two tools instead of one
 - Requires coordination between GitVersion and git-cliff configuration
 - Pre-commit hook needed to enforce conventional commit format
 
 ## Decision
 
-We will use **GitVersion** for semantic versioning and **git-cliff** for changelog generation, with **commitlint** (or similar) for pre-commit enforcement of conventional commits.
+We will use **GitVersion** for semantic versioning and **git-cliff** for changelog
+generation, with **commitlint** (or similar) for pre-commit enforcement of conventional
+commits.
 
 ### Configuration Alignment
 
-| Concern | GitVersion | git-cliff |
-|---------|------------|-----------|
-| Tag prefix | `tag-prefix: 'ProjectA-v'` | `--tag-pattern="ProjectA-v.*"` |
-| Path filtering | `ignore.paths` | `--include-path` |
-| Conventional commits | `major/minor/patch-version-bump-message` regex | Native support |
+| Concern              | GitVersion                                     | git-cliff                      |
+| -------------------- | ---------------------------------------------- | ------------------------------ |
+| Tag prefix           | `tag-prefix: 'ProjectA-v'`                     | `--tag-pattern="ProjectA-v.*"` |
+| Path filtering       | `ignore.paths`                                 | `--include-path`               |
+| Conventional commits | `major/minor/patch-version-bump-message` regex | Native support                 |
 
 ### Version Flow
 
-| Branch | Version Format |
-|--------|----------------|
-| `main` | `1.0.0`, `1.1.0`, `2.0.0` |
-| `develop` | `1.1.0-beta.1`, `1.1.0-beta.2` |
+| Branch         | Version Format                 |
+| -------------- | ------------------------------ |
+| `main`         | `1.0.0`, `1.1.0`, `2.0.0`      |
+| `develop`      | `1.1.0-beta.1`, `1.1.0-beta.2` |
 | `feature/auth` | `1.1.0-auth.1`, `1.1.0-auth.2` |
-| `feature/ui` | `1.1.0-ui.1`, `1.1.0-ui.2` |
-| `release/1.2` | `1.2.0-rc.1`, `1.2.0-rc.2` |
+| `feature/ui`   | `1.1.0-ui.1`, `1.1.0-ui.2`     |
+| `release/1.2`  | `1.2.0-rc.1`, `1.2.0-rc.2`     |
 
 ### Monorepo Strategy
 
 For future monorepo use:
 
-```
+```text
 /repo
   /src/ProjectA
     GitVersion.yml    # tag-prefix: 'ProjectA-v', ignore.paths for other projects
@@ -156,7 +167,7 @@ Tags: `ProjectA-v1.0.0`, `ProjectB-v2.3.0` (independent versioning)
 
 ## License Verification
 
-| Tool | License | Verification Date |
-|------|---------|-------------------|
-| GitVersion | MIT | 2026-01-09 |
-| git-cliff | MIT/Apache 2.0 | 2026-01-09 |
+| Tool       | License        | Verification Date |
+| ---------- | -------------- | ----------------- |
+| GitVersion | MIT            | 2026-01-09        |
+| git-cliff  | MIT/Apache 2.0 | 2026-01-09        |

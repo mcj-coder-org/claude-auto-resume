@@ -2,10 +2,22 @@
 
 This document is the entry point for AI agents working on the McjCoderOrg.ClaudeAutoResume project.
 
-## Quick Start
-
 **Project:** Claude Auto Resume - A cross-platform .NET tool that automatically
 resumes Claude CLI sessions when rate limits are hit.
+
+## Critical Rules
+
+1. **Always Clean Build Commits** - Zero Warnings and Errors (Build/Tests/Linting + Everyday Operations)
+2. **Evidence based verification** - Record evidence of passing criteria. Passing tests, immutable links to evidence
+3. **No Broken Windows** - Fix significant issues ASAP, ensure working directory is rebased often and `main` is always clean
+4. **TDD Delivery** - Red, Green, Refactor Always
+5. **Never work without a plan** - All work requires a ticket that's been refined and planned. Do not start work without.
+6. **Never commit directly to main** - Always use feature branches
+7. **Commits must be signed** - Configure GPG signing
+8. **All commits must pass hooks** - Pre-commit validates format
+9. **No placeholder content** - All documentation must be complete and actionable
+10. **Follow existing patterns** - Check similar files before creating new ones
+11. **Keep docs and tooling in sync** - Standards must match analyzer/linter configuration
 
 **Tech Stack:**
 
@@ -127,15 +139,6 @@ McjCoderOrg.ClaudeAutoResume/
 | Work item ref | `Refs: #123` in commit body                                         |
 
 See ADR-0004 for complete contribution workflow.
-
-## Critical Rules
-
-1. **Never commit directly to main** - Always use feature branches
-2. **Commits must be signed** - Configure GPG signing
-3. **All commits must pass hooks** - Pre-commit validates format
-4. **No placeholder content** - All documentation must be complete and actionable
-5. **Follow existing patterns** - Check similar files before creating new ones
-6. **Keep docs and tooling in sync** - Standards must match analyzer/linter configuration
 
 ## Documentation Standards
 

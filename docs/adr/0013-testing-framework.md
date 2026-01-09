@@ -23,18 +23,21 @@ We need a testing framework for the ClaudeAutoResume project that supports:
 #### Option 1: xUnit + AwesomeAssertions (Selected)
 
 **xUnit:**
+
 - Most popular .NET testing framework
 - Built-in parallel test execution
 - Extensible with traits and custom attributes
 - First-class .NET support
 
 **AwesomeAssertions:**
+
 - Community fork of FluentAssertions (after licensing concerns)
 - Fluent assertion API for readable tests
 - Extensive assertion methods for collections, exceptions, etc.
 - Open source (Apache 2.0)
 
 **Pros:**
+
 - Industry standard combination
 - Excellent tooling support (VS, Rider, CLI)
 - xunit.analyzers enforces best practices
@@ -42,17 +45,20 @@ We need a testing framework for the ClaudeAutoResume project that supports:
 - Both actively maintained OSS projects
 
 **Cons:**
+
 - Two packages instead of built-in assertions
 - Learning curve for fluent assertion syntax
 
 #### Option 2: NUnit + AwesomeAssertions
 
 **Pros:**
+
 - Mature framework with long history
 - Rich attribute-based configuration
 - Good constraint-based assertions built-in
 
 **Cons:**
+
 - Less popular in modern .NET projects
 - Slightly more verbose setup
 - Parallel execution requires more configuration
@@ -60,10 +66,12 @@ We need a testing framework for the ClaudeAutoResume project that supports:
 #### Option 3: MSTest + AwesomeAssertions
 
 **Pros:**
+
 - Microsoft's official test framework
 - Tight Visual Studio integration
 
 **Cons:**
+
 - Less popular in OSS community
 - Fewer community extensions
 - Less flexible than xUnit
@@ -71,17 +79,20 @@ We need a testing framework for the ClaudeAutoResume project that supports:
 #### Option 4: xUnit with Built-in Assertions Only
 
 **Pros:**
+
 - No additional dependencies
 - Simpler setup
 
 **Cons:**
+
 - Less readable assertions
 - Verbose failure messages
 - Limited collection assertions
 
 ## Decision
 
-We will use **xUnit** as the test framework with **AwesomeAssertions** for fluent assertions and **xunit.analyzers** for test best practices enforcement.
+We will use **xUnit** as the test framework with **AwesomeAssertions** for fluent assertions
+and **xunit.analyzers** for test best practices enforcement.
 
 ### Package Configuration
 
@@ -97,7 +108,7 @@ We will use **xUnit** as the test framework with **AwesomeAssertions** for fluen
 
 ### Test Project Structure
 
-```
+```text
 tests/
 └── ClaudeAutoResume.Tests/
     ├── ClaudeAutoResume.Tests.csproj
@@ -170,9 +181,9 @@ public class WrapperConfigTests
 
 ## License Verification
 
-| Package | License | Verification Date |
-|---------|---------|-------------------|
-| xunit | Apache 2.0 | 2026-01-09 |
-| xunit.analyzers | Apache 2.0 | 2026-01-09 |
-| AwesomeAssertions | Apache 2.0 | 2026-01-09 |
-| coverlet | MIT | 2026-01-09 |
+| Package           | License    | Verification Date |
+| ----------------- | ---------- | ----------------- |
+| xunit             | Apache 2.0 | 2026-01-09        |
+| xunit.analyzers   | Apache 2.0 | 2026-01-09        |
+| AwesomeAssertions | Apache 2.0 | 2026-01-09        |
+| coverlet          | MIT        | 2026-01-09        |

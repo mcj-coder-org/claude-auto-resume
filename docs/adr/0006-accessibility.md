@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need accessibility standards for:
+
 1. Documentation website
 2. CLI output
 3. Error messages
@@ -49,11 +50,13 @@ We need accessibility standards for:
 ## Consequences
 
 ### Positive
+
 - Inclusive documentation
 - Better UX for all users
 - Legal compliance
 
 ### Negative
+
 - Additional design constraints
 - Audit overhead
 

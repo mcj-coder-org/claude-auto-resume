@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need code coverage to:
+
 1. Measure test effectiveness
 2. Identify untested code
 3. Enforce coverage standards
@@ -29,6 +30,7 @@ We need code coverage to:
 ### Configuration
 
 **coverlet.runsettings:**
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
@@ -77,11 +79,13 @@ Only enforce coverage on changed files:
 ## Consequences
 
 ### Positive
+
 - Focused on changed code
 - Prevents coverage regression
 - Clear PR feedback
 
 ### Negative
+
 - Delta coverage tooling complexity
 - Threshold tuning needed
 - False sense of quality from coverage alone

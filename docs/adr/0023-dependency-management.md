@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need dependency management for:
+
 1. Keeping dependencies up to date
 2. Security vulnerability patching
 3. Reducing manual maintenance
@@ -29,33 +30,35 @@ We need dependency management for:
 ### Configuration
 
 **.github/dependabot.yml:**
+
 ```yaml
 version: 2
 updates:
-  - package-ecosystem: "nuget"
-    directory: "/"
+  - package-ecosystem: 'nuget'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     groups:
       development-dependencies:
         patterns:
-          - "*Analyzer*"
-          - "coverlet*"
-          - "xunit*"
+          - '*Analyzer*'
+          - 'coverlet*'
+          - 'xunit*'
     open-pull-requests-limit: 10
 
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     groups:
       dev-dependencies:
-        dependency-type: "development"
+        dependency-type: 'development'
 ```
 
 ### Auto-Merge Strategy
 
 Using org-scoped `MACHINE_USER_PAT`:
+
 - **Patch updates:** Auto-approve and merge if tests pass
 - **Minor updates:** Auto-approve, manual merge
 - **Major updates:** Manual review required
@@ -82,11 +85,13 @@ jobs:
 ## Consequences
 
 ### Positive
+
 - Automated security updates
 - Reduced maintenance burden
 - Grouped updates reduce noise
 
 ### Negative
+
 - Auto-merge risk (mitigated by tests)
 - PR noise for major updates
 - Machine user PAT required

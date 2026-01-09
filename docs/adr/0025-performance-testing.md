@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need performance testing to:
+
 1. Detect performance regressions
 2. Establish baselines
 3. Track improvements over time
@@ -54,20 +55,22 @@ public class OutputParsingBenchmarks
 
 ### Execution Strategy
 
-| Trigger | Action |
-|---------|--------|
-| PR | Compare to baseline, warn on regression |
-| Main push | Update baseline |
-| Nightly | Full benchmark suite |
+| Trigger   | Action                                  |
+| --------- | --------------------------------------- |
+| PR        | Compare to baseline, warn on regression |
+| Main push | Update baseline                         |
+| Nightly   | Full benchmark suite                    |
 
 ## Consequences
 
 ### Positive
+
 - Automated regression detection
 - Historical tracking
 - Industry-standard tooling
 
 ### Negative
+
 - CI time for benchmarks
 - Baseline management
 - Environment variability

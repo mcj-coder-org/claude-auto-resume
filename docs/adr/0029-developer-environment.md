@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need a consistent developer environment that:
+
 1. Works across Windows, macOS, and Linux
 2. Isolates project dependencies
 3. Includes all required tooling
@@ -30,12 +31,14 @@ We need a consistent developer environment that:
 Docker-based development containers.
 
 **Pros:**
+
 - Complete environment isolation
 - Pre-configured tooling
 - Works with VS Code, GitHub Codespaces
 - Reproducible across machines
 
 **Cons:**
+
 - Requires Docker
 - Resource overhead
 - Learning curve
@@ -45,11 +48,13 @@ Docker-based development containers.
 Manual installation with setup scripts.
 
 **Pros:**
+
 - No Docker dependency
 - Native performance
 - Simpler for small teams
 
 **Cons:**
+
 - Environment drift
 - "Works on my machine" issues
 - Manual dependency management
@@ -59,11 +64,13 @@ Manual installation with setup scripts.
 Declarative package management.
 
 **Pros:**
+
 - Reproducible builds
 - No Docker needed
 - Lightweight
 
 **Cons:**
+
 - Steep learning curve
 - Limited Windows support
 - Less IDE integration
@@ -75,6 +82,7 @@ Declarative package management.
 ### Dev Container Configuration
 
 **.devcontainer/devcontainer.json:**
+
 ```json
 {
   "name": "McjCoderOrg.ClaudeAutoResume",
@@ -99,6 +107,7 @@ Declarative package management.
 ### Bootstrap Scripts
 
 For local development without containers:
+
 - `scripts/setup.ps1` (Windows)
 - `scripts/setup.sh` (Unix)
 
@@ -107,12 +116,14 @@ Scripts check prerequisites, install dependencies, configure git hooks.
 ## Consequences
 
 ### Positive
+
 - Consistent environment across developers
 - Pre-configured IDE settings
 - Quick onboarding via Codespaces
 - Isolated from host system
 
 ### Negative
+
 - Docker requirement
 - Resource overhead on older machines
 - WSL2 required on Windows

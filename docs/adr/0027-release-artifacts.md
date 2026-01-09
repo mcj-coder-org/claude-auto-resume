@@ -11,6 +11,7 @@ Proposed
 ## Context
 
 We need to define release artifacts for:
+
 1. NuGet distribution (dotnet tool)
 2. Standalone executables
 3. Security and verification
@@ -28,16 +29,16 @@ Comprehensive release artifacts with Source Link and SBOM.
 
 ### Artifacts
 
-| Artifact | Description |
-|----------|-------------|
-| `McjCoderOrg.ClaudeAutoResume.x.y.z.nupkg` | NuGet package |
-| `McjCoderOrg.ClaudeAutoResume.x.y.z.snupkg` | Symbol package |
-| `win-x64/claude-auto-resume.exe` | Windows x64 |
-| `linux-x64/claude-auto-resume` | Linux x64 |
-| `osx-x64/claude-auto-resume` | macOS Intel |
-| `osx-arm64/claude-auto-resume` | macOS Apple Silicon |
-| `checksums.sha256` | SHA256 checksums |
-| `manifest.spdx.json` | SBOM |
+| Artifact                                    | Description         |
+| ------------------------------------------- | ------------------- |
+| `McjCoderOrg.ClaudeAutoResume.x.y.z.nupkg`  | NuGet package       |
+| `McjCoderOrg.ClaudeAutoResume.x.y.z.snupkg` | Symbol package      |
+| `win-x64/claude-auto-resume.exe`            | Windows x64         |
+| `linux-x64/claude-auto-resume`              | Linux x64           |
+| `osx-x64/claude-auto-resume`                | macOS Intel         |
+| `osx-arm64/claude-auto-resume`              | macOS Apple Silicon |
+| `checksums.sha256`                          | SHA256 checksums    |
+| `manifest.spdx.json`                        | SBOM                |
 
 ### Source Link
 
@@ -59,6 +60,7 @@ NuGet package includes Source Link for debugging:
 ### SBOM Generation
 
 Using Microsoft SBOM tool:
+
 ```bash
 dotnet tool install --global Microsoft.Sbom.DotNetTool
 sbom-tool generate -b ./artifacts -bc . -pn ClaudeAutoResume -pv $VERSION
@@ -85,12 +87,14 @@ Each build uses `continue-on-error: true` with final verification step.
 ## Consequences
 
 ### Positive
+
 - Debugging enabled via Source Link
 - Supply chain transparency (SBOM)
 - Verification via checksums
 - Cross-platform support
 
 ### Negative
+
 - Build matrix complexity
 - Artifact storage costs
 - SBOM tooling overhead

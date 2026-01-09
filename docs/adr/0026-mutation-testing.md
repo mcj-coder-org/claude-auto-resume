@@ -31,9 +31,7 @@ Configuration via `stryker-config.json`:
 {
   "stryker-config": {
     "project": "McjCoderOrg.ClaudeAutoResume.csproj",
-    "test-projects": [
-      "McjCoderOrg.ClaudeAutoResume.Tests.csproj"
-    ],
+    "test-projects": ["McjCoderOrg.ClaudeAutoResume.Tests.csproj"],
     "reporters": ["html", "json", "dashboard"],
     "threshold-high": 80,
     "threshold-low": 60,
@@ -44,15 +42,16 @@ Configuration via `stryker-config.json`:
 
 ### Execution Strategy
 
-| Trigger | Scope |
-|---------|-------|
-| Nightly | Full mutation suite |
-| Manual | Developer-triggered |
-| Local | Per playbook instructions |
+| Trigger | Scope                     |
+| ------- | ------------------------- |
+| Nightly | Full mutation suite       |
+| Manual  | Developer-triggered       |
+| Local   | Per playbook instructions |
 
 ### Playbook
 
 `docs/playbooks/mutation-testing.md` covers:
+
 1. Local installation
 2. Running mutations
 3. Interpreting results
@@ -65,11 +64,13 @@ Mutation reports published to GitHub Pages alongside benchmark results.
 ## Consequences
 
 ### Positive
+
 - Validates test quality
 - Finds weak tests
 - Complements coverage metrics
 
 ### Negative
+
 - Long execution time
 - Resource intensive
 - Nightly-only feedback

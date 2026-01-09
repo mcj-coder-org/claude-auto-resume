@@ -17,6 +17,7 @@ We need a comprehensive testing strategy that covers:
 3. **E2E tests** - Production-safe smoke tests against real systems
 
 System and E2E tests should be written in BDD (Behavior-Driven Development) style for:
+
 - Readable specifications that serve as documentation
 - Clear Given/When/Then structure
 - Collaboration between technical and non-technical stakeholders
@@ -28,6 +29,7 @@ System and E2E tests should be written in BDD (Behavior-Driven Development) styl
 Community fork of SpecFlow after licensing concerns.
 
 **Pros:**
+
 - Full Gherkin syntax support (.feature files)
 - Active OSS development (Apache 2.0)
 - SpecFlow-compatible API (easy migration)
@@ -36,6 +38,7 @@ Community fork of SpecFlow after licensing concerns.
 - Parallel test execution support
 
 **Cons:**
+
 - Newer than SpecFlow (less battle-tested)
 - Requires feature file management
 
@@ -44,11 +47,13 @@ Community fork of SpecFlow after licensing concerns.
 Original Gherkin-based BDD framework.
 
 **Pros:**
+
 - Most widely adopted in .NET
 - Extensive documentation
 - Mature ecosystem
 
 **Cons:**
+
 - Licensing concerns (custom license)
 - Commercial features gated
 - Not fully open source
@@ -58,11 +63,13 @@ Original Gherkin-based BDD framework.
 Code-first BDD without Gherkin files.
 
 **Pros:**
+
 - No feature file management
 - Refactoring-friendly
 - Lighter weight
 
 **Cons:**
+
 - No Gherkin syntax
 - Less readable for non-developers
 - Smaller community
@@ -72,11 +79,13 @@ Code-first BDD without Gherkin files.
 xUnit extension for BDD.
 
 **Pros:**
+
 - Lightweight
 - xUnit integration
 - Code-based scenarios
 
 **Cons:**
+
 - Less structured than Gherkin
 - No living documentation
 - Limited adoption
@@ -87,7 +96,7 @@ We will use **Reqnroll** for BDD-style tests and organize tests into three proje
 
 ### Test Project Structure
 
-```
+```text
 tests/
 ├── ClaudeAutoResume.Tests/           # Unit tests
 │   ├── Unit/
@@ -108,11 +117,11 @@ tests/
 
 ### Test Categories
 
-| Project | Purpose | Dependencies | Speed | CI Frequency |
-|---------|---------|--------------|-------|--------------|
-| **Unit Tests** | Isolated component testing | None (mocks only) | Fast (<1s each) | Every commit |
-| **System Tests** | End-to-end with mocked externals | Mocked PTY, stubbed processes | Medium (<10s each) | Every commit |
-| **E2E Tests** | Production-safe smoke tests | Real Claude CLI (if available) | Slow (<60s each) | Nightly/manual |
+| Project          | Purpose                          | Dependencies                   | Speed              | CI Frequency   |
+| ---------------- | -------------------------------- | ------------------------------ | ------------------ | -------------- |
+| **Unit Tests**   | Isolated component testing       | None (mocks only)              | Fast (<1s each)    | Every commit   |
+| **System Tests** | End-to-end with mocked externals | Mocked PTY, stubbed processes  | Medium (<10s each) | Every commit   |
+| **E2E Tests**    | Production-safe smoke tests      | Real Claude CLI (if available) | Slow (<60s each)   | Nightly/manual |
 
 ### Package Configuration
 
@@ -380,9 +389,9 @@ dotnet test --filter "Category!=Integration & Category!=E2E"
 
 ## License Verification
 
-| Package | License | Verification Date |
-|---------|---------|-------------------|
-| Reqnroll | Apache 2.0 | 2026-01-09 |
-| Reqnroll.xUnit | Apache 2.0 | 2026-01-09 |
-| Moq | BSD-3 | 2026-01-09 |
-| Moq.Analyzers | MIT | 2026-01-09 |
+| Package        | License    | Verification Date |
+| -------------- | ---------- | ----------------- |
+| Reqnroll       | Apache 2.0 | 2026-01-09        |
+| Reqnroll.xUnit | Apache 2.0 | 2026-01-09        |
+| Moq            | BSD-3      | 2026-01-09        |
+| Moq.Analyzers  | MIT        | 2026-01-09        |

@@ -25,12 +25,14 @@ We need to choose an open source license for the project.
 Simple permissive license.
 
 **Pros:**
+
 - Maximum permissiveness
 - Industry standard
 - Compatible with all other licenses
 - Simple to understand
 
 **Cons:**
+
 - No patent grant
 - No warranty disclaimer emphasis
 
@@ -39,10 +41,12 @@ Simple permissive license.
 Permissive with patent grant.
 
 **Pros:**
+
 - Patent protection
 - Contribution terms
 
 **Cons:**
+
 - More complex
 - NOTICE file requirement
 
@@ -51,9 +55,11 @@ Permissive with patent grant.
 Copyleft license.
 
 **Pros:**
+
 - Protects source availability
 
 **Cons:**
+
 - Incompatible with proprietary use
 - Limits adoption
 
@@ -61,7 +67,7 @@ Copyleft license.
 
 **MIT License** for maximum permissiveness and adoption.
 
-```
+```text
 MIT License
 
 Copyright (c) 2026 McjCoderOrg
@@ -88,11 +94,13 @@ SOFTWARE.
 ## Consequences
 
 ### Positive
+
 - Broad adoption possible
 - Simple compliance
 - Industry standard
 
 ### Negative
+
 - No patent protection
 - No contribution agreement
 

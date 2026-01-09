@@ -19,12 +19,14 @@ We need to decide whether to collect usage telemetry.
 No usage data collection.
 
 **Pros:**
+
 - Privacy-first
 - No GDPR/privacy concerns
 - Simpler implementation
 - User trust
 
 **Cons:**
+
 - No usage insights
 - No crash reporting
 - Harder to prioritize features
@@ -34,10 +36,12 @@ No usage data collection.
 Anonymous usage data with user consent.
 
 **Pros:**
+
 - Usage insights
 - Crash reporting
 
 **Cons:**
+
 - Privacy concerns
 - Opt-in fatigue
 - Infrastructure needed
@@ -47,10 +51,12 @@ Anonymous usage data with user consent.
 Telemetry by default, can disable.
 
 **Pros:**
+
 - Higher data collection
 - Better insights
 
 **Cons:**
+
 - Privacy concerns
 - User trust issues
 - Potential backlash
@@ -75,12 +81,14 @@ Telemetry by default, can disable.
 ## Consequences
 
 ### Positive
+
 - Complete privacy
 - No infrastructure needed
 - User trust
 - No legal compliance overhead
 
 ### Negative
+
 - No usage metrics
 - No crash analytics
 - Rely on user-reported issues
