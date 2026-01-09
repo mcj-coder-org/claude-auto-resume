@@ -1,4 +1,4 @@
-# ADR-0024: Mutation Testing
+# ADR-0026: Mutation Testing
 
 ## Status
 

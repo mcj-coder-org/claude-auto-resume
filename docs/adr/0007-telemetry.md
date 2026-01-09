@@ -1,4 +1,4 @@
-# ADR-0021: Telemetry
+# ADR-0007: Telemetry
 
 ## Status
 

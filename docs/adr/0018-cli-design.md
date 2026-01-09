@@ -1,4 +1,4 @@
-# ADR-0017: CLI Design
+# ADR-0018: CLI Design
 
 ## Status
 

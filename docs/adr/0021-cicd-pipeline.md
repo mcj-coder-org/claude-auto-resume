@@ -1,4 +1,4 @@
-# ADR-0004: CI/CD Pipeline
+# ADR-0021: CI/CD Pipeline
 
 ## Status
 

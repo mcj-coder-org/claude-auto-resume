@@ -856,68 +856,92 @@ logs.AssertLoggedWithProperty(
 
 ## ADR Summary
 
-| ADR | Title |
-|-----|-------|
-| 0001 | Versioning and Changelog Strategy |
-| 0002 | Testing Framework |
-| 0003 | Code Analyzers |
-| 0004 | CI/CD Pipeline |
-| 0005 | Pre-commit Hooks |
-| 0006 | Code Formatting |
-| 0007 | Test Project Structure |
-| 0008 | Namespace and Project Naming |
-| 0009 | GitHub Platform |
-| 0010 | Work Item Management |
-| 0011 | Security Scanning |
-| 0012 | Architecture Testing |
-| 0013 | Documentation Strategy |
-| 0014 | Agent Onboarding |
-| 0015 | Developer Environment |
-| 0016 | Observability |
-| 0017 | CLI Design |
-| 0018 | License |
-| 0019 | Accessibility |
-| 0020 | Internationalization |
-| 0021 | Telemetry |
-| 0022 | Breaking Change Detection |
-| 0023 | Performance Testing |
-| 0024 | Mutation Testing |
-| 0025 | Dependency Management |
-| 0026 | Code Coverage |
-| 0027 | Branch Strategy |
-| 0028 | Release Artifacts |
-| 0029 | Documentation Versioning |
+ADRs are ordered by decision dependency: foundational constraints first, then compliance standards, process decisions, technology choices, and finally CI/CD implementation.
+
+### Tier 1: Foundational Constraints
+
+| ADR | Title | Rationale |
+|-----|-------|-----------|
+| 0001 | License | Legal framework - constrains everything |
+| 0002 | GitHub Platform | Where we develop - informs tooling |
+| 0003 | Work Item Management | How we track/organize work |
+| 0004 | Branch Strategy | How we collaborate on code |
+
+### Tier 2: Compliance & Standards
+
+| ADR | Title | Rationale |
+|-----|-------|-----------|
+| 0005 | Security Scanning | Security baseline before code |
+| 0006 | Accessibility | WCAG compliance requirements |
+| 0007 | Telemetry | Privacy policy - affects architecture |
+
+### Tier 3: Process & Workflow
+
+| ADR | Title | Rationale |
+|-----|-------|-----------|
+| 0008 | Documentation Strategy | How we capture knowledge |
+| 0009 | Agent Onboarding | How AI agents interact |
+| 0010 | Code Formatting | Style consistency |
+| 0011 | Pre-commit Hooks | Quality gates |
+
+### Tier 4: Technology Choices
+
+| ADR | Title | Rationale |
+|-----|-------|-----------|
+| 0012 | Namespace and Project Naming | Based on org standards |
+| 0013 | Testing Framework | What testing approach |
+| 0014 | Test Project Structure | How to organize tests |
+| 0015 | Code Analyzers | Which analyzers for .NET 10 |
+| 0016 | Architecture Testing | Enforce structure rules |
+| 0017 | Observability | Logging/diagnostics |
+| 0018 | CLI Design | Command-line interface |
+| 0019 | Internationalization | String handling |
+| 0020 | Breaking Change Detection | API stability tooling |
+
+### Tier 5: CI/CD & Release
+
+| ADR | Title | Rationale |
+|-----|-------|-----------|
+| 0021 | CI/CD Pipeline | Implements above decisions |
+| 0022 | Versioning and Changelog | Release process |
+| 0023 | Dependency Management | Update strategy |
+| 0024 | Code Coverage | Coverage enforcement |
+| 0025 | Performance Testing | Benchmark approach |
+| 0026 | Mutation Testing | Test quality validation |
+| 0027 | Release Artifacts | What we ship |
+| 0028 | Documentation Versioning | Docs release alignment |
+| 0029 | Developer Environment | Onboarding experience |
 
 ---
 
 ## References
 
-- [ADR-0001: Versioning and Changelog Strategy](../adr/0001-versioning-and-changelog-strategy.md)
-- [ADR-0002: Testing Framework](../adr/0002-testing-framework.md)
-- [ADR-0003: Code Analyzers](../adr/0003-code-analyzers.md)
-- [ADR-0004: CI/CD Pipeline](../adr/0004-cicd-pipeline.md)
-- [ADR-0005: Pre-commit Hooks](../adr/0005-pre-commit-hooks.md)
-- [ADR-0006: Code Formatting](../adr/0006-code-formatting.md)
-- [ADR-0007: Test Project Structure](../adr/0007-test-project-structure.md)
-- [ADR-0008: Namespace and Project Naming](../adr/0008-namespace-and-project-naming.md)
-- [ADR-0009: GitHub Platform](../adr/0009-github-platform.md)
-- [ADR-0010: Work Item Management](../adr/0010-work-item-management.md)
-- [ADR-0011: Security Scanning](../adr/0011-security-scanning.md)
-- [ADR-0012: Architecture Testing](../adr/0012-architecture-testing.md)
-- [ADR-0013: Documentation Strategy](../adr/0013-documentation-strategy.md)
-- [ADR-0014: Agent Onboarding](../adr/0014-agent-onboarding.md)
-- [ADR-0015: Developer Environment](../adr/0015-developer-environment.md)
-- [ADR-0016: Observability](../adr/0016-observability.md)
-- [ADR-0017: CLI Design](../adr/0017-cli-design.md)
-- [ADR-0018: License](../adr/0018-license.md)
-- [ADR-0019: Accessibility](../adr/0019-accessibility.md)
-- [ADR-0020: Internationalization](../adr/0020-internationalization.md)
-- [ADR-0021: Telemetry](../adr/0021-telemetry.md)
-- [ADR-0022: Breaking Change Detection](../adr/0022-breaking-change-detection.md)
-- [ADR-0023: Performance Testing](../adr/0023-performance-testing.md)
-- [ADR-0024: Mutation Testing](../adr/0024-mutation-testing.md)
-- [ADR-0025: Dependency Management](../adr/0025-dependency-management.md)
-- [ADR-0026: Code Coverage](../adr/0026-code-coverage.md)
-- [ADR-0027: Branch Strategy](../adr/0027-branch-strategy.md)
-- [ADR-0028: Release Artifacts](../adr/0028-release-artifacts.md)
-- [ADR-0029: Documentation Versioning](../adr/0029-documentation-versioning.md)
+- [ADR-0001: License](../adr/0001-license.md)
+- [ADR-0002: GitHub Platform](../adr/0002-github-platform.md)
+- [ADR-0003: Work Item Management](../adr/0003-work-item-management.md)
+- [ADR-0004: Branch Strategy](../adr/0004-branch-strategy.md)
+- [ADR-0005: Security Scanning](../adr/0005-security-scanning.md)
+- [ADR-0006: Accessibility](../adr/0006-accessibility.md)
+- [ADR-0007: Telemetry](../adr/0007-telemetry.md)
+- [ADR-0008: Documentation Strategy](../adr/0008-documentation-strategy.md)
+- [ADR-0009: Agent Onboarding](../adr/0009-agent-onboarding.md)
+- [ADR-0010: Code Formatting](../adr/0010-code-formatting.md)
+- [ADR-0011: Pre-commit Hooks](../adr/0011-pre-commit-hooks.md)
+- [ADR-0012: Namespace and Project Naming](../adr/0012-namespace-and-project-naming.md)
+- [ADR-0013: Testing Framework](../adr/0013-testing-framework.md)
+- [ADR-0014: Test Project Structure](../adr/0014-test-project-structure.md)
+- [ADR-0015: Code Analyzers](../adr/0015-code-analyzers.md)
+- [ADR-0016: Architecture Testing](../adr/0016-architecture-testing.md)
+- [ADR-0017: Observability](../adr/0017-observability.md)
+- [ADR-0018: CLI Design](../adr/0018-cli-design.md)
+- [ADR-0019: Internationalization](../adr/0019-internationalization.md)
+- [ADR-0020: Breaking Change Detection](../adr/0020-breaking-change-detection.md)
+- [ADR-0021: CI/CD Pipeline](../adr/0021-cicd-pipeline.md)
+- [ADR-0022: Versioning and Changelog Strategy](../adr/0022-versioning-and-changelog-strategy.md)
+- [ADR-0023: Dependency Management](../adr/0023-dependency-management.md)
+- [ADR-0024: Code Coverage](../adr/0024-code-coverage.md)
+- [ADR-0025: Performance Testing](../adr/0025-performance-testing.md)
+- [ADR-0026: Mutation Testing](../adr/0026-mutation-testing.md)
+- [ADR-0027: Release Artifacts](../adr/0027-release-artifacts.md)
+- [ADR-0028: Documentation Versioning](../adr/0028-documentation-versioning.md)
+- [ADR-0029: Developer Environment](../adr/0029-developer-environment.md)

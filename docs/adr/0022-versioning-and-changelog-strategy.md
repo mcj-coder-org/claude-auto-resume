@@ -1,4 +1,4 @@
-# ADR-0001: Versioning and Changelog Strategy
+# ADR-0022: Versioning and Changelog Strategy
 
 ## Status
 

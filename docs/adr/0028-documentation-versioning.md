@@ -1,4 +1,4 @@
-# ADR-0029: Documentation Versioning
+# ADR-0028: Documentation Versioning
 
 ## Status
 

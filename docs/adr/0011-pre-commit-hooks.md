@@ -1,4 +1,4 @@
-# ADR-0005: Pre-commit Hooks
+# ADR-0011: Pre-commit Hooks
 
 ## Status
 

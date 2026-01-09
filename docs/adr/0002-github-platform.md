@@ -1,4 +1,4 @@
-# ADR-0009: GitHub as Development Platform
+# ADR-0002: GitHub as Development Platform
 
 ## Status
 

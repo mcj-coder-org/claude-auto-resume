@@ -1,4 +1,4 @@
-# ADR-0013: Documentation Strategy
+# ADR-0008: Documentation Strategy
 
 ## Status
 

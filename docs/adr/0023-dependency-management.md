@@ -1,4 +1,4 @@
-# ADR-0025: Dependency Management
+# ADR-0023: Dependency Management
 
 ## Status
 

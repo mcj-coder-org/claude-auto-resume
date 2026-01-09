@@ -1,4 +1,4 @@
-# ADR-0016: Observability
+# ADR-0017: Observability
 
 ## Status
 

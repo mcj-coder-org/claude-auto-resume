@@ -1,4 +1,4 @@
-# ADR-0026: Code Coverage
+# ADR-0024: Code Coverage
 
 ## Status
 

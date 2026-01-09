@@ -1,4 +1,4 @@
-# ADR-0022: Breaking Change Detection
+# ADR-0020: Breaking Change Detection
 
 ## Status
 

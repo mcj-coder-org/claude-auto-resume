@@ -1,4 +1,4 @@
-# ADR-0011: Security Scanning
+# ADR-0005: Security Scanning
 
 ## Status
 

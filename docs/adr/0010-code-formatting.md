@@ -1,4 +1,4 @@
-# ADR-0006: Code Formatting
+# ADR-0010: Code Formatting
 
 ## Status
 

@@ -1,4 +1,4 @@
-# ADR-0019: Accessibility
+# ADR-0006: Accessibility
 
 ## Status
 

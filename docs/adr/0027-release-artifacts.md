@@ -1,4 +1,4 @@
-# ADR-0028: Release Artifacts
+# ADR-0027: Release Artifacts
 
 ## Status
 

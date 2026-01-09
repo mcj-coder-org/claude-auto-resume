@@ -1,4 +1,4 @@
-# ADR-0012: Architecture Testing
+# ADR-0016: Architecture Testing
 
 ## Status
 

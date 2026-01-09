@@ -32,14 +32,14 @@ Migrate McjCoderOrg.ClaudeAutoResume from a single-file .NET 8 project to a best
 ## Sub-Issue #2: Solution Structure & Build Configuration
 
 **Branch:** `feature/2-solution-structure`
-**ADRs:** 0008 (Namespace and Project Naming)
+**ADRs:** 0012 (Namespace and Project Naming)
 **Depends on:** None (Foundation)
 
 ### Context
 
 - [Design Document - Solution Structure](./2026-01-09-dotnet10-migration-design.md#solution-structure)
 - [Design Document - Project Configuration](./2026-01-09-dotnet10-migration-design.md#project-configuration)
-- [ADR-0008: Namespace and Project Naming](../adr/0008-namespace-and-project-naming.md)
+- [ADR-0012: Namespace and Project Naming](../adr/0012-namespace-and-project-naming.md)
 
 ### Tasks
 
@@ -78,15 +78,15 @@ dotnet build
 ## Sub-Issue #3: Code Quality & Formatting
 
 **Branch:** `feature/3-code-quality`
-**ADRs:** 0003 (Code Analyzers), 0006 (Code Formatting), 0022 (Breaking Change Detection)
+**ADRs:** 0010 (Code Formatting), 0015 (Code Analyzers), 0020 (Breaking Change Detection)
 **Depends on:** #2
 
 ### Context
 
 - [Design Document - Code Quality](./2026-01-09-dotnet10-migration-design.md#code-quality)
-- [ADR-0003: Code Analyzers](../adr/0003-code-analyzers.md)
-- [ADR-0006: Code Formatting](../adr/0006-code-formatting.md)
-- [ADR-0022: Breaking Change Detection](../adr/0022-breaking-change-detection.md)
+- [ADR-0010: Code Formatting](../adr/0010-code-formatting.md)
+- [ADR-0015: Code Analyzers](../adr/0015-code-analyzers.md)
+- [ADR-0020: Breaking Change Detection](../adr/0020-breaking-change-detection.md)
 
 ### Tasks
 
@@ -121,15 +121,15 @@ dotnet format --verify-no-changes
 ## Sub-Issue #4: npm Tooling & Pre-commit Hooks
 
 **Branch:** `feature/4-npm-tooling`
-**ADRs:** 0005 (Pre-commit Hooks), 0011 (Security Scanning)
+**ADRs:** 0005 (Security Scanning), 0011 (Pre-commit Hooks)
 **Depends on:** #3
 
 ### Context
 
 - [Design Document - Security](./2026-01-09-dotnet10-migration-design.md#security)
 - [Design Document - Code Quality](./2026-01-09-dotnet10-migration-design.md#code-quality)
-- [ADR-0005: Pre-commit Hooks](../adr/0005-pre-commit-hooks.md)
-- [ADR-0011: Security Scanning](../adr/0011-security-scanning.md)
+- [ADR-0005: Security Scanning](../adr/0005-security-scanning.md)
+- [ADR-0011: Pre-commit Hooks](../adr/0011-pre-commit-hooks.md)
 
 ### Tasks
 
@@ -178,14 +178,14 @@ npx cspell --version
 ## Sub-Issue #5: Testing Infrastructure
 
 **Branch:** `feature/5-testing-infrastructure`
-**ADRs:** 0002 (Testing Framework), 0007 (Test Project Structure), 0012 (Architecture Testing), 0023 (Performance Testing), 0026 (Code Coverage)
+**ADRs:** 0013 (Testing Framework), 0014 (Test Project Structure), 0016 (Architecture Testing), 0024 (Code Coverage), 0025 (Performance Testing)
 **Depends on:** #2
 
 ### Context
 
 - [Design Document - Testing Strategy](./2026-01-09-dotnet10-migration-design.md#testing-strategy)
-- [ADR-0002: Testing Framework](../adr/0002-testing-framework.md)
-- [ADR-0007: Test Project Structure](../adr/0007-test-project-structure.md)
+- [ADR-0013: Testing Framework](../adr/0013-testing-framework.md)
+- [ADR-0014: Test Project Structure](../adr/0014-test-project-structure.md)
 
 ### Tasks
 
@@ -231,13 +231,13 @@ dotnet test --collect:"XPlat Code Coverage"
 ## Sub-Issue #6: CI/CD Workflows
 
 **Branch:** `feature/6-cicd-workflows`
-**ADRs:** 0004 (CI/CD Pipeline), 0009 (GitHub Platform), 0027 (Branch Strategy)
+**ADRs:** 0002 (GitHub Platform), 0004 (Branch Strategy), 0021 (CI/CD Pipeline)
 **Depends on:** #4, #5
 
 ### Context
 
 - [Design Document - CI/CD Pipeline](./2026-01-09-dotnet10-migration-design.md#cicd-pipeline)
-- [ADR-0004: CI/CD Pipeline](../adr/0004-cicd-pipeline.md)
+- [ADR-0021: CI/CD Pipeline](../adr/0021-cicd-pipeline.md)
 
 ### Tasks
 
@@ -284,14 +284,14 @@ dotnet test --collect:"XPlat Code Coverage"
 ## Sub-Issue #7: Versioning & Release Pipeline
 
 **Branch:** `feature/7-versioning-release`
-**ADRs:** 0001 (Versioning and Changelog Strategy), 0028 (Release Artifacts)
+**ADRs:** 0022 (Versioning and Changelog Strategy), 0027 (Release Artifacts)
 **Depends on:** #6
 
 ### Context
 
 - [Design Document - Versioning & Releases](./2026-01-09-dotnet10-migration-design.md#versioning--releases)
-- [ADR-0001: Versioning and Changelog Strategy](../adr/0001-versioning-and-changelog-strategy.md)
-- [ADR-0028: Release Artifacts](../adr/0028-release-artifacts.md)
+- [ADR-0022: Versioning and Changelog Strategy](../adr/0022-versioning-and-changelog-strategy.md)
+- [ADR-0027: Release Artifacts](../adr/0027-release-artifacts.md)
 
 ### Tasks
 
@@ -329,14 +329,15 @@ git cliff --unreleased
 ## Sub-Issue #8: Documentation Foundation
 
 **Branch:** `feature/8-documentation-foundation`
-**ADRs:** 0013 (Documentation Strategy), 0014 (Agent Onboarding), 0018 (License)
+**ADRs:** 0001 (License), 0008 (Documentation Strategy), 0009 (Agent Onboarding)
 **Depends on:** #2
 
 ### Context
 
 - [Design Document - Documentation](./2026-01-09-dotnet10-migration-design.md#documentation)
-- [ADR-0013: Documentation Strategy](../adr/0013-documentation-strategy.md)
-- [ADR-0014: Agent Onboarding](../adr/0014-agent-onboarding.md)
+- [ADR-0001: License](../adr/0001-license.md)
+- [ADR-0008: Documentation Strategy](../adr/0008-documentation-strategy.md)
+- [ADR-0009: Agent Onboarding](../adr/0009-agent-onboarding.md)
 
 ### Tasks
 
@@ -379,13 +380,14 @@ git cliff --unreleased
 ## Sub-Issue #9: Documentation Website
 
 **Branch:** `feature/9-documentation-website`
-**ADRs:** 0013 (Documentation Strategy), 0019 (Accessibility), 0029 (Documentation Versioning)
+**ADRs:** 0006 (Accessibility), 0008 (Documentation Strategy), 0028 (Documentation Versioning)
 **Depends on:** #8
 
 ### Context
 
 - [Design Document - Documentation](./2026-01-09-dotnet10-migration-design.md#documentation)
-- [ADR-0029: Documentation Versioning](../adr/0029-documentation-versioning.md)
+- [ADR-0006: Accessibility](../adr/0006-accessibility.md)
+- [ADR-0028: Documentation Versioning](../adr/0028-documentation-versioning.md)
 
 ### Tasks
 
@@ -426,13 +428,13 @@ npm run serve
 ## Sub-Issue #10: Developer Environment
 
 **Branch:** `feature/10-developer-environment`
-**ADRs:** 0015 (Developer Environment)
+**ADRs:** 0029 (Developer Environment)
 **Depends on:** #4
 
 ### Context
 
 - [Design Document - Developer Experience](./2026-01-09-dotnet10-migration-design.md#developer-experience)
-- [ADR-0015: Developer Environment](../adr/0015-developer-environment.md)
+- [ADR-0029: Developer Environment](../adr/0029-developer-environment.md)
 
 ### Tasks
 
@@ -470,15 +472,15 @@ npm run serve
 ## Sub-Issue #11: Application Updates (Observability & CLI)
 
 **Branch:** `feature/11-application-updates`
-**ADRs:** 0016 (Observability), 0017 (CLI Design), 0020 (Internationalization)
+**ADRs:** 0017 (Observability), 0018 (CLI Design), 0019 (Internationalization)
 **Depends on:** #2
 
 ### Context
 
 - [Design Document - Observability](./2026-01-09-dotnet10-migration-design.md#observability)
 - [Design Document - CLI Design](./2026-01-09-dotnet10-migration-design.md#cli-design)
-- [ADR-0016: Observability](../adr/0016-observability.md)
-- [ADR-0017: CLI Design](../adr/0017-cli-design.md)
+- [ADR-0017: Observability](../adr/0017-observability.md)
+- [ADR-0018: CLI Design](../adr/0018-cli-design.md)
 
 ### Tasks
 
