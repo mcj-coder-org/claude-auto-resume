@@ -32,6 +32,9 @@
 *.js text eol=lf
 *.ts text eol=lf
 
+# Husky hooks - must be LF for cross-platform compatibility
+.husky/* text eol=lf
+
 # Binary files - no text processing
 *.png binary
 *.jpg binary

@@ -669,16 +669,19 @@ Before migrating any code, verify all infrastructure, workflows, and standards a
 Verify that AI agents can follow project processes using only repository documentation (no external skills). Test against all target platforms per ADR-0009.
 
 **Target Platforms:**
+
 - Claude Code (Anthropic) - CLI/terminal
 - Codex/Copilot (OpenAI) - VS Code integration
 - Junie (JetBrains) - Rider integration
 
 **Test Setup (per platform):**
+
 - Fresh agent session with no pre-loaded skills/context
 - Agent has access only to repository files
 - Task: "Add a code comment to explain the purpose of ExitCodes.cs"
 
 **Onboarding Verification (all platforms):**
+
 - [ ] Claude Code: reads `AGENTS.md` as first action
 - [ ] Codex: reads `AGENTS.md` as first action
 - [ ] Junie: reads `AGENTS.md` as first action
@@ -687,6 +690,7 @@ Verify that AI agents can follow project processes using only repository documen
 - [ ] All agents find and read ADR-0004 (Contribution Workflow)
 
 **Process Adherence Verification (all platforms):**
+
 - [ ] Agent creates/identifies appropriate issue (or references existing)
 - [ ] Agent creates correctly named branch (`docs/{issue#}-description`)
 - [ ] Agent makes change following coding standards
@@ -694,23 +698,27 @@ Verify that AI agents can follow project processes using only repository documen
 - [ ] Agent includes issue reference in commit (`Refs: #X`)
 
 **Output Compliance Verification:**
+
 - [ ] Commit message passes commitlint validation
 - [ ] Code change follows documented standards
 - [ ] PR description follows template (if PR created)
 - [ ] No reliance on external skills or undocumented conventions
 
 **Platform-Specific Notes:**
+
 - [ ] Document any platform-specific behaviour differences
 - [ ] Document any documentation that one platform finds unclear
 - [ ] Verify sub-agent/persona pattern works (Claude Code)
 - [ ] Verify fallback strategies work (Codex, Junie)
 
 **Failure Scenarios to Test:**
+
 - [ ] Agent without AGENTS.md access fails gracefully (requests guidance)
 - [ ] Agent presented with ambiguous task asks clarifying questions
 - [ ] Agent recognises when documentation is insufficient and flags it
 
 **Documentation Gaps Identified:**
+
 - [ ] Record any points where agent needed guidance not in docs
 - [ ] Update documentation to address gaps before proceeding
 - [ ] Re-run agent verification on ALL platforms after documentation updates
@@ -945,3 +953,49 @@ Phase 8: Release
 5. **No Code Until Phase 7**: The code bundle stays untouched until Phase 7
 
 6. **Verification Gate**: Phase 6 must pass completely before code migration begins
+
+---
+
+## Implementation Modifications
+
+This section documents modifications made during implementation that deviate from or extend the original plan.
+
+### Sub-Issue #6: Quality Gates & Hooks (PR #24)
+
+**Date:** 2026-01-09
+
+**Modifications Applied:**
+
+1. **Security Fix (CRITICAL):** Updated `markdownlint-cli` from `^0.43.0` to `^0.47.0` to resolve
+   HIGH severity CVE (GHSA-5j98-mcp5-4vw2) - glob command injection vulnerability.
+
+2. **Bug Fix:** Quoted `$1` variable in `.husky/commit-msg` to handle file paths with spaces.
+
+3. **Bug Fix:** Changed secretlint invocation in pre-commit hook to use null-terminated
+   processing (`-z`/`-0` flags) for safer filename handling.
+
+4. **Enhancement:** Added prerequisite checks to all three hook scripts (pre-commit, commit-msg,
+   pre-push) to provide actionable error messages when Node.js or npm packages are not installed.
+
+5. **Enhancement:** Added `ignores` configuration to commitlint to allow auto-generated merge and
+   revert commits that don't follow conventional commit format.
+
+6. **Enhancement:** Pre-push hook now gracefully handles missing `dotnet` CLI by warning instead
+   of failing.
+
+**Follow-on Tickets Created:**
+
+| Issue | Title                                                  | Priority |
+| ----- | ------------------------------------------------------ | -------- |
+| #25   | Handle detached HEAD state in pre-push hook            | Medium   |
+| #26   | Cross-platform shell compatibility audit for git hooks | Medium   |
+| #27   | Move British spelling words to project-terms.txt       | Low      |
+| #28   | Remove redundant secretlint dependencies               | Low      |
+| #29   | Document git hook edge cases and limitations           | Medium   |
+| #30   | Add integration tests for git hook scripts             | Medium   |
+| #31   | Implement CI enforcement for commit conventions        | High     |
+
+**Notes:**
+
+- Issue #31 (CI enforcement) should be addressed in Step 9 (CI/CD Pipeline) or Step 10 (Versioning & Release)
+- The `dotnet format --include` command in lint-staged will be verified when C# files exist in Step 6
