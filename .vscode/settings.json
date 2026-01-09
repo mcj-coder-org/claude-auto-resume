@@ -1,0 +1,126 @@
+{
+  // ==========================================================================
+  // Editor Settings
+  // ==========================================================================
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // Auto-save
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+
+  // Whitespace
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // ==========================================================================
+  // C# / .NET Settings
+  // ==========================================================================
+  "dotnet.defaultSolution": "McjCoderOrg.ClaudeAutoResume.sln",
+
+  // Enable analyzers in editor
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableAsyncCompletion": true,
+
+  // C# Dev Kit settings
+  "csharp.inlayHints.enableInlayHintsForTypes": true,
+  "csharp.inlayHints.enableInlayHintsForParameters": true,
+
+  // ==========================================================================
+  // Language-Specific Formatting
+  // ==========================================================================
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+  },
+
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "files.trimTrailingWhitespace": false
+  },
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+
+  // ==========================================================================
+  // Spell Checking
+  // ==========================================================================
+  "cSpell.enabled": true,
+  "cSpell.enableFiletypes": ["csharp", "markdown", "yaml", "json"],
+
+  // ==========================================================================
+  // Git Settings
+  // ==========================================================================
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+
+  // ==========================================================================
+  // File Associations
+  // ==========================================================================
+  "files.associations": {
+    "*.feature": "gherkin",
+    ".editorconfig": "editorconfig",
+    "Directory.Build.props": "xml",
+    "Directory.Packages.props": "xml"
+  },
+
+  // ==========================================================================
+  // Exclude from Explorer
+  // ==========================================================================
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/.git": true,
+    "**/node_modules": true
+  },
+
+  // ==========================================================================
+  // Search Exclusions
+  // ==========================================================================
+  "search.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/node_modules": true,
+    "**/*.min.js": true,
+    "**/*.min.css": true,
+    "**/package-lock.json": true
+  }
+}

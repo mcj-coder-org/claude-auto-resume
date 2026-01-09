@@ -8,7 +8,7 @@ internal static class Program
 {
     private static int Main(string[] args)
     {
-        if (args.Length > 0 && args[0] == "--version")
+        if (args.Length > 0 && string.Equals(args[0], "--version", StringComparison.Ordinal))
         {
             Console.WriteLine("claude-auto-resume 0.0.0-dev");
             return 0;

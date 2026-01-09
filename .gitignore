@@ -14,7 +14,6 @@ project.fragment.lock.json
 
 # IDE and editor files
 .vs/
-.vscode/
 .idea/
 *.user
 *.userosscache
