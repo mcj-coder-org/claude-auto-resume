@@ -1,0 +1,21 @@
+{
+  "name": "mcjcoderorg-claudeautoresume-tooling",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Development tooling for McjCoderOrg.ClaudeAutoResume",
+  "scripts": {
+    "secretlint": "secretlint \"**/*\"",
+    "secretlint:fix": "secretlint \"**/*\" --fix"
+  },
+  "devDependencies": {
+    "secretlint": "^8.0.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^8.0.0",
+    "@secretlint/secretlint-rule-aws": "^8.0.0",
+    "@secretlint/secretlint-rule-gcp": "^8.0.0",
+    "@secretlint/secretlint-rule-npm": "^8.0.0",
+    "@secretlint/secretlint-rule-privatekey": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
