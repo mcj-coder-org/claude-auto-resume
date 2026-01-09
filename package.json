@@ -3,17 +3,47 @@
   "version": "0.0.0",
   "private": true,
   "description": "Development tooling for McjCoderOrg.ClaudeAutoResume",
+  "type": "module",
   "scripts": {
+    "prepare": "husky",
+    "lint": "npm run lint:format && npm run lint:markdown && npm run lint:spelling && npm run lint:secrets",
+    "lint:format": "prettier --check \"**/*.md\" \"**/*.json\" \"**/*.yml\" --ignore-path .gitignore",
+    "lint:format:fix": "prettier --write \"**/*.md\" \"**/*.json\" \"**/*.yml\" --ignore-path .gitignore",
+    "lint:markdown": "markdownlint \"**/*.md\" --ignore node_modules --ignore .git",
+    "lint:markdown:fix": "markdownlint \"**/*.md\" --ignore node_modules --ignore .git --fix",
+    "lint:spelling": "cspell \"**/*.md\" \"**/*.cs\" \"**/*.json\" --no-progress",
+    "lint:secrets": "secretlint \"**/*\"",
     "secretlint": "secretlint \"**/*\"",
     "secretlint:fix": "secretlint \"**/*\" --fix"
   },
   "devDependencies": {
-    "secretlint": "^8.0.0",
-    "@secretlint/secretlint-rule-preset-recommend": "^8.0.0",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
     "@secretlint/secretlint-rule-aws": "^8.0.0",
     "@secretlint/secretlint-rule-gcp": "^8.0.0",
     "@secretlint/secretlint-rule-npm": "^8.0.0",
-    "@secretlint/secretlint-rule-privatekey": "^8.0.0"
+    "@secretlint/secretlint-rule-preset-recommend": "^8.0.0",
+    "@secretlint/secretlint-rule-privatekey": "^8.0.0",
+    "cspell": "^8.17.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.3.0",
+    "markdownlint-cli": "^0.43.0",
+    "prettier": "^3.4.2",
+    "secretlint": "^8.0.0"
+  },
+  "lint-staged": {
+    "*.cs": [
+      "dotnet format --include",
+      "cspell --no-must-find-files"
+    ],
+    "*.md": [
+      "prettier --write",
+      "markdownlint --fix",
+      "cspell --no-must-find-files"
+    ],
+    "*.{json,yml}": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=22.0.0"

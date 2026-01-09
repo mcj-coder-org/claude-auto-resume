@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Validate branch name format
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+# Allow main branch pushes (for releases)
+if [ "$branch" = "main" ]; then
+  exit 0
+fi
+
+# Validate branch naming convention
+# Valid patterns: feature/N-*, fix/N-*, docs/N-*, chore/N-*, refactor/N-*, test/N-*
+if ! echo "$branch" | grep -qE "^(feature|fix|docs|chore|refactor|test)/[0-9]+-"; then
+  echo "Invalid branch name: $branch"
+  echo "Branch name must follow pattern: {type}/{issue#}-description"
+  echo "Valid types: feature, fix, docs, chore, refactor, test"
+  echo "Example: feature/123-add-login-page"
+  exit 1
+fi
+
+echo "Branch name validation passed: $branch"
+
+# Run unit tests before push (if solution exists)
+if find . -maxdepth 2 -name "*.sln" -print -quit 2>/dev/null | grep -q .; then
+  echo "Running unit tests..."
+  dotnet test --no-build -c Release --filter "Category!=Integration&Category!=E2E" --verbosity minimal
+  test_result=$?
+  if [ $test_result -ne 0 ]; then
+    echo "Unit tests failed. Fix before pushing."
+    exit 1
+  fi
+fi
+
+echo "All pre-push checks passed."

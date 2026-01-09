@@ -1,0 +1,51 @@
+# Build outputs
+bin/
+obj/
+out/
+publish/
+artifacts/
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Generated files
+*.min.js
+*.min.css
+*.generated.*
+
+# IDE files
+.vs/
+.vscode/
+.idea/
+
+# Test results
+TestResults/
+coverage/
+StrykerOutput/
+BenchmarkDotNet.Artifacts/
+
+# Documentation build
+docs/_site/
+docs/.docusaurus/
+docs/build/
+
+# Git
+.git/
+
+# Husky internal
+.husky/_/
+
+# Binary and non-text files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.pdf
+*.zip
+*.nupkg
+*.snupkg
+*.dll
+*.exe
+*.pdb
