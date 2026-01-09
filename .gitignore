@@ -117,3 +117,6 @@ docs/build/
 
 # Claude Code
 .claude/
+
+# Git worktrees
+.worktrees/
