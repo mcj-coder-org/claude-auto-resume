@@ -924,10 +924,29 @@ Notes captured during implementation:
 
 **ADR Impact:** ADR-0005 should be updated to reflect that only `preset-recommend` is needed in the configuration file.
 
-### CodeQL Workflow CI Failure (Expected)
+### CodeQL Workflow CI Validation
 
-**Issue:** The CodeQL workflow fails with "MSB1003: Specify a project or solution file" because no .NET solution exists yet.
+**Issue:** The CodeQL workflow initially failed with "MSB1003: Specify a project or solution file" because no .NET solution existed.
 
-**Resolution:** This is expected and acceptable. Phase 2 establishes security infrastructure before code exists. The workflow will pass automatically once Phase 4 (Solution Structure) adds the .NET solution.
+**Resolution:** Added a minimal .NET 10 solution to validate CI workflows are correctly configured. This includes:
 
-**No action required** - the workflow is correctly configured.
+- `McjCoderOrg.ClaudeAutoResume.sln` - Solution file
+- `src/McjCoderOrg.ClaudeAutoResume/` - Minimal console project
+  - `McjCoderOrg.ClaudeAutoResume.csproj` - Project file with .NET tool configuration
+  - `Program.cs` - Placeholder entry point
+
+This minimal solution will be expanded in Phase 4 (Solution Structure) with the full project configuration, analyzers, and test projects. The current implementation is sufficient to:
+
+1. Validate CodeQL workflow builds and analyzes C# code
+2. Validate the solution structure conventions
+3. Provide a foundation for Phase 4
+
+**Note:** This is an amendment to the original plan which intended to defer all .NET code until Phase 4. The minimal solution was added to ensure CI workflow validation in Phase 2.
+
+### Documentation Front-Matter Fixes
+
+**Issue:** PR review identified missing front-matter on SECURITY.md and inconsistent `related` field paths.
+
+**Resolution:**
+- Added YAML front-matter to `.github/SECURITY.md` per ADR-0008
+- Fixed `related` paths in `accessibility.md` and `privacy.md` (removed `docs/` prefix)
