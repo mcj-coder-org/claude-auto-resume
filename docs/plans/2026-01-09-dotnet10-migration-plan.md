@@ -48,11 +48,14 @@ The implementation follows the ADR tier structure, ensuring foundational constra
 │  ├── #10 Versioning & Release
 │  └── #11 Developer Environment
 │
-├─ Phase 6: Code Migration
-│  └── #12 Migrate Code Bundle
+├─ Phase 6: Infrastructure Verification
+│  └── #12 Prove Workflows & Standards
 │
-└─ Phase 7: Verification
-   └── #13 Final Verification & Release Prep
+├─ Phase 7: Code Migration
+│  └── #13 Migrate Code Bundle
+│
+└─ Phase 8: Final Verification
+   └── #14 Release Preparation
 ```
 
 ---
@@ -62,7 +65,7 @@ The implementation follows the ADR tier structure, ensuring foundational constra
 ### Sub-Issue #2: Repository Foundation
 
 **Branch:** `feature/2-repository-foundation`
-**ADRs:** 0001 (License), 0002 (GitHub Platform), 0003 (Work Item Management), 0004 (Branch Strategy)
+**ADRs:** 0001 (License), 0002 (GitHub Platform), 0003 (Work Item Management), 0004 (Contribution Workflow)
 **Depends on:** None (First phase)
 
 ### Context
@@ -72,7 +75,7 @@ Establish the legal and organizational foundation before any code or tooling dec
 - [ADR-0001: License](../adr/0001-license.md)
 - [ADR-0002: GitHub Platform](../adr/0002-github-platform.md)
 - [ADR-0003: Work Item Management](../adr/0003-work-item-management.md)
-- [ADR-0004: Branch Strategy](../adr/0004-branch-strategy.md)
+- [ADR-0004: Contribution Workflow](../adr/0004-contribution-workflow.md)
 
 ### Tasks
 
@@ -188,8 +191,17 @@ Establish documentation structure and agent onboarding before tooling setup.
   - [ ] Common task routing
 - [ ] Create `docs/agents/ORIENTATION.md`
 - [ ] Create `docs/agents/CONVENTIONS.md`
-- [ ] Create `docs/standards/coding-standards.md` (placeholder)
-- [ ] Create `docs/practices/code-review.md` (placeholder)
+- [ ] Create `docs/standards/coding-standards.md`:
+  - [ ] C# naming conventions
+  - [ ] File organization
+  - [ ] Comment and documentation requirements
+  - [ ] Error handling patterns
+  - [ ] Logging standards
+- [ ] Create `docs/practices/code-review.md`:
+  - [ ] Review criteria and checklist
+  - [ ] Approval requirements
+  - [ ] Common issues to watch for
+  - [ ] Review etiquette
 - [ ] Add front-matter template to documentation guidelines
 - [ ] Update `README.md` with project overview
 
@@ -198,12 +210,15 @@ Establish documentation structure and agent onboarding before tooling setup.
 - [ ] All documentation files have front-matter
 - [ ] AGENTS.md provides clear routing
 - [ ] Links between documents work
+- [ ] Coding standards document is actionable (not placeholder)
+- [ ] Code review practices document is actionable (not placeholder)
 
 ### Acceptance Criteria
 
 - [ ] Documentation structure established
 - [ ] Agent onboarding path clear
-- [ ] Standards documented (even if placeholder)
+- [ ] All standards documents complete and actionable
+- [ ] No placeholder content in any document
 
 ---
 
@@ -428,7 +443,7 @@ dotnet run -- --diagnose
 ### Sub-Issue #9: CI/CD Pipeline
 
 **Branch:** `feature/9-cicd-pipeline`
-**ADRs:** 0002 (GitHub Platform), 0004 (Branch Strategy), 0021 (CI/CD Pipeline)
+**ADRs:** 0002 (GitHub Platform), 0004 (Contribution Workflow), 0021 (CI/CD Pipeline)
 **Depends on:** #7, #8
 
 ### Context
@@ -569,13 +584,109 @@ Create developer onboarding experience and documentation site.
 
 ---
 
-## Phase 6: Code Migration
+## Phase 6: Infrastructure Verification
 
-### Sub-Issue #12: Migrate Code Bundle
+### Sub-Issue #12: Prove Workflows & Standards
 
-**Branch:** `feature/12-code-migration`
+**Branch:** `feature/12-infrastructure-verification`
+**ADRs:** All (0001-0029)
+**Depends on:** #11
+
+### Context
+
+Before migrating any code, verify all infrastructure, workflows, and standards are functional. This phase proves the system works end-to-end by executing a complete contribution workflow with a test change.
+
+### Tasks
+
+#### Documentation Verification
+
+- [ ] Audit all documentation for placeholder content:
+  - [ ] `docs/standards/coding-standards.md` - complete and actionable
+  - [ ] `docs/practices/code-review.md` - complete and actionable
+  - [ ] `AGENTS.md` - provides clear routing
+  - [ ] All documents have proper front-matter
+- [ ] Verify all cross-references and links work
+- [ ] Ensure no "TODO" or "TBD" markers remain
+
+#### Workflow Verification (Dummy PR)
+
+- [ ] Create test issue: "Test: Infrastructure Verification"
+- [ ] Create branch: `feature/{issue#}-infra-test`
+- [ ] Make trivial change (add comment to a config file)
+- [ ] Commit with conventional message
+- [ ] Verify pre-commit hooks execute:
+  - [ ] commitlint validates message
+  - [ ] prettier/format checks run
+  - [ ] secretlint scans content
+  - [ ] cspell checks spelling
+- [ ] Push branch
+- [ ] Verify pre-push hook validates branch name
+- [ ] Create PR
+- [ ] Verify CI pipeline runs:
+  - [ ] lint job passes
+  - [ ] build job passes (all platforms)
+  - [ ] test jobs pass (unit, system, arch)
+  - [ ] codeql job passes
+  - [ ] pr-title job validates title
+- [ ] Verify PR requirements enforced:
+  - [ ] Review required
+  - [ ] Status checks required
+  - [ ] Conversation resolution required
+- [ ] Complete review and merge PR
+- [ ] Verify branch auto-deleted
+- [ ] Verify issue auto-closed (via `Closes #X`)
+
+#### Security Verification
+
+- [ ] Run secret scan on repository: `npx secretlint .`
+- [ ] Verify Dependabot is configured and has run
+- [ ] Verify CodeQL workflow is active
+
+#### Tooling Verification
+
+- [ ] Verify dev container launches and builds project
+- [ ] Run bootstrap script on clean environment
+- [ ] Verify documentation site builds: `npm run build` (in docs/)
+
+### Verification
+
+```bash
+# All hooks work
+echo "test: infra verification" | npx commitlint
+npx secretlint .
+npx cspell "**/*.md"
+npx prettier --check .
+
+# All tooling works
+dotnet restore
+dotnet build
+dotnet test
+npm run lint
+
+# Documentation complete
+grep -r "placeholder\|TODO\|TBD" docs/ && exit 1 || echo "No placeholders found"
+```
+
+### Acceptance Criteria
+
+- [ ] Zero placeholder documentation
+- [ ] Pre-commit hooks block invalid commits
+- [ ] Pre-push hooks validate branch names
+- [ ] CI pipeline runs all required checks
+- [ ] PR requirements are enforced
+- [ ] Dummy PR successfully merged via full workflow
+- [ ] All infrastructure ADRs verified functional
+- [ ] Ready for code migration
+
+---
+
+## Phase 7: Code Migration
+
+### Sub-Issue #13: Migrate Code Bundle
+
+**Branch:** `feature/13-code-migration`
 **ADRs:** All technology ADRs (0012-0020)
-**Depends on:** #11 (All infrastructure complete)
+**Depends on:** #12 (Infrastructure verified)
 
 ### Context
 
@@ -624,13 +735,13 @@ npx secretlint .
 
 ---
 
-## Phase 7: Verification
+## Phase 8: Final Verification
 
-### Sub-Issue #13: Final Verification & Release Preparation
+### Sub-Issue #14: Release Preparation
 
-**Branch:** `feature/13-final-verification`
+**Branch:** `feature/14-release-preparation`
 **ADRs:** All
-**Depends on:** #12
+**Depends on:** #13
 
 ### Context
 
@@ -717,12 +828,16 @@ Phase 5: CI/CD                               │
 #11 Developer Environment                    │
     │                                        │
     ▼                                        │
-Phase 6: Migration                           │
-#12 Migrate Code Bundle ◄────────────────────┘
+Phase 6: Verification Gate                   │
+#12 Prove Workflows & Standards              │
+    │                                        │
+    ▼                                        │
+Phase 7: Migration                           │
+#13 Migrate Code Bundle ◄────────────────────┘
     │
     ▼
-Phase 7: Verification
-#13 Final Verification
+Phase 8: Release
+#14 Release Preparation
 ```
 
 ---
@@ -733,11 +848,15 @@ Phase 7: Verification
 
 2. **Infrastructure Before Migration**: Phases 4-5 create the target environment before migration
 
-3. **Migration is Validation**: Phase 6 validates all setup by applying it to real code
+3. **Verify Before Migrating**: Phase 6 proves all workflows work via a real PR before any code migration
 
-4. **Sequential Dependencies**: Each phase builds on the previous; no skipping ahead
+4. **Migration is Validation**: Phase 7 validates all setup by applying it to real code
 
-5. **ADR Alignment**: Each sub-issue maps to specific ADR tiers
+5. **No Placeholders**: All documentation must be complete and actionable before Phase 6
+
+6. **Sequential Dependencies**: Each phase builds on the previous; no skipping ahead
+
+7. **ADR Alignment**: Each sub-issue maps to specific ADR tiers
 
 ---
 
@@ -751,4 +870,6 @@ Phase 7: Verification
 
 4. **PR Workflow**: Squash merge with conventional commit message
 
-5. **No Code Until Phase 6**: The code bundle stays untouched until Phase 6
+5. **No Code Until Phase 7**: The code bundle stays untouched until Phase 7
+
+6. **Verification Gate**: Phase 6 must pass completely before code migration begins

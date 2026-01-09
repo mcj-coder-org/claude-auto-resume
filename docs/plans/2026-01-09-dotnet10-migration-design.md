@@ -865,7 +865,7 @@ ADRs are ordered by decision dependency: foundational constraints first, then co
 | 0001 | License | Legal framework - constrains everything |
 | 0002 | GitHub Platform | Where we develop - informs tooling |
 | 0003 | Work Item Management | How we track/organize work |
-| 0004 | Branch Strategy | How we collaborate on code |
+| 0004 | Contribution Workflow | Full ticket-to-merge process |
 
 ### Tier 2: Compliance & Standards
 
@@ -919,7 +919,7 @@ ADRs are ordered by decision dependency: foundational constraints first, then co
 - [ADR-0001: License](../adr/0001-license.md)
 - [ADR-0002: GitHub Platform](../adr/0002-github-platform.md)
 - [ADR-0003: Work Item Management](../adr/0003-work-item-management.md)
-- [ADR-0004: Branch Strategy](../adr/0004-branch-strategy.md)
+- [ADR-0004: Contribution Workflow](../adr/0004-contribution-workflow.md)
 - [ADR-0005: Security Scanning](../adr/0005-security-scanning.md)
 - [ADR-0006: Accessibility](../adr/0006-accessibility.md)
 - [ADR-0007: Telemetry](../adr/0007-telemetry.md)

@@ -161,7 +161,7 @@ Refs: #{parent-issue}
 
 ### Branch Naming Convention
 
-As per ADR-0026 (Branch Strategy):
+As per [ADR-0004: Contribution Workflow](./0004-contribution-workflow.md):
 - `feature/{issue#}-{description}` - New features
 - `fix/{issue#}-{description}` - Bug fixes
 - `docs/{issue#}-{description}` - Documentation only
