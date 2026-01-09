@@ -1,5 +1,7 @@
 export default {
   extends: ['@commitlint/config-conventional'],
+  // Ignore auto-generated merge and revert commits
+  ignores: [(commit) => /^Merge\s/.test(commit) || /^Revert\s/.test(commit)],
   rules: {
     'type-enum': [
       2,

@@ -27,7 +27,7 @@
     "cspell": "^8.17.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
-    "markdownlint-cli": "^0.43.0",
+    "markdownlint-cli": "^0.47.0",
     "prettier": "^3.4.2",
     "secretlint": "^8.0.0"
   },
