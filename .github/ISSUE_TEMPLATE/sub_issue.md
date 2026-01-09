@@ -2,7 +2,7 @@
 name: Sub-Issue / Task
 about: A task that is part of a larger feature or epic
 title: ''
-labels: 'type:task'
+labels: 'enhancement'
 assignees: ''
 ---
 
