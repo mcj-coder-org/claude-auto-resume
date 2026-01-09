@@ -191,6 +191,14 @@ Establish documentation structure and agent onboarding before tooling setup.
   - [ ] Common task routing
 - [ ] Create `docs/agents/ORIENTATION.md`
 - [ ] Create `docs/agents/CONVENTIONS.md`
+- [ ] Create `docs/agents/PATTERNS.md` (per ADR-0009)
+- [ ] Create `docs/agents/IDE-SETUP.md` (VS Code, Rider, VS)
+- [ ] Create `docs/agents/PERSONAS.md`:
+  - [ ] Define project-specific roles (subset of full role library)
+  - [ ] Include frontmatter: name, description, model tier
+  - [ ] Document when to use each persona
+  - [ ] Include blocking issues that require escalation
+- [ ] Create `docs/agents/TROUBLESHOOTING.md`
 - [ ] Create `docs/standards/coding-standards.md`:
   - [ ] C# naming conventions
   - [ ] File organization
@@ -218,6 +226,8 @@ Establish documentation structure and agent onboarding before tooling setup.
 - [ ] Documentation structure established
 - [ ] Agent onboarding path clear
 - [ ] All standards documents complete and actionable
+- [ ] Project-specific personas defined with selection guidance
+- [ ] IDE setup documented for VS Code, Rider, and Visual Studio
 - [ ] No placeholder content in any document
 
 ---
