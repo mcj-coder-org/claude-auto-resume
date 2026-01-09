@@ -198,6 +198,12 @@ Establish documentation structure and agent onboarding before tooling setup.
   - [ ] Include frontmatter: name, description, model tier
   - [ ] Document when to use each persona
   - [ ] Include blocking issues that require escalation
+  - [ ] Likely personas for this project:
+    - [ ] **DotNet Developer** - C# idioms, .NET 10 features, async patterns, LINQ, NuGet
+    - [ ] **Security Reviewer** - OWASP, input validation, secure coding
+    - [ ] **QA Engineer** - Testing strategy, xUnit, BDD with Reqnroll
+    - [ ] **Senior Developer** - Code quality, SOLID, refactoring
+    - [ ] **Documentation Specialist** - XML docs, README, API documentation
 - [ ] Create `docs/agents/TROUBLESHOOTING.md`
 - [ ] Create `docs/standards/coding-standards.md`:
   - [ ] C# naming conventions
