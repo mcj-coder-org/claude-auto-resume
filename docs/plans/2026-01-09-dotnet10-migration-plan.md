@@ -648,6 +648,44 @@ Before migrating any code, verify all infrastructure, workflows, and standards a
 - [ ] Run bootstrap script on clean environment
 - [ ] Verify documentation site builds: `npm run build` (in docs/)
 
+#### Agent Verification
+
+Verify that AI agents can follow project processes using only repository documentation (no external skills).
+
+**Test Setup:**
+- Fresh agent session with no pre-loaded skills
+- Agent has access only to repository files
+- Task: "Add a code comment to explain the purpose of ExitCodes.cs"
+
+**Onboarding Verification:**
+- [ ] Agent reads `AGENTS.md` as first action
+- [ ] Agent navigates to relevant documentation via AGENTS.md routing
+- [ ] Agent finds and reads `docs/standards/coding-standards.md`
+- [ ] Agent finds and reads ADR-0004 (Contribution Workflow)
+
+**Process Adherence Verification:**
+- [ ] Agent creates/identifies appropriate issue (or references existing)
+- [ ] Agent creates correctly named branch (`docs/{issue#}-description`)
+- [ ] Agent makes change following coding standards
+- [ ] Agent commits with valid conventional commit message
+- [ ] Agent includes issue reference in commit (`Refs: #X`)
+
+**Output Compliance Verification:**
+- [ ] Commit message passes commitlint validation
+- [ ] Code change follows documented standards
+- [ ] PR description follows template (if PR created)
+- [ ] No reliance on external skills or undocumented conventions
+
+**Failure Scenarios to Test:**
+- [ ] Agent without AGENTS.md access fails gracefully (requests guidance)
+- [ ] Agent presented with ambiguous task asks clarifying questions
+- [ ] Agent recognises when documentation is insufficient and flags it
+
+**Documentation Gaps Identified:**
+- [ ] Record any points where agent needed guidance not in docs
+- [ ] Update documentation to address gaps before proceeding
+- [ ] Re-run agent verification after documentation updates
+
 ### Verification
 
 ```bash
@@ -676,6 +714,8 @@ grep -r "placeholder\|TODO\|TBD" docs/ && exit 1 || echo "No placeholders found"
 - [ ] PR requirements are enforced
 - [ ] Dummy PR successfully merged via full workflow
 - [ ] All infrastructure ADRs verified functional
+- [ ] Agent successfully completes task using only repo documentation
+- [ ] No documentation gaps identified (or all gaps resolved)
 - [ ] Ready for code migration
 
 ---
