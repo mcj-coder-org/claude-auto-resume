@@ -135,6 +135,54 @@ See ADR-0004 for complete contribution workflow.
 3. **All commits must pass hooks** - Pre-commit validates format
 4. **No placeholder content** - All documentation must be complete and actionable
 5. **Follow existing patterns** - Check similar files before creating new ones
+6. **Keep docs and tooling in sync** - Standards must match analyzer/linter configuration
+
+## Documentation Standards
+
+When creating or updating documentation, follow these principles:
+
+### Progressive Loading Pattern
+
+Structure documents for efficient agent consumption:
+
+1. **Front-matter first** - YAML front-matter must contain enough information to determine relevance
+2. **Main document concise** - Key rules, tables, brief examples only
+3. **Details in sub-pages** - Extract lengthy examples, edge cases, and references
+
+```yaml
+---
+title: Short descriptive title
+summary: One sentence explaining document purpose and scope
+audience: [developer, agent]
+topics: [relevant, searchable, keywords]
+prerequisites: [required-reading.md]
+related: [linked-doc.md]
+last_validated: YYYY-MM-DD
+---
+```
+
+### Writing Style
+
+- **Terse and direct** - No filler words, no verbose explanations
+- **Tables over prose** - Structured data is faster to parse
+- **Bullets over paragraphs** - Scannable content
+- **Code over description** - Show, don't tell
+- **Links over duplication** - Reference, don't repeat
+
+### Documentation-Tooling Sync
+
+Standards documented must be enforced by tooling where possible:
+
+| Documentation      | Enforcement                          |
+| ------------------ | ------------------------------------ |
+| Naming conventions | `.editorconfig` naming rules         |
+| Code style         | `.editorconfig` + `dotnet format`    |
+| Member ordering    | StyleCop analyzers (SA1201-SA1214)   |
+| Security patterns  | Analyzer rules (CA2100, S2068, etc.) |
+| Commit format      | commitlint via husky                 |
+| Markdown style     | markdownlint + prettier              |
+
+When adding new standards, update both documentation AND tooling configuration.
 
 ## Getting Help
 
