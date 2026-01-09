@@ -650,20 +650,27 @@ Before migrating any code, verify all infrastructure, workflows, and standards a
 
 #### Agent Verification
 
-Verify that AI agents can follow project processes using only repository documentation (no external skills).
+Verify that AI agents can follow project processes using only repository documentation (no external skills). Test against all target platforms per ADR-0009.
 
-**Test Setup:**
-- Fresh agent session with no pre-loaded skills
+**Target Platforms:**
+- Claude Code (Anthropic) - CLI/terminal
+- Codex/Copilot (OpenAI) - VS Code integration
+- Junie (JetBrains) - Rider integration
+
+**Test Setup (per platform):**
+- Fresh agent session with no pre-loaded skills/context
 - Agent has access only to repository files
 - Task: "Add a code comment to explain the purpose of ExitCodes.cs"
 
-**Onboarding Verification:**
-- [ ] Agent reads `AGENTS.md` as first action
-- [ ] Agent navigates to relevant documentation via AGENTS.md routing
-- [ ] Agent finds and reads `docs/standards/coding-standards.md`
-- [ ] Agent finds and reads ADR-0004 (Contribution Workflow)
+**Onboarding Verification (all platforms):**
+- [ ] Claude Code: reads `AGENTS.md` as first action
+- [ ] Codex: reads `AGENTS.md` as first action
+- [ ] Junie: reads `AGENTS.md` as first action
+- [ ] All agents navigate to relevant documentation via AGENTS.md routing
+- [ ] All agents find and read `docs/standards/coding-standards.md`
+- [ ] All agents find and read ADR-0004 (Contribution Workflow)
 
-**Process Adherence Verification:**
+**Process Adherence Verification (all platforms):**
 - [ ] Agent creates/identifies appropriate issue (or references existing)
 - [ ] Agent creates correctly named branch (`docs/{issue#}-description`)
 - [ ] Agent makes change following coding standards
@@ -676,6 +683,12 @@ Verify that AI agents can follow project processes using only repository documen
 - [ ] PR description follows template (if PR created)
 - [ ] No reliance on external skills or undocumented conventions
 
+**Platform-Specific Notes:**
+- [ ] Document any platform-specific behaviour differences
+- [ ] Document any documentation that one platform finds unclear
+- [ ] Verify sub-agent/persona pattern works (Claude Code)
+- [ ] Verify fallback strategies work (Codex, Junie)
+
 **Failure Scenarios to Test:**
 - [ ] Agent without AGENTS.md access fails gracefully (requests guidance)
 - [ ] Agent presented with ambiguous task asks clarifying questions
@@ -684,7 +697,7 @@ Verify that AI agents can follow project processes using only repository documen
 **Documentation Gaps Identified:**
 - [ ] Record any points where agent needed guidance not in docs
 - [ ] Update documentation to address gaps before proceeding
-- [ ] Re-run agent verification after documentation updates
+- [ ] Re-run agent verification on ALL platforms after documentation updates
 
 ### Verification
 
@@ -714,7 +727,10 @@ grep -r "placeholder\|TODO\|TBD" docs/ && exit 1 || echo "No placeholders found"
 - [ ] PR requirements are enforced
 - [ ] Dummy PR successfully merged via full workflow
 - [ ] All infrastructure ADRs verified functional
-- [ ] Agent successfully completes task using only repo documentation
+- [ ] Claude Code successfully completes task using only repo documentation
+- [ ] Codex successfully completes task using only repo documentation
+- [ ] Junie successfully completes task using only repo documentation
+- [ ] Sub-agent/persona pattern verified (Claude Code)
 - [ ] No documentation gaps identified (or all gaps resolved)
 - [ ] Ready for code migration
 
