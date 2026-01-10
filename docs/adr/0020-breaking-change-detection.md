@@ -1,3 +1,12 @@
+---
+name: breaking-change-detection
+description: |
+  When modifying public API or managing semantic versioning. Apply when adding, removing,
+  or changing public members, or when syncing API changes with conventional commits.
+decision: Use Microsoft.CodeAnalysis.PublicApiAnalyzers with PublicAPI.Shipped/Unshipped.txt files.
+status: accepted
+---
+
 # ADR-0020: Breaking Change Detection
 
 ## Status

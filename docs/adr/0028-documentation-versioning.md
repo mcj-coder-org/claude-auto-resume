@@ -1,3 +1,11 @@
+---
+name: documentation-versioning
+description: |
+  When versioning documentation alongside software releases or managing docs for multiple versions. Apply when configuring Docusaurus versioning or documentation site structure.
+decision: Use Docusaurus versioned docs with version snapshots created at each release.
+status: accepted
+---
+
 # ADR-0028: Documentation Versioning
 
 ## Status

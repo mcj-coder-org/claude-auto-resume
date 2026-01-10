@@ -1,3 +1,12 @@
+---
+name: security-scanning
+description: |
+  When configuring security tools or responding to security alerts.
+  Applies when setting up secret detection, SAST, or dependency vulnerability scanning.
+decision: Use multi-layered security with secretlint pre-commit, GitHub CodeQL, and Dependabot.
+status: accepted
+---
+
 # ADR-0005: Security Scanning
 
 ## Status

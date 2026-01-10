@@ -1,3 +1,12 @@
+---
+name: testing-framework
+description: |
+  When writing unit tests or configuring test packages. Apply when adding test dependencies,
+  writing assertions, or setting up code coverage collection.
+decision: Use xUnit with AwesomeAssertions for fluent assertions and xunit.analyzers for best practices.
+status: accepted
+---
+
 # ADR-0013: Testing Framework
 
 ## Status

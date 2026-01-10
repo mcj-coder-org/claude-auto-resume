@@ -1,3 +1,12 @@
+---
+name: agent-onboarding
+description: |
+  When setting up AI agent access or defining agent workflows.
+  Applies when configuring AGENTS.md, usage patterns, or multi-agent collaboration.
+decision: Use AGENTS.md for routing with docs/agents/ for detailed guidance and sub-agent patterns.
+status: accepted
+---
+
 # ADR-0009: Agent Onboarding
 
 ## Status

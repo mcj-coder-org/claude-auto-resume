@@ -1,3 +1,12 @@
+---
+name: accessibility
+description: |
+  When building documentation website or CLI output.
+  Applies when designing user-facing content to ensure inclusivity and compliance.
+decision: Target WCAG 2.1 AA compliance for documentation with semantic HTML and clear CLI output.
+status: accepted
+---
+
 # ADR-0006: Accessibility
 
 ## Status

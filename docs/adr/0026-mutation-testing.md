@@ -1,3 +1,11 @@
+---
+name: mutation-testing
+description: |
+  When validating test effectiveness beyond code coverage or identifying weak tests. Apply when setting up mutation testing infrastructure or interpreting mutation scores.
+decision: Use Stryker.NET for mutation testing with nightly CI execution and dashboard reporting.
+status: accepted
+---
+
 # ADR-0026: Mutation Testing
 
 ## Status

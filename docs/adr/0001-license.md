@@ -1,3 +1,12 @@
+---
+name: license
+description: |
+  When choosing or reviewing the project's open source license.
+  Applies when adding new dependencies or considering license compatibility.
+decision: Use MIT License for maximum permissiveness and broad adoption.
+status: accepted
+---
+
 # ADR-0001: License
 
 ## Status

@@ -1,3 +1,11 @@
+---
+name: developer-environment
+description: |
+  When setting up development environments, onboarding developers, or ensuring consistent tooling. Apply for Dev Container configuration or local setup script decisions.
+decision: Use Dev Containers as recommended environment with bootstrap scripts for local fallback.
+status: accepted
+---
+
 # ADR-0029: Developer Environment
 
 ## Status

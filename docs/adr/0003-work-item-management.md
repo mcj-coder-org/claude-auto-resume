@@ -1,3 +1,12 @@
+---
+name: work-item-management
+description: |
+  When creating issues, tracking features, or organizing work breakdown.
+  Applies when structuring epics, sub-issues, or linking work to branches and PRs.
+decision: Use GitHub Issues with sub-issues and task lists for hierarchical work tracking.
+status: accepted
+---
+
 # ADR-0003: Work Item Management
 
 ## Status

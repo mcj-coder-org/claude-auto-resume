@@ -1,3 +1,12 @@
+---
+name: cli-design
+description: |
+  When designing command-line interface or configuration. Apply when implementing CLI arguments,
+  layered configuration, exit codes, or diagnostics commands.
+decision: Use layered configuration with semantic exit codes and built-in diagnostics command.
+status: accepted
+---
+
 # ADR-0018: CLI Design
 
 ## Status

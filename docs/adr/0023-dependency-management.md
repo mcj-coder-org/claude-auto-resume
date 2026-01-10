@@ -1,3 +1,11 @@
+---
+name: dependency-management
+description: |
+  When configuring automated dependency updates, security patching, or NuGet/npm package management. Apply when setting up Dependabot or auto-merge strategies.
+decision: Use Dependabot with grouped updates and auto-merge for patch versions via machine user PAT.
+status: accepted
+---
+
 # ADR-0023: Dependency Management
 
 ## Status

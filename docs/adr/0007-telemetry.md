@@ -1,3 +1,12 @@
+---
+name: telemetry
+description: |
+  When considering usage analytics or crash reporting features.
+  Applies when evaluating privacy implications or user data collection.
+decision: Implement no telemetry for privacy-first approach; use GitHub Issues for feedback.
+status: accepted
+---
+
 # ADR-0007: Telemetry
 
 ## Status

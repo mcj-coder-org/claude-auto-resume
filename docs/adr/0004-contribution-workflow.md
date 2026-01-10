@@ -1,3 +1,12 @@
+---
+name: contribution-workflow
+description: |
+  When contributing code, creating branches, or submitting PRs.
+  Applies to all ticket-to-merge workflows including commit format and PR requirements.
+decision: Follow GitHub Flow with conventional commits, branch naming conventions, and squash merges.
+status: accepted
+---
+
 # ADR-0004: Contribution Workflow
 
 ## Status

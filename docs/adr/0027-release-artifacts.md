@@ -1,3 +1,11 @@
+---
+name: release-artifacts
+description: |
+  When defining release outputs, configuring NuGet packages, or building standalone executables. Apply for Source Link, SBOM generation, or cross-platform build decisions.
+decision: Publish NuGet packages with Source Link, cross-platform standalone builds, SBOM, and checksums.
+status: accepted
+---
+
 # ADR-0027: Release Artifacts
 
 ## Status

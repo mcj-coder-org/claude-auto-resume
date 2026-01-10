@@ -1,3 +1,12 @@
+---
+name: documentation-strategy
+description: |
+  When creating or organizing documentation for users, developers, or agents.
+  Applies when structuring docs, adding front-matter, or setting up the documentation site.
+decision: Use Docusaurus on GitHub Pages with structured front-matter for agent-friendly documentation.
+status: accepted
+---
+
 # ADR-0008: Documentation Strategy
 
 ## Status

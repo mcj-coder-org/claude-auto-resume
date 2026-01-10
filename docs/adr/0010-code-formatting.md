@@ -1,3 +1,12 @@
+---
+name: code-formatting
+description: |
+  When configuring formatters or resolving formatting issues.
+  Applies when setting up .editorconfig, Prettier, or pre-commit hooks for code style.
+decision: Use dotnet format for C# with .editorconfig and Prettier for Markdown/JSON/YAML files.
+status: accepted
+---
+
 # ADR-0010: Code Formatting
 
 ## Status

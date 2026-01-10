@@ -1,3 +1,12 @@
+---
+name: pre-commit-hooks
+description: |
+  When setting up Git hooks or commit validation. Apply when configuring pre-commit,
+  commit-msg, or pre-push hooks, or when enforcing conventional commits and work item references.
+decision: Use Husky + commitlint + lint-staged for pre-commit hooks with CI enforcement as backup.
+status: accepted
+---
+
 # ADR-0011: Pre-commit Hooks
 
 ## Status

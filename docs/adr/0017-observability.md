@@ -1,3 +1,12 @@
+---
+name: observability
+description: |
+  When adding logging or diagnostics. Apply when configuring structured logging, capturing
+  platform context, or implementing test-capturable log behavior.
+decision: Use Serilog with file and debug sinks, disabled by default, with bootstrap logger pattern.
+status: accepted
+---
+
 # ADR-0017: Observability
 
 ## Status

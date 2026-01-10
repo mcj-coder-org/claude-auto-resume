@@ -1,3 +1,12 @@
+---
+name: namespace-and-project-naming
+description: |
+  When creating new projects, namespaces, or test assemblies. Apply when naming solutions,
+  configuring RootNamespace, setting up InternalsVisibleTo, or structuring test projects.
+decision: Use McjCoderOrg prefix with folder-parallel namespaces and test projects sharing production namespace.
+status: accepted
+---
+
 # ADR-0012: Namespace and Project Naming Conventions
 
 ## Status

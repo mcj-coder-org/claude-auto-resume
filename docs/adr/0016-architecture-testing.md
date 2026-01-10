@@ -1,3 +1,12 @@
+---
+name: architecture-testing
+description: |
+  When enforcing dependency rules or layer separation. Apply when writing architecture tests
+  to prevent circular dependencies, cross-slice references, or layer violations.
+decision: Use NetArchTest with slice support for automated architecture enforcement.
+status: accepted
+---
+
 # ADR-0016: Architecture Testing
 
 ## Status

@@ -1,3 +1,12 @@
+---
+name: test-project-structure
+description: |
+  When organizing test projects or writing BDD-style tests. Apply when creating system tests,
+  E2E tests, feature files, or step definitions using Gherkin syntax.
+decision: Use Reqnroll for BDD with three test projects for unit, system, and E2E tests.
+status: accepted
+---
+
 # ADR-0014: Test Project Structure and BDD Framework
 
 ## Status

@@ -1,3 +1,12 @@
+---
+name: internationalization
+description: |
+  When adding user-facing strings or planning localization. Apply when creating resource files,
+  formatting messages with named parameters, or structuring for future translations.
+decision: Use i18n-ready structure with resource files and named parameters, English only initially.
+status: accepted
+---
+
 # ADR-0019: Internationalization
 
 ## Status

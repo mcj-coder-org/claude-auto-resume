@@ -1,3 +1,12 @@
+---
+name: github-platform
+description: |
+  When setting up repository infrastructure, CI/CD, or integrations.
+  Applies when choosing tools for code hosting, issues, packages, or security scanning.
+decision: Use GitHub as unified development platform for source, CI/CD, packages, and security features.
+status: accepted
+---
+
 # ADR-0002: GitHub as Development Platform
 
 ## Status

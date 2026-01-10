@@ -1,3 +1,12 @@
+---
+name: code-analyzers
+description: |
+  When configuring static analysis or adding analyzer packages. Apply when setting up code
+  quality rules, suppressing diagnostics, or enforcing coding standards at compile time.
+decision: Use comprehensive analyzer stack with Meziantou, Roslynator, and SonarAnalyzer alongside built-in analyzers.
+status: accepted
+---
+
 # ADR-0015: Code Analyzers
 
 ## Status

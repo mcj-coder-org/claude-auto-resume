@@ -1,3 +1,11 @@
+---
+name: code-coverage
+description: |
+  When setting up test coverage metrics, configuring coverage thresholds, or implementing delta coverage in PRs. Apply for coverage tooling and reporting decisions.
+decision: Use Coverlet with delta coverage reporting enforcing 80% line and 70% branch coverage on changed code.
+status: accepted
+---
+
 # ADR-0024: Code Coverage
 
 ## Status
