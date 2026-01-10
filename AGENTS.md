@@ -15,9 +15,10 @@ resumes Claude CLI sessions when rate limits are hit.
 6. **Never commit directly to main** - Always use feature branches
 7. **Commits must be signed** - Configure GPG signing
 8. **All commits must pass hooks** - Pre-commit validates format
-9. **No placeholder content** - All documentation must be complete and actionable
-10. **Follow existing patterns** - Check similar files before creating new ones
-11. **Keep docs and tooling in sync** - Standards must match analyzer/linter configuration
+9. **NEVER use `--no-verify` without explicit User approval** - Fix root causes of hook failures, do not bypass validation
+10. **No placeholder content** - All documentation must be complete and actionable
+11. **Follow existing patterns** - Check similar files before creating new ones
+12. **Keep docs and tooling in sync** - Standards must match analyzer/linter configuration
 
 **Tech Stack:**
 
