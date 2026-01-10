@@ -22,7 +22,7 @@
     "@secretlint/secretlint-rule-aws": "^11.2.5",
     "@secretlint/secretlint-rule-gcp": "^8.0.0",
     "@secretlint/secretlint-rule-npm": "^11.2.5",
-    "@secretlint/secretlint-rule-preset-recommend": "^8.0.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^11.2.5",
     "@secretlint/secretlint-rule-privatekey": "^8.0.0",
     "cspell": "^8.17.1",
     "husky": "^9.1.7",
