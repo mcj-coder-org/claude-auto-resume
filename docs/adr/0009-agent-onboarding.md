@@ -420,36 +420,27 @@ See docs/agents/IDE-SETUP.md for:
 | CONVENTIONS.md     | Coding standards summary, commit format, branch naming |
 | PATTERNS.md        | Detailed usage patterns with examples                  |
 | IDE-SETUP.md       | IDE-specific configuration and tips                    |
-| PERSONAS.md        | Sub-agent persona definitions                          |
+| (Roles moved)      | See docs/standards/roles.md for role definitions       |
 | TROUBLESHOOTING.md | Common issues and solutions                            |
 
-### docs/agents/PERSONAS.md
+### docs/standards/roles.md
 
-Define reusable personas for sub-agents:
+Role definitions have been consolidated into `docs/standards/roles.md` with individual
+role files in `docs/standards/roles/`. Each role has YAML frontmatter for agent routing:
 
-```markdown
-# Agent Personas
-
-## security-reviewer
-
-**Focus:** Security vulnerabilities and best practices
-**Checklist:** docs/checklists/security-review.md
-**Perspective:** Assume malicious input, verify all trust boundaries
-
-## accessibility-auditor
-
-**Focus:** WCAG 2.1 AA compliance
-**Checklist:** docs/checklists/accessibility-audit.md
-**Perspective:** Test with screen reader, keyboard-only navigation
-
-## performance-analyst
-
-**Focus:** Efficiency and scalability
-**Checklist:** docs/checklists/performance-review.md
-**Perspective:** Consider memory, CPU, async patterns, caching
-
-...
+```yaml
+---
+name: security-reviewer
+description: |
+  Use for security code review, vulnerability assessment, and threat modelling.
+model: balanced
+audience: [developer, agent]
+topics: [security, owasp, vulnerabilities]
+last_validated: 2026-01-10
+---
 ```
+
+See `docs/standards/roles.md` for the full role index and selection guide.
 
 ---
 

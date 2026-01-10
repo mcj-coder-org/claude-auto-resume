@@ -1,9 +1,15 @@
+---
+title: Team Roles
+summary: Role definitions for code review, planning, and validation
+audience: [developer, agent]
+topics: [roles, review, personas]
+last_validated: 2026-01-10
+---
+
 # Team Roles
 
-## Overview
-
-Team role definitions for both human teams and agent perspectives. These roles provide standardized
-expert perspectives during code reviews, planning, and validation.
+Role definitions for both human teams and agents. Use roles for focused expertise during reviews,
+planning, and validation.
 
 ## Frontmatter Standard
 
@@ -15,17 +21,23 @@ name: role-name
 description: |
   When to use this role and what expertise it provides.
   Include specific trigger conditions for agents.
-model: balanced # Task-based model tier
+model: balanced
+audience: [developer, agent]
+topics: [relevant, keywords]
+last_validated: 2026-01-10
 ---
 ```
 
 ### Required Fields
 
-| Field         | Description                                                                                  |
-| ------------- | -------------------------------------------------------------------------------------------- |
-| `name`        | Kebab-case identifier (e.g., `tech-lead`, `senior-developer`)                                |
-| `description` | When to use this role; must be sufficient for agents to select without reading full document |
-| `model`       | Task-based model tier (see below)                                                            |
+| Field            | Description                                                      |
+| ---------------- | ---------------------------------------------------------------- |
+| `name`           | Kebab-case identifier (e.g., `tech-lead`, `senior-developer`)    |
+| `description`    | When to use this role; trigger conditions for agents (1-3 lines) |
+| `model`          | Task-based model tier (see below)                                |
+| `audience`       | Always `[developer, agent]` for role documents                   |
+| `topics`         | Searchable keywords for the role                                 |
+| `last_validated` | Date of last review (YYYY-MM-DD)                                 |
 
 ### Model Tiers
 
@@ -83,6 +95,7 @@ model: reasoning # Complex analysis → Opus 4.5, GPT-5.2
 
 - **[Tech Lead](roles/tech-lead.md)** - Technical architecture and design oversight
 - **[Senior Developer](roles/senior-developer.md)** - Code quality and implementation excellence
+- **[DotNet Developer](roles/dotnet-developer.md)** - C# implementation and .NET 10 patterns
 - **[QA Engineer](roles/qa-engineer.md)** - Quality assurance and testing strategy
 
 ### Security and Performance
@@ -160,6 +173,7 @@ Use these exact names when referencing roles:
 
 - `Tech Lead` (not: "Technical Lead", "Architect", "Tech Arch")
 - `Senior Developer` (not: "Developer", "Sr Dev", "Engineer")
+- `DotNet Developer` (not: "C# Developer", ".NET Dev", "Backend Dev")
 - `QA Engineer` (not: "QA", "Tester", "Quality Assurance")
 - `Security Reviewer` (not: "Security", "Sec Engineer", "AppSec")
 - `Performance Engineer` (not: "Performance", "Perf Engineer")
@@ -190,22 +204,24 @@ When multiple roles seem applicable, use these criteria:
 
 ### By Scope
 
-| Scope            | Use These Roles                                |
-| ---------------- | ---------------------------------------------- |
-| Single component | Senior Developer, Security Reviewer, QA        |
-| Cross-cutting    | Tech Lead, Performance Engineer, DevOps        |
-| Enterprise-wide  | Technical Architect, Security Architect, Cloud |
+| Scope            | Use These Roles                                           |
+| ---------------- | --------------------------------------------------------- |
+| Single component | DotNet Developer, Senior Developer, Security Reviewer, QA |
+| Cross-cutting    | Tech Lead, Performance Engineer, DevOps                   |
+| Enterprise-wide  | Technical Architect, Security Architect, Cloud            |
 
 ### By Phase
 
-| Phase          | Use These Roles                                 |
-| -------------- | ----------------------------------------------- |
-| Design         | Tech Lead, Technical Architect, Cloud Architect |
-| Implementation | Senior Developer, Security Reviewer             |
-| Review         | QA Engineer, Documentation Specialist           |
+| Phase          | Use These Roles                                          |
+| -------------- | -------------------------------------------------------- |
+| Design         | Tech Lead, Technical Architect, Cloud Architect          |
+| Implementation | DotNet Developer, Senior Developer                       |
+| Review         | Security Reviewer, QA Engineer, Documentation Specialist |
 
 ### Overlapping Domains
 
+- **DotNet Developer vs Senior Developer**: DotNet Developer for C#/.NET implementation details;
+  Senior Developer for code quality, SOLID principles, and architecture patterns
 - **Tech Lead vs Technical Architect**: Tech Lead for project-level decisions; Technical
   Architect for enterprise or cross-project concerns
 - **Security Reviewer vs Security Architect**: Security Reviewer for code-level issues;

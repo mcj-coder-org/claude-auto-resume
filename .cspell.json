@@ -155,7 +155,8 @@
     "gnupg",
     "gpgconf",
     "glab",
-    "adrs"
+    "adrs",
+    "Pulumi"
   ],
   "flagWords": [],
   "allowCompoundWords": true,

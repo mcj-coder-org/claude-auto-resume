@@ -95,17 +95,20 @@ See `docs/agents/IDE-SETUP.md` for configuration guidance:
 | Plan work               | `docs/agents/PATTERNS.md` (Planning section)           |
 | Understand architecture | `docs/agents/ORIENTATION.md`, `docs/adr/`              |
 
-## Personas
+## Roles
 
-For specialised tasks, use focused personas defined in `docs/agents/PERSONAS.md`:
+For specialised tasks, use focused roles defined in `docs/standards/roles.md`:
 
-| Persona                  | Use For                                 |
-| ------------------------ | --------------------------------------- |
-| DotNet Developer         | C# implementation, async patterns, LINQ |
-| Security Reviewer        | OWASP, input validation, secrets        |
-| QA Engineer              | Testing strategy, BDD scenarios         |
-| Senior Developer         | Code quality, SOLID, refactoring        |
-| Documentation Specialist | XML docs, README, user guides           |
+| Role                     | Use For                                        |
+| ------------------------ | ---------------------------------------------- |
+| Tech Lead                | Architecture decisions, cross-cutting concerns |
+| DotNet Developer         | C# implementation, .NET 10, async patterns     |
+| Senior Developer         | Code quality, SOLID, refactoring               |
+| QA Engineer              | Testing strategy, BDD scenarios                |
+| Security Reviewer        | OWASP, input validation, secrets               |
+| Documentation Specialist | XML docs, README, user guides                  |
+
+See `docs/standards/roles.md` for the full list of 16 roles and selection guidance.
 
 ## Project Structure
 

@@ -4,7 +4,7 @@ summary: Detailed guidance for different agent usage modes and autonomy levels
 audience: [agent]
 topics: [patterns, workflows, autonomy, collaboration]
 prerequisites: [AGENTS.md, ORIENTATION.md, CONVENTIONS.md]
-related: [PERSONAS.md, ../adr/0009-agent-onboarding.md]
+related: [../standards/roles.md, ../adr/0009-agent-onboarding.md]
 last_validated: 2026-01-09
 ---
 

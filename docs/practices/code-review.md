@@ -391,7 +391,7 @@ Reviewers should not duplicate what automated checks verify.
 
 When performing code review as an AI agent:
 
-1. **Adopt the appropriate persona** - See `docs/agents/PERSONAS.md`
+1. **Adopt the appropriate role** - See `docs/standards/roles.md`
 2. **Structure your review** - Use the comment prefixes
 3. **Be specific** - Point to exact lines
 4. **Provide examples** - Show how to fix issues
