@@ -1,7 +1,10 @@
 ---
 title: Testing Examples
 summary: Detailed examples for unit tests, BDD scenarios, and assertions
+audience: [developer, agent]
+topics: [testing, xunit, bdd]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Testing Examples

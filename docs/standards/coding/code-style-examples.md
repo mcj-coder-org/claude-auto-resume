@@ -1,7 +1,10 @@
 ---
 title: Code Style Examples
 summary: Detailed examples for braces, var usage, null handling, and pattern matching
+audience: [developer, agent]
+topics: [csharp, code-style, patterns]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Code Style Examples

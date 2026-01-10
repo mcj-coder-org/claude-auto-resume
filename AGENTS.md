@@ -61,7 +61,7 @@ For these documents, read the YAML front-matter to determine relevance, then loa
 Load these documents only when specifically relevant to your task:
 
 - `docs/playbooks/*` - Specific procedures and runbooks
-- `CHANGELOG.md` - Version history
+- `CHANGELOG.md` - Version history (created at first release)
 
 ## Usage Patterns
 
@@ -113,7 +113,7 @@ For specialised tasks, use focused personas defined in `docs/agents/PERSONAS.md`
 McjCoderOrg.ClaudeAutoResume/
 ├── src/
 │   └── McjCoderOrg.ClaudeAutoResume/    # Main application
-├── tests/
+├── tests/                                # (planned - Phase 4)
 │   ├── McjCoderOrg.ClaudeAutoResume.Tests/       # Unit tests
 │   ├── McjCoderOrg.ClaudeAutoResume.SystemTests/ # BDD system tests
 │   ├── McjCoderOrg.ClaudeAutoResume.E2ETests/    # BDD E2E tests
@@ -127,7 +127,7 @@ McjCoderOrg.ClaudeAutoResume/
 │   ├── adr/          # Architecture decisions
 │   └── plans/        # Design documents
 ├── .github/          # CI/CD, templates
-└── scripts/          # Bootstrap scripts
+└── scripts/          # Bootstrap scripts (planned - Phase 5)
 ```
 
 ## Contribution Quick Reference
@@ -145,25 +145,56 @@ See ADR-0004 for complete contribution workflow.
 
 When creating or updating documentation, follow these principles:
 
-### Progressive Loading Pattern
+## Progressive Document Loading
 
-Structure documents for efficient agent consumption:
+Agents SHOULD load document frontmatter first, then full content only when needed. This
+reduces context consumption and improves selection accuracy.
 
-1. **Front-matter first** - YAML front-matter must contain enough information to determine relevance
-2. **Main document concise** - Key rules, tables, brief examples only
-3. **Details in sub-pages** - Extract lengthy examples, edge cases, and references
+### Progressive Loading Principle
 
-```yaml
----
-title: Short descriptive title
-summary: One sentence explaining document purpose and scope
-audience: [developer, agent]
-topics: [relevant, searchable, keywords]
-prerequisites: [required-reading.md]
-related: [linked-doc.md]
-last_validated: YYYY-MM-DD
----
-```
+**Load frontmatter first, full content when relevant.** Frontmatter contains summary fields
+sufficient for selection and applicability decisions. Only load full document body when
+execution or detailed rationale is required.
+
+### Summary Fields by Document Type
+
+| Document Type | Selection Fields      | Execution Fields             |
+| ------------- | --------------------- | ---------------------------- |
+| Roles         | `name`, `description` | `model` (for tier selection) |
+| ADRs          | `name`, `description` | `decision`, `status`         |
+| Playbooks     | `name`, `triggers`    | `description`, `summary`     |
+
+For complete field definitions and validation rules, see the respective README files.
+
+### When Frontmatter Suffices
+
+Use frontmatter only when:
+
+- **Selecting** which document applies to current context
+- **Checking applicability** of a role, decision, or playbook
+- **Building lists** of relevant documents for a task
+- **Quick reference** to a decision or trigger condition
+
+### When Full Document Needed
+
+Load the full document body when:
+
+- **Executing** a playbook requires details beyond the summary
+- **Understanding rationale** for why a decision was made
+- **Following step-by-step** procedures with nested steps or decision points
+- **Reviewing alternatives** that were considered (ADRs)
+- **Learning capabilities** of a role beyond its description
+
+### Loading Algorithm
+
+1. **Scan frontmatter** of all documents in the relevant directory
+   - Use `Read` tool with `limit: 20` to capture frontmatter block
+   - Frontmatter ends at closing `---` delimiter (typically lines 1-15)
+2. **Filter** by matching triggers, descriptions, or status (for ADRs)
+3. **Select** the most applicable document(s) using conflict resolution rules
+4. **Execute** using summary fields if sufficient
+5. **Load body** only if summary references details not provided
+   - Use `Read` without limit for full document content
 
 ### Writing Style
 

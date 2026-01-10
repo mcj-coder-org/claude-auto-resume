@@ -314,6 +314,24 @@ All standard review items, plus:
 | Documentation only | 1                  | Spelling/grammar check |
 | Infrastructure/CI  | 1                  | Test in non-prod first |
 
+## Merge Requirements
+
+After approval, PRs must be merged using **squash merge**:
+
+- **Squash and merge** - Combines all commits into one clean commit
+- **Commit message** - Use conventional commit format matching PR title
+- **Branch deletion** - Enabled automatically after merge
+
+**Why squash merge:**
+
+- Clean, linear history on main branch
+- Each merge represents one logical change
+- Easy to revert if needed
+- Conventional commit messages for changelog generation
+
+**Exception:** Feature branch merges (Strategy B sub-issues merging to feature branch) also use
+squash merge for consistency.
+
 ## Handling Disagreements
 
 When author and reviewer disagree:

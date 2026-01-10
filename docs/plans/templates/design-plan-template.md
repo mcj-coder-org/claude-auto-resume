@@ -8,9 +8,43 @@ last_updated: YYYY-MM-DD
 
 # Design Plan: {Feature Name}
 
+## Version History
+
+| Version | Date       | Changes        | Discussion | Approved By   | Follow-up Issues |
+| ------- | ---------- | -------------- | ---------- | ------------- | ---------------- |
+| v1      | YYYY-MM-DD | Initial design | #{issue}   | Tech Lead, PO | -                |
+
+**Note:** Amendments during implementation are appended here with new version numbers (v1.1, v1.2, etc.)
+
+## Approval
+
+**Design Approved By:**
+
+- [ ] Product Owner: @username (YYYY-MM-DD) #{Approval link}
+- [ ] Tech Lead: @username (YYYY-MM-DD) #{Approval link}
+- [ ] Security Reviewer: @username (YYYY-MM-DD) [if required] #{Approval link}
+- [ ] Architecture Reviewer: @username (YYYY-MM-DD) [if required] #{Approval link}
+- [ ] QA Reviewer: @username (YYYY-MM-DD) [if required] #{Approval link}
+
+**Status:** `Draft` → `Approved v1` (when all approvals received)
+**Approved Date:** YYYY-MM-DD
+Ready to move to implementation.
+
+### Amendment #N Approval (if applicable)
+
+- [ ] Product Owner: @username (YYYY-MM-DD) #{Approval link}
+- [ ] Tech Lead: @username (YYYY-MM-DD) #{Approval link}
+- [ ] {Specialist} Reviewer: @username (YYYY-MM-DD) [if required] #{Approval link}
+
+**Status:** `Draft` → `Approved v1.N` (when all approvals received)
+**Approved Date:** YYYY-MM-DD
+Ready to move to implementation.
+
+---
+
 ## Summary
 
-Brief 2-3 sentence summary of what this feature does and why it's needed.
+Brief 2–3 sentence summary of what this feature does and why it's necessary.
 
 ## Issue Context
 
@@ -56,8 +90,29 @@ Brief 2-3 sentence summary of what this feature does and why it's needed.
 - **Performance:** Response time < Xms, throughput > Y req/s
 - **Scalability:** Handle X concurrent users
 - **Reliability:** X% uptime, X retries on failure
-- **Security:** Authentication, authorization, encryption requirements
+- **Security:** Authentication, authorisation, encryption requirements
 - **Compatibility:** Cross-platform (Windows/macOS/Linux), .NET 10
+- **Documentation:** Complete and up to date
+- **Stability:** No regressions in existing functionality
+- **Versioning:** Appropriate Semantic versioning for Components and Contracts
+
+## Success Criteria
+
+**Definition of Done for this feature:**
+
+- [ ] All sub-issues are completed and merged
+- [ ] All acceptance criteria are met and verified
+- [ ] All tests passing (unit, integration, system, E2E)
+- [ ] Test coverage meets the target (85% line, 78% branch)
+- [ ] Documentation complete (XML docs, README, guides)
+- [ ] Security review completed with no blockers
+- [ ] Performance requirements met
+- [ ] Feature flags enabled (Strategy A) OR feature branch merged (Strategy B)
+- [ ] Monitoring shows stability (24h observation)
+- [ ] No regressions in existing functionality
+- [ ] ADRs updated to Accepted
+- [ ] Design plan archived
+- [ ] Feature flag removal tickets created (if Strategy A)
 
 ## Architecture Approach
 
@@ -127,7 +182,7 @@ Brief 2-3 sentence summary of what this feature does and why it's needed.
 
 ### System Tests (BDD)
 
-**Scope:** Behavior changes visible to users
+**Scope:** Behaviour changes visible to users
 
 **Key Scenarios (Gherkin):**
 
@@ -184,7 +239,7 @@ Scenario: User performs action
 
 - [ ] Input validation on all boundaries
 - [ ] No hardcoded secrets (use configuration/KeyVault)
-- [ ] Authentication and authorization implemented
+- [ ] Authentication and authorisation implemented
 - [ ] Error messages don't leak sensitive information
 - [ ] Secure communication (HTTPS, TLS)
 - [ ] Process spawning is safe (if applicable)
@@ -193,7 +248,7 @@ Scenario: User performs action
 
 ## Breaking Changes
 
-### Behavioral Changes
+### Behavioural Changes
 
 **Change 1:** Description
 
@@ -219,7 +274,7 @@ Scenario: User performs action
 - **Breaking:** Yes/No
 - **Versioning:** How we handle both versions
 
-## Expected Artifacts
+## Expected Artefacts
 
 ### New Documentation
 
@@ -230,7 +285,7 @@ Scenario: User performs action
 
 ### Documentation Changes
 
-- [ ] Update existing README section: {Section}
+- [ ] Update the existing README section: {Section}
 - [ ] Update ADR-XXXX: {ADR name}
 - [ ] Update `docs/guides/{guide-name}.md`
 
@@ -248,11 +303,13 @@ Scenario: User performs action
 
 **Deployment:** Standard merge to main, deploy to production
 
-### For Epics - Choose One:
+### For Epics – Choose One:
 
 #### Strategy A: Feature Flags (Preferred)
 
 **Feature Flags:**
+
+**CRITICAL**: No breaking changes or behaviour changes are allowed in this strategy while feature flags are disabled.
 
 | Flag Name                   | Sub-Issue | Purpose                                | Default State |
 | --------------------------- | --------- | -------------------------------------- | ------------- |
@@ -267,7 +324,7 @@ Scenario: User performs action
 
 **Enablement Plan:**
 
-1. All sub-issues merge to main with flags disabled
+1. All sub-issues merge to the main with flags disabled
 2. Test each sub-feature independently by enabling its flag
 3. When all sub-issues complete, enable parent flag
 4. Monitor for 24 hours
@@ -275,8 +332,8 @@ Scenario: User performs action
 
 **Flag Removal:**
 
-- **Target:** 2 releases after enablement
-- **Ticket:** Create follow-up issue for flag removal
+- **Target:** two releases after enablement
+- **Ticket:** Create a follow-up issue for flag removal
 
 **Base Branch:** All sub-issues branch from `main`
 
@@ -288,7 +345,7 @@ Scenario: User performs action
 
 1. Create feature branch from `main`
 2. Keep feature branch rebased with `main` (epic owner responsibility)
-3. All sub-issues branch from feature branch
+3. All sub-issues branch from the feature branch
 4. Sub-issues merge to feature branch
 5. Final epic PR merges feature branch → `main`
 
@@ -300,23 +357,31 @@ Scenario: User performs action
 - Sub-features tightly coupled
 - Breaking changes require all-or-nothing deployment
 
-## Work Breakdown (For Epics)
+## Work Breakdown
+
+### Strategy & Granularity
+
+- **For Epics:** Provide a high-level breakdown at the component/deliverable unit level. Capture the epic's requirements
+  and deliverables into the sub-tickets listed below. Explain how the sub-tickets interrelate and which skill sets should
+  be involved in each.
+- **For Sub-issues/Single Ticket Features:** Provide a detailed plan with a task breakdown. Each task should be small enough (1–4 hours) to be
+  completed by a single person or role.
 
 ### Sub-Issues
 
-| Sub-Issue | Title   | Description       | Dependencies | Estimate |
-| --------- | ------- | ----------------- | ------------ | -------- |
-| #XXX      | {Title} | Brief description | None         | X days   |
-| #XXX      | {Title} | Brief description | #YYY         | X days   |
-| #XXX      | {Title} | Brief description | #YYY, #ZZZ   | X days   |
+| Sub-Issue      | Title   | Description       | Skillsets Required | Dependencies | Estimate |
+| -------------- | ------- | ----------------- | ------------------ | ------------ | -------- |
+| [#XXX]({Link}) | {Title} | Brief description | e.g. skill:dotnet  | None         | X days   |
+| [#XXX]({Link}) | {Title} | Brief description | e.g. skill:testing | #YYY         | X days   |
 
-### Sub-Issue Links
+All sub-issues must link back to this ticket and the design plan with an immutable URL.
 
-- [ ] #XXX - {Sub-issue 1 title}
-- [ ] #XXX - {Sub-issue 2 title}
-- [ ] #XXX - {Sub-issue 3 title}
+### Task Breakdown
 
-All sub-issues must link back to this design plan with immutable URL.
+| Task | Description | Role/Skillset | Estimate |
+| ---- | ----------- | ------------- | -------- |
+| 1    | {Task name} | e.g. DotNet   | 2h       |
+| 2    | {Task name} | e.g. QA       | 1h       |
 
 ## Risks and Mitigations
 
@@ -337,61 +402,6 @@ All sub-issues must link back to this design plan with immutable URL.
 - **Service/Library 1:** What we need externally
 - **Service/Library 2:** Another external dependency
 
-## Timeline
-
-**Estimated Duration:** X weeks/sprints
-
-**Milestones:**
-
-- Refinement complete: YYYY-MM-DD
-- Sub-issue 1 complete: YYYY-MM-DD
-- Sub-issue 2 complete: YYYY-MM-DD
-- Feature complete: YYYY-MM-DD
-- Production deployment: YYYY-MM-DD
-
-## Version History
-
-| Version | Date       | Changes        | Discussion | Approved By   | Follow-up Issues |
-| ------- | ---------- | -------------- | ---------- | ------------- | ---------------- |
-| v1      | YYYY-MM-DD | Initial design | #{issue}   | Tech Lead, PO | -                |
-
-**Note:** Amendments during implementation are appended here with new version numbers (v1.1, v1.2, etc.)
-
-### Amendment Process
-
-When implementation deviates from design or scope changes:
-
-1. Append amendment to version history table
-2. Update relevant sections below
-3. Link to PR comment or issue discussion
-4. Get Tech Lead approval
-5. Update immutable links in sub-issues if needed
-
-## Follow-up Issues
-
-Issues created during implementation/review for future work:
-
-| Issue      | Title | Reason | Target Release | Status |
-| ---------- | ----- | ------ | -------------- | ------ |
-| (none yet) | -     | -      | -              | -      |
-
-**Note:** All follow-up issues should link back to this design plan and parent epic.
-
-### When to Create Follow-ups
-
-- Performance optimizations (if current performance acceptable)
-- Additional test scenarios (if coverage adequate)
-- Documentation improvements (if basics complete)
-- Future enhancements identified during implementation
-- Refactoring opportunities (if code acceptable)
-
-### Not Acceptable for Follow-up
-
-- Blockers (security, bugs, violations) - must fix in current PR
-- Missing acceptance criteria - must complete now
-- Broken tests - must fix now
-- Missing required documentation - must add now
-
 ## Implementation Notes
 
 ### For Developers
@@ -411,34 +421,100 @@ What to focus on during code review:
 - Security-sensitive code
 - Complex logic that needs careful review
 
-## Success Criteria
+---
 
-**Definition of Done for this feature:**
+## Follow-up Issues
 
-- [ ] All sub-issues completed and merged
-- [ ] All acceptance criteria met and verified
-- [ ] All tests passing (unit, integration, system, E2E)
-- [ ] Test coverage meets target (85% line, 78% branch)
-- [ ] Documentation complete (XML docs, README, guides)
-- [ ] Security review completed with no blockers
-- [ ] Performance requirements met
-- [ ] Feature flags enabled (Strategy A) OR feature branch merged (Strategy B)
-- [ ] Monitoring shows stability (24h observation)
-- [ ] No regressions in existing functionality
-- [ ] ADRs updated to Accepted
-- [ ] Design plan archived
-- [ ] Feature flag removal tickets created (if Strategy A)
+Issues created during implementation/review for future work:
 
-## Approval
+| Issue      | Title | Reason | Target Release | Status |
+| ---------- | ----- | ------ | -------------- | ------ |
+| (none yet) | -     | -      | -              | -      |
 
-**Design Approved By:**
+**Note:** All follow-up issues should link back to this design plan and parent epic.
 
-- [ ] Product Owner: @username (YYYY-MM-DD)
-- [ ] Tech Lead: @username (YYYY-MM-DD)
-- [ ] Security Reviewer: @username (YYYY-MM-DD) [if required]
+### When to Create Follow-ups
 
-**Status:** `Draft` → `Approved v1` (when all approvals received)
+- Performance optimisations (if current performance is acceptable)
+- Additional test scenarios (if coverage adequate)
+- Documentation improvements (if basics are complete)
+- Future enhancements identified during implementation
+- Refactoring opportunities (if code acceptable)
 
-**Approved Date:** YYYY-MM-DD
+### Not Acceptable for Follow-up
 
-Ready to move to implementation.
+- Blockers (security, bugs, violations) – must fix in current PR
+- Missing acceptance criteria – must be complete now
+- Broken tests must be fixed now
+- Missing required documentation – must add now
+
+### Amendment Process
+
+When implementation deviates from design or scope changes:
+
+1. Append amendment to the version history table and Approvals header
+2. Append "Amendment #N" Section to the end of the design plan
+3. Add update details to relevant sections within the amendment section (diff from original details)
+4. Link to PR comment or issue discussion
+5. Get Tech Lead approval (Approval link)
+6. Get Product Owner approval (Approval link) (if applicable/change in scope/functionality)
+7. Add updated immutable links in sub-issues if needed
+
+---
+
+## Retrospective
+
+After implementation has been approved and verified
+
+**Completed:** YYYY-MM-DD
+**Participants:** @participant1, @participant2, @participant3
+
+### What Went Well
+
+- Success 1: Description of what worked well
+- Success 2: Another positive outcome
+- Success 3: Process or technical win
+
+### What Could Be Improved
+
+- Challenge 1: What didn't go as planned
+  - **Root Cause:** Why it happened
+  - **Impact:** How it affected the project
+- Challenge 2: Another area for improvement
+  - **Root Cause:** Why it happened
+  - **Impact:** How it affected the project
+
+### Action Items
+
+| Action                                      | Owner     | Target Date | Status      |
+| ------------------------------------------- | --------- | ----------- | ----------- |
+| Action item 1 to improve future work (link) | @username | YYYY-MM-DD  | Open/Closed |
+| Action item 2 to improve future work (link) | @username | YYYY-MM-DD  | Open/Closed |
+
+### Metrics
+
+**Planned vs Actual:**
+
+- **Estimated Effort:** X days/weeks
+- **Actual Effort:** Y days/weeks
+- **Variance:** +/- Z days/weeks
+
+**Quality Metrics:**
+
+- **Test Coverage Achieved:** X% line, Y% branch
+- **Bugs Found Post-Release:** X (P0: Y, P1: Z)
+- **Rework Required:** X% of total effort
+
+**Deployment Metrics:**
+
+- **Time to Production:** X days from approval
+- **Rollback Required:** Yes/No
+- **Monitoring Alerts:** X incidents in first 24h
+
+### Lessons Learned
+
+Key takeaways for future similar work:
+
+1. **Technical:** Specific technical lesson
+2. **Process:** Specific process lesson
+3. **Communication:** Specific communication lesson

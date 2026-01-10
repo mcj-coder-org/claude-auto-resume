@@ -884,9 +884,9 @@ Establishes security scanning and compliance standards for the repository (Phase
 
 ## ADRs Implemented
 
-- [ADR-0005: Security Scanning](docs/adr/0005-security-scanning.md)
-- [ADR-0006: Accessibility](docs/adr/0006-accessibility.md)
-- [ADR-0007: Telemetry](docs/adr/0007-telemetry.md)
+- [ADR-0005: Security Scanning](../adr/0005-security-scanning.md)
+- [ADR-0006: Accessibility](../adr/0006-accessibility.md)
+- [ADR-0007: Telemetry](../adr/0007-telemetry.md)
 
 ## Test Plan
 

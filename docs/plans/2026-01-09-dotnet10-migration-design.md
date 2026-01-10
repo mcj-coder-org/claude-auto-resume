@@ -493,7 +493,7 @@ summary: C# conventions, naming rules, and style guidelines for the project
 audience: [developer, agent]
 topics: [csharp, conventions, code-style]
 prerequisites: [docs/getting-started/development-environment.md]
-related: [docs/practices/code-review.md, docs/standards/testing.md]
+related: [docs/practices/code-review.md, docs/standards/coding/testing-examples.md]
 last_validated: 2026-01-09
 ---
 ```

@@ -91,7 +91,16 @@ How issues move through the development workflow from creation to completion.
 **Work Breakdown:**
 
 - **Single ticket:** Move to Ready when design approved
-- **Epic:** Create sub-issues with links to parent and immutable link to design plan
+- **Epic:**
+  - Create high-level plan at component/deliverable unit level.
+  - Capture epic requirements and deliverables into sub-tickets.
+  - Define how sub-tickets interrelate (dependencies, data flow).
+  - Identify required skillsets for each sub-ticket.
+  - Move to Ready when high-level plan approved and all sub-issues created.
+- **Sub-issue:**
+  - Create detailed plan with task breakdown.
+  - Each task must be small (1-4 hours) and completable by a single person/role.
+  - Move to Ready when detailed plan approved and all criteria met.
 
 **Deployment Strategy (for epics):**
 

@@ -1,7 +1,10 @@
 ---
 title: Performance Examples
 summary: Detailed examples for avoiding allocations and optimising hot paths
+audience: [developer, agent]
+topics: [performance, optimization, csharp]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Performance Examples

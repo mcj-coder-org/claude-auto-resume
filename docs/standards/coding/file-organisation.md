@@ -1,7 +1,10 @@
 ---
 title: File Organisation Examples
 summary: Detailed examples for C# file structure and member ordering
+audience: [developer, agent]
+topics: [csharp, file-structure, conventions]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # File Organisation Examples

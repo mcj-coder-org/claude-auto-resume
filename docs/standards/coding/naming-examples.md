@@ -1,7 +1,10 @@
 ---
 title: Naming Convention Examples
 summary: Detailed examples and anti-patterns for C# naming conventions
+audience: [developer, agent]
+topics: [csharp, naming, conventions]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Naming Convention Examples

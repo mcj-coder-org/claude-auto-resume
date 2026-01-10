@@ -1,7 +1,10 @@
 ---
 title: Security Examples
 summary: Detailed examples for input validation, process spawning, and secret handling
+audience: [developer, agent]
+topics: [security, validation, owasp]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Security Examples

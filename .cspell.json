@@ -154,7 +154,8 @@
     "armor",
     "gnupg",
     "gpgconf",
-    "glab"
+    "glab",
+    "adrs"
   ],
   "flagWords": [],
   "allowCompoundWords": true,

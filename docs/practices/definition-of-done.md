@@ -17,7 +17,7 @@ additional requirements for epics.
 
 - [ ] **Implementation complete** - All acceptance criteria met
 - [ ] **Code reviewed** - PR approved by at least one reviewer
-- [ ] **All conversations resolved** - Reviewer resolved all inline comment threads
+- [ ] **All conversations resolved** - Reviewer (not author) resolved all inline comment threads
 - [ ] **No analyzer warnings** - Build passes with zero warnings
 - [ ] **Follows coding standards** - Per `docs/standards/coding-standards.md`
 

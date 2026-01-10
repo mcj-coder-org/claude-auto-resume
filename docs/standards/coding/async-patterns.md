@@ -1,7 +1,10 @@
 ---
 title: Async Programming Patterns
 summary: Detailed examples for async/await, CancellationToken, and ValueTask usage
+audience: [developer, agent]
+topics: [async, csharp, patterns]
 parent: ../coding-standards.md
+last_validated: 2026-01-10
 ---
 
 # Async Programming Patterns
@@ -40,11 +43,38 @@ public async Task ProcessAsync(CancellationToken ct = default)
 }
 ```
 
-## ConfigureAwait in Library Code
+## ConfigureAwait Usage
+
+### Library Code (ConfigureAwait(false))
 
 ```csharp
-// In non-UI library code
+// In non-UI library code - avoids deadlocks and improves performance
 var result = await httpClient.GetAsync(url, ct).ConfigureAwait(false);
+```
+
+### Special Cases (ConfigureAwait(true))
+
+Use `ConfigureAwait(true)` (or omit ConfigureAwait) in these scenarios:
+
+```csharp
+// Durable Function Orchestrations - must preserve context for replay
+[Function("ProcessWorkflow")]
+public async Task<string> RunOrchestrator(
+    [OrchestrationTrigger] TaskOrchestrationContext context)
+{
+    // Do NOT use ConfigureAwait(false) in orchestrations
+    var result = await context.CallActivityAsync<string>("Step1", input);
+    return result;
+}
+
+// Test code - preserve context for assertions and test framework
+[Fact]
+public async Task Should_return_valid_response()
+{
+    // Omit ConfigureAwait in tests - context preservation aids debugging
+    var result = await _sut.ProcessAsync(CancellationToken.None);
+    result.Should().NotBeNull();
+}
 ```
 
 ## Never Block on Async

@@ -28,6 +28,10 @@ phase before moving to Ready state.
   - Format: `https://github.com/org/repo/blob/{commit-sha}/docs/plans/{issue#}-{name}-design-plan.md`
   - Status must be `Approved v1` or higher
   - Design plan must be on feature branch, committed and pushed
+  - **For Epics:** Plan must be a high-level breakdown at component/deliverable unit level,
+    capturing requirements into sub-tickets, how they interrelate, and required skillsets.
+  - **For Sub-issues:** Plan must be a detailed breakdown into tasks (1-4 hours each) manageable
+    by a single person/role.
 - [ ] **No blockers** - Dependencies resolved or clearly documented
 - [ ] **Appropriately sized** - Can be completed in a single PR
 - [ ] **Priority assigned** - Scrum Master has set priority label (`priority:critical`, `priority:high`,
