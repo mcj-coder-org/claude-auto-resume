@@ -146,7 +146,15 @@
     "Diagnoser",
     "snupkg",
     "defense",
-    "analyzes"
+    "analyzes",
+    "behavioral",
+    "labeled",
+    "repro",
+    "keyid",
+    "armor",
+    "gnupg",
+    "gpgconf",
+    "glab"
   ],
   "flagWords": [],
   "allowCompoundWords": true,

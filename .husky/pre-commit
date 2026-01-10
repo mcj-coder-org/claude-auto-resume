@@ -13,12 +13,83 @@ if [ ! -d "node_modules" ]; then
   exit 1
 fi
 
-# Block commits directly to main
-branch="$(git rev-parse --abbrev-ref HEAD)"
-if [ "$branch" = "main" ]; then
-  echo "Direct commits to main are not allowed."
-  echo "Create a feature branch and open a PR instead."
+# Prevent direct commits to main branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "$BRANCH" = "main" ]; then
+  echo "❌ ERROR: Direct commits to main are not allowed"
+  echo "📋 Required workflow:"
+  echo "   1. Create feature branch: git checkout -b feat/issue-N-description"
+  echo "   2. Commit changes to feature branch"
+  echo "   3. Push feature branch: git push -u origin feat/issue-N-description"
+  echo "   4. Create PR: gh pr create"
+  echo "   5. Merge PR after review"
+  echo ""
+  echo "ℹ️  To commit to main (emergency only), use: git commit --no-verify"
   exit 1
+fi
+
+# Require GPG commit signing to be configured
+if [ "$(git config --get commit.gpgsign)" != "true" ]; then
+  echo ""
+  echo "❌ ERROR: GPG commit signing is not enabled"
+  echo "   All commits must be cryptographically signed."
+  echo ""
+  echo "   To enable signed commits:"
+  echo "   1. Follow the setup guide: docs/playbooks/enable-signed-commits.md"
+  echo "   2. Configure git: git config --global commit.gpgsign true"
+  echo "   3. Ensure your GPG key is added to GitHub"
+  echo ""
+  echo "ℹ️  To bypass (not recommended): git commit --no-verify"
+  exit 1
+fi
+
+# Validate signing key email matches Git user.email
+# This prevents "Unverified" commits on GitHub due to email/key mismatch
+SIGNING_KEY=$(git config --get user.signingkey)
+GIT_EMAIL=$(git config --get user.email)
+
+if [ -n "$SIGNING_KEY" ] && [ -n "$GIT_EMAIL" ]; then
+  # Get the email associated with the signing key
+  # DO-C3: Use timeout to prevent hanging if GPG agent is unresponsive
+  if command -v timeout &>/dev/null; then
+    KEY_EMAIL=$(timeout 10s gpg --list-keys --with-colons "$SIGNING_KEY" 2>/dev/null | grep '^uid:' | head -1 | cut -d: -f10 | sed -n 's/.*<\([^>]*\)>.*/\1/p')
+    GPG_EXIT=$?
+    if [ $GPG_EXIT -eq 124 ]; then
+      echo ""
+      echo "❌ ERROR: GPG operation timed out after 10 seconds"
+      echo "   The GPG agent may be unresponsive or locked."
+      echo ""
+      echo "   To fix:"
+      echo "   1. Restart GPG agent: gpgconf --kill gpg-agent"
+      echo "   2. Ensure GPG agent is running: gpg-connect-agent /bye"
+      echo ""
+      echo "ℹ️  To bypass (not recommended): git commit --no-verify"
+      exit 1
+    fi
+  else
+    # Fallback for systems without timeout command (macOS without coreutils)
+    KEY_EMAIL=$(gpg --list-keys --with-colons "$SIGNING_KEY" 2>/dev/null | grep '^uid:' | head -1 | cut -d: -f10 | sed -n 's/.*<\([^>]*\)>.*/\1/p')
+  fi
+
+  if [ -n "$KEY_EMAIL" ] && [ "$KEY_EMAIL" != "$GIT_EMAIL" ]; then
+    echo ""
+    echo "❌ ERROR: Git email does not match GPG signing key email"
+    echo ""
+    echo "   Git user.email:     $GIT_EMAIL"
+    echo "   Signing key email:  $KEY_EMAIL"
+    echo ""
+    echo "   This would cause 'Unverified' commits on GitHub."
+    echo ""
+    echo "   To fix, either:"
+    echo "   1. Update Git email: git config user.email '$KEY_EMAIL'"
+    echo "   2. Use a different signing key that matches your email"
+    echo "   3. Add $GIT_EMAIL as a UID to your GPG key"
+    echo ""
+    echo "   See: docs/playbooks/enable-signed-commits.md"
+    echo ""
+    echo "ℹ️  To bypass (not recommended): git commit --no-verify"
+    exit 1
+  fi
 fi
 
 # Format and lint staged files

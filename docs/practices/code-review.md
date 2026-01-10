@@ -94,6 +94,7 @@ Code review serves multiple purposes:
 - [ ] Uses appropriate abstractions
 - [ ] No unnecessary complexity
 - [ ] DRY - no duplicated logic
+- [ ] YAGNI - no additional features added
 - [ ] Single Responsibility - classes/methods do one thing
 - [ ] Meaningful names for variables, methods, classes
 - [ ] No dead code or commented-out code
@@ -103,19 +104,21 @@ Code review serves multiple purposes:
 **Is the code adequately tested?**
 
 - [ ] New code has corresponding tests
+- [ ] New Tests have been executed by reviewer (or CI)
 - [ ] Tests cover happy path and edge cases
 - [ ] Tests are meaningful (not just for coverage)
 - [ ] Test names describe what's being tested
 - [ ] No flaky tests introduced
-- [ ] BDD scenarios updated if behaviour changed
+- [ ] BDD scenarios updated if behaviour change is in scope of expected feature
 
 ### Documentation
 
 **Is the code properly documented?**
 
 - [ ] Public APIs have XML documentation
+- [ ] API's have documented Open API contracts (with examples)
 - [ ] Complex logic has explanatory comments
-- [ ] README updated if needed
+- [ ] README (or relevant in-repo documents) updated if needed
 - [ ] No misleading or outdated comments
 
 ### Performance
@@ -144,6 +147,76 @@ Code review serves multiple purposes:
 - [ ] Cross-platform considerations (Windows/macOS/Linux)
 - [ ] No breaking changes to public API (or properly documented)
 - [ ] Backwards compatible where expected
+
+## Comment Format
+
+### Inline Comments (Preferred)
+
+**Use file/line-based comments for code-specific feedback:**
+
+- Post comments on specific files and lines using GitHub's inline comment feature
+- Start conversation threads on relevant code
+- Tag with comment type prefix (blocker, issue, etc.)
+- Keep discussion focused on the specific code location
+
+**Example Inline Comment (File: `src/Core/RateLimitDetector.cs`, Line 45):**
+
+```csharp
+blocker: This can throw NullReferenceException if `response` is null.
+Add a null check or use null-conditional operator: `response?.Headers`
+```
+
+### PR-Level Comments
+
+**Use general PR comments only for:**
+
+- Overall architecture feedback
+- Cross-cutting concerns
+- High-level summary
+- Process feedback
+- Review summary (after inline comments posted)
+
+### Conversation Resolution
+
+#### Critical Rule: Reviewer resolves conversations, not author
+
+**Conversation Flow:**
+
+1. **Reviewer opens conversation** (inline on specific line)
+2. **Author responds** in the conversation thread:
+   - Explains what was changed
+   - Links to commit with fix
+   - Asks for clarification if needed
+3. **Reviewer verifies and resolves** the conversation when satisfied
+4. **Author does NOT resolve conversations** (even after fixing)
+
+**Example Conversation:**
+
+**Reviewer (Line 45):**
+
+```text
+blocker: Missing null check for `response` parameter
+```
+
+**Author response:**
+
+```text
+✅ Fixed in commit abc123f
+
+Added null guard clause:
+if (response == null) throw new ArgumentNullException(nameof(response));
+
+Also added unit test: `Detect_WhenResponseIsNull_ThrowsArgumentNullException`
+```
+
+**Reviewer verifies and resolves:**
+
+```text
+Verified in abc123f. Looks good! ✓
+[Resolves conversation]
+```
+
+**All conversations must be resolved before merge** (enforced by branch protection)
 
 ## Comment Types
 
