@@ -38,62 +38,57 @@ resumes Claude CLI sessions when rate limits are hit.
 
 After reading this file completely, read `docs/agents/ORIENTATION.md` for detailed project context.
 
-## Documentation Loading Rules
+---
 
-### Always Read (Full Content)
+## Document Index
 
-These documents must be read in full before starting work:
+### First Read (Full Content)
 
-- `AGENTS.md` (this file)
-- `docs/agents/ORIENTATION.md` - Project overview and architecture
-- `docs/agents/CONVENTIONS.md` - Coding and commit conventions
+Read these documents in full before starting any work:
 
-### Read Front-Matter First, Full Content On-Demand
+| Document                     | Purpose                               |
+| ---------------------------- | ------------------------------------- |
+| `AGENTS.md`                  | This file - routing and loading rules |
+| `docs/agents/ORIENTATION.md` | Project overview and architecture     |
+| `docs/agents/CONVENTIONS.md` | Coding and commit conventions         |
 
-For these documents, read the YAML front-matter to determine relevance, then load full content as needed:
+### Read When Relevant
 
-- `docs/standards/*` - Coding standards and guidelines
-- `docs/practices/*` - Workflows and processes
-- `docs/adr/*` - Architecture Decision Records
+Load frontmatter first, full content when the task requires it:
 
-### Reference Only When Needed
+| Document                                   | When to Read                                 |
+| ------------------------------------------ | -------------------------------------------- |
+| `docs/practices/collaboration-patterns.md` | Starting any task - understand working modes |
+| `docs/standards/roles.md`                  | Need specialised review or implementation    |
+| `docs/practices/code-review.md`            | Reviewing or submitting PRs                  |
+| `docs/standards/coding-standards.md`       | Writing or reviewing code                    |
+| `docs/playbooks/troubleshooting.md`        | Encountering errors or issues                |
+| `docs/agents/IDE-SETUP.md`                 | Configuring IDE for agent use                |
+| `docs/adr/*`                               | Understanding architectural decisions        |
 
-Load these documents only when specifically relevant to your task:
+### Reference Only
 
-- `docs/playbooks/*` - Specific procedures and runbooks
-- `CHANGELOG.md` - Version history (created at first release)
+Load only when specifically needed:
 
-## Usage Patterns
+| Document                                  | When to Read                               |
+| ----------------------------------------- | ------------------------------------------ |
+| `docs/playbooks/troubleshooting/*`        | Specific issue categories                  |
+| `docs/practices/collaboration-patterns/*` | Deep dive into specific patterns           |
+| `docs/standards/roles/*`                  | Individual role details                    |
+| `CHANGELOG.md`                            | Version history (created at first release) |
 
-See `docs/agents/PATTERNS.md` for detailed guidance on:
+---
 
-| Pattern                 | When to Use                          |
-| ----------------------- | ------------------------------------ |
-| Planning & Requirements | Designing features, writing ADRs     |
-| Pair Programming        | Real-time collaboration in IDE       |
-| Verification & Review   | Code review, security audit, testing |
-| Autonomous Execution    | Implementing well-defined tickets    |
+## Collaboration Patterns
 
-## IDE Integration
+See `docs/practices/collaboration-patterns.md` for detailed guidance:
 
-See `docs/agents/IDE-SETUP.md` for configuration guidance:
-
-| IDE             | Primary Agent | Setup Guide        |
-| --------------- | ------------- | ------------------ |
-| VS Code         | Claude Code   | Terminal + Copilot |
-| JetBrains Rider | Junie         | AI Assistant       |
-| Visual Studio   | Codex/Copilot | Copilot Chat       |
-
-## Common Tasks
-
-| Task                    | Start Here                                             |
-| ----------------------- | ------------------------------------------------------ |
-| Implement feature       | ADR-0004, `docs/standards/coding-standards.md`         |
-| Review code             | `docs/practices/code-review.md`                        |
-| Fix bug                 | `docs/agents/TROUBLESHOOTING.md`                       |
-| Write tests             | `docs/standards/coding-standards.md` (Testing section) |
-| Plan work               | `docs/agents/PATTERNS.md` (Planning section)           |
-| Understand architecture | `docs/agents/ORIENTATION.md`, `docs/adr/`              |
+| Pattern                                                                               | When to Use                          |
+| ------------------------------------------------------------------------------------- | ------------------------------------ |
+| [Planning & Requirements](docs/practices/collaboration-patterns/planning.md)          | Designing features, writing ADRs     |
+| [Pair Programming](docs/practices/collaboration-patterns/pair-programming.md)         | Real-time collaboration in IDE       |
+| [Verification & Review](docs/practices/collaboration-patterns/verification-review.md) | Code review, security audit, testing |
+| [Autonomous Execution](docs/practices/collaboration-patterns/autonomous-execution.md) | Implementing well-defined tickets    |
 
 ## Roles
 
@@ -110,6 +105,31 @@ For specialised tasks, use focused roles defined in `docs/standards/roles.md`:
 
 See `docs/standards/roles.md` for the full list of 16 roles and selection guidance.
 
+## IDE Integration
+
+See `docs/agents/IDE-SETUP.md` for configuration guidance:
+
+| IDE             | Primary Agent | Setup Guide        |
+| --------------- | ------------- | ------------------ |
+| VS Code         | Claude Code   | Terminal + Copilot |
+| JetBrains Rider | Junie         | AI Assistant       |
+| Visual Studio   | Codex/Copilot | Copilot Chat       |
+
+---
+
+## Common Tasks
+
+| Task                    | Start Here                                             |
+| ----------------------- | ------------------------------------------------------ |
+| Implement feature       | ADR-0004, `docs/standards/coding-standards.md`         |
+| Review code             | `docs/practices/code-review.md`                        |
+| Fix bug                 | `docs/playbooks/troubleshooting.md`                    |
+| Write tests             | `docs/standards/coding-standards.md` (Testing section) |
+| Plan work               | `docs/practices/collaboration-patterns/planning.md`    |
+| Understand architecture | `docs/agents/ORIENTATION.md`, `docs/adr/`              |
+
+---
+
 ## Project Structure
 
 ```text
@@ -123,10 +143,10 @@ McjCoderOrg.ClaudeAutoResume/
 │   ├── McjCoderOrg.ClaudeAutoResume.ArchTests/   # Architecture tests
 │   └── McjCoderOrg.ClaudeAutoResume.Benchmarks/  # Performance tests
 ├── docs/
-│   ├── standards/    # Coding conventions
-│   ├── practices/    # Workflows, processes
-│   ├── playbooks/    # Runbooks
-│   ├── agents/       # Agent guidance (you are here)
+│   ├── standards/    # Coding conventions, roles
+│   ├── practices/    # Workflows, collaboration patterns
+│   ├── playbooks/    # Runbooks, troubleshooting
+│   ├── agents/       # Agent-specific guidance
 │   ├── adr/          # Architecture decisions
 │   └── plans/        # Design documents
 ├── .github/          # CI/CD, templates
@@ -144,16 +164,14 @@ McjCoderOrg.ClaudeAutoResume/
 
 See ADR-0004 for complete contribution workflow.
 
-## Documentation Standards
-
-When creating or updating documentation, follow these principles:
+---
 
 ## Progressive Document Loading
 
 Agents SHOULD load document frontmatter first, then full content only when needed. This
 reduces context consumption and improves selection accuracy.
 
-### Progressive Loading Principle
+### Loading Principle
 
 **Load frontmatter first, full content when relevant.** Frontmatter contains summary fields
 sufficient for selection and applicability decisions. Only load full document body when
@@ -165,66 +183,33 @@ execution or detailed rationale is required.
 | ------------- | --------------------- | ---------------------------- |
 | Roles         | `name`, `description` | `model` (for tier selection) |
 | ADRs          | `name`, `description` | `decision`, `status`         |
-| Playbooks     | `name`, `triggers`    | `description`, `summary`     |
-
-For complete field definitions and validation rules, see the respective README files.
-
-### When Frontmatter Suffices
-
-Use frontmatter only when:
-
-- **Selecting** which document applies to current context
-- **Checking applicability** of a role, decision, or playbook
-- **Building lists** of relevant documents for a task
-- **Quick reference** to a decision or trigger condition
-
-### When Full Document Needed
-
-Load the full document body when:
-
-- **Executing** a playbook requires details beyond the summary
-- **Understanding rationale** for why a decision was made
-- **Following step-by-step** procedures with nested steps or decision points
-- **Reviewing alternatives** that were considered (ADRs)
-- **Learning capabilities** of a role beyond its description
+| Playbooks     | `title`, `summary`    | Full procedures              |
+| Patterns      | `title`, `summary`    | Detailed guidance            |
 
 ### Loading Algorithm
 
-1. **Scan frontmatter** of all documents in the relevant directory
-   - Use `Read` tool with `limit: 20` to capture frontmatter block
-   - Frontmatter ends at closing `---` delimiter (typically lines 1-15)
-2. **Filter** by matching triggers, descriptions, or status (for ADRs)
-3. **Select** the most applicable document(s) using conflict resolution rules
-4. **Execute** using summary fields if sufficient
-5. **Load body** only if summary references details not provided
-   - Use `Read` without limit for full document content
+1. **Scan frontmatter** - Use `Read` tool with `limit: 20` to capture frontmatter block
+2. **Filter** - Match by triggers, descriptions, or status
+3. **Select** - Choose most applicable document(s)
+4. **Execute** - Use summary fields if sufficient
+5. **Load body** - Only if details needed beyond summary
 
 ### Writing Style
 
-- **Terse and direct** - No filler words, no verbose explanations
-- **Tables over prose** - Structured data is faster to parse
+- **Terse and direct** - No filler words
+- **Tables over prose** - Structured data
 - **Bullets over paragraphs** - Scannable content
 - **Code over description** - Show, don't tell
 - **Links over duplication** - Reference, don't repeat
 
-### Documentation-Tooling Sync
-
-Standards documented must be enforced by tooling where possible:
-
-| Documentation      | Enforcement                          |
-| ------------------ | ------------------------------------ |
-| Naming conventions | `.editorconfig` naming rules         |
-| Code style         | `.editorconfig` + `dotnet format`    |
-| Member ordering    | StyleCop analyzers (SA1201-SA1214)   |
-| Security patterns  | Analyzer rules (CA2100, S2068, etc.) |
-| Commit format      | commitlint via husky                 |
-| Markdown style     | markdownlint + prettier              |
-
-When adding new standards, update both documentation AND tooling configuration.
+---
 
 ## Getting Help
 
-- **Stuck on process?** Read ADR-0004 (Contribution Workflow)
-- **Code style question?** Read `docs/standards/coding-standards.md`
-- **Test question?** Read `docs/standards/coding-standards.md` (Testing section)
-- **Unknown error?** Read `docs/agents/TROUBLESHOOTING.md`
+| Problem                 | Solution                                                    |
+| ----------------------- | ----------------------------------------------------------- |
+| Stuck on process        | Read ADR-0004 (Contribution Workflow)                       |
+| Code style question     | Read `docs/standards/coding-standards.md`                   |
+| Test question           | Read `docs/standards/coding-standards.md` (Testing section) |
+| Unknown error           | Read `docs/playbooks/troubleshooting.md`                    |
+| Need specialised review | Read `docs/standards/roles.md`                              |

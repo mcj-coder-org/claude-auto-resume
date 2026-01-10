@@ -384,9 +384,9 @@ Read this file completely, then read docs/agents/ORIENTATION.md
 - docs/playbooks/\* (specific procedures)
 - CHANGELOG.md (version history)
 
-## Usage Patterns
+## Collaboration Patterns
 
-See docs/agents/PATTERNS.md for:
+See docs/practices/collaboration-patterns.md for:
 
 - Planning & Requirements
 - Pair Programming
@@ -407,21 +407,24 @@ See docs/agents/IDE-SETUP.md for:
 | ----------------- | -------------------------------------------- |
 | Implement feature | ADR-0004, docs/standards/coding-standards.md |
 | Review code       | docs/practices/code-review.md                |
-| Fix bug           | docs/agents/TROUBLESHOOTING.md               |
+| Fix bug           | docs/playbooks/troubleshooting.md            |
 | Write tests       | docs/standards/testing-standards.md          |
-| Plan work         | docs/agents/PATTERNS.md#planning             |
+| Plan work         | docs/practices/collaboration-patterns.md     |
 ```
 
 ### docs/agents/ Contents
 
-| File               | Purpose                                                |
-| ------------------ | ------------------------------------------------------ |
-| ORIENTATION.md     | Project overview, architecture, key decisions          |
-| CONVENTIONS.md     | Coding standards summary, commit format, branch naming |
-| PATTERNS.md        | Detailed usage patterns with examples                  |
-| IDE-SETUP.md       | IDE-specific configuration and tips                    |
-| (Roles moved)      | See docs/standards/roles.md for role definitions       |
-| TROUBLESHOOTING.md | Common issues and solutions                            |
+| File           | Purpose                                                |
+| -------------- | ------------------------------------------------------ |
+| ORIENTATION.md | Project overview, architecture, key decisions          |
+| CONVENTIONS.md | Coding standards summary, commit format, branch naming |
+| IDE-SETUP.md   | IDE-specific configuration and tips                    |
+
+Note: Patterns and troubleshooting moved to dual-audience locations:
+
+- `docs/practices/collaboration-patterns.md` - Working patterns (formerly PATTERNS.md)
+- `docs/playbooks/troubleshooting.md` - Issue resolution (formerly TROUBLESHOOTING.md)
+- `docs/standards/roles.md` - Role definitions (formerly PERSONAS.md)
 
 ### docs/standards/roles.md
 

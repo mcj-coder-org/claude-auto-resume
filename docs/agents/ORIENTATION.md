@@ -267,5 +267,5 @@ Before committing:
 After reading this document:
 
 1. Read `docs/agents/CONVENTIONS.md` for coding and commit conventions
-2. Read `docs/agents/PATTERNS.md` to understand usage patterns
+2. Read `docs/practices/collaboration-patterns.md` to understand working patterns
 3. Consult the relevant ADR for your specific task
