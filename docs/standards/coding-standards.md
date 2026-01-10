@@ -41,7 +41,7 @@ C# coding standards for McjCoderOrg.ClaudeAutoResume. Violations are caught by a
 
 Within groups, order by accessibility: public → internal → protected → private
 
-See [file-organisation.md](coding/file-organisation.md) for examples.
+See [file-organisation.md](coding-standards/file-organisation.md) for examples.
 
 ## Naming Conventions
 
@@ -64,7 +64,7 @@ See [file-organisation.md](coding/file-organisation.md) for examples.
 - Boolean names should be questions: `isEnabled`, `hasValue`, `canRetry`
 - Consistent terminology: `RateLimit` not `ThrottleLimit`
 
-See [naming-examples.md](coding/naming-examples.md) for detailed guidance.
+See [naming-examples.md](coding-standards/naming-examples.md) for detailed guidance.
 
 ## Code Style
 
@@ -82,7 +82,7 @@ See [naming-examples.md](coding/naming-examples.md) for detailed guidance.
 
 **Pattern matching:** Prefer switch expressions, type patterns, property patterns.
 
-See [code-style-examples.md](coding/code-style-examples.md) for examples.
+See [code-style-examples.md](coding-standards/code-style-examples.md) for examples.
 
 ## Asynchronous Programming
 
@@ -94,7 +94,7 @@ See [code-style-examples.md](coding/code-style-examples.md) for examples.
 - Never use `.Result` or `.Wait()`
 - Use `ValueTask<T>` when often completing synchronously
 
-See [async-patterns.md](coding/async-patterns.md) for examples.
+See [async-patterns.md](coding-standards/async-patterns.md) for examples.
 
 ## Error Handling
 
@@ -111,7 +111,7 @@ public void Configure(string path, int retryDelay)
 }
 ```
 
-See [error-handling-examples.md](coding/error-handling-examples.md) for patterns.
+See [error-handling-examples.md](coding-standards/error-handling-examples.md) for patterns.
 
 ## Logging
 
@@ -130,7 +130,7 @@ _logger.LogInformation("Rate limit detected, resets at {ResetTime}", resetTime);
 | `Error`       | Failures requiring attention      |
 | `Critical`    | Application cannot continue       |
 
-See [logging-examples.md](coding/logging-examples.md) for patterns.
+See [logging-examples.md](coding-standards/logging-examples.md) for patterns.
 
 ## Testing
 
@@ -153,7 +153,7 @@ See [logging-examples.md](coding/logging-examples.md) for patterns.
 
 **Coverage target:** 80% line, 70% branch on changed code
 
-See [testing-examples.md](coding/testing-examples.md) for patterns and BDD guidance.
+See [testing-examples.md](coding-standards/testing-examples.md) for patterns and BDD guidance.
 
 ## Documentation
 
@@ -177,7 +177,7 @@ Skip docs for: private members, self-documenting code, test methods, unchanged o
 - Use `Span<T>` for slicing without allocation
 - Use `StringBuilder` for concatenation in loops
 
-See [performance-examples.md](coding/performance-examples.md) for patterns.
+See [performance-examples.md](coding-standards/performance-examples.md) for patterns.
 
 ## Security
 
@@ -186,7 +186,7 @@ See [performance-examples.md](coding/performance-examples.md) for patterns.
 - Never log secrets (apply OWASP Logging Standards)
 - Use `ArgumentList` for process arguments (auto-escapes)
 
-See [security-examples.md](coding/security-examples.md) for examples.
+See [security-examples.md](coding-standards/security-examples.md) for examples.
 
 ## Code Review Checklist
 
