@@ -11,37 +11,37 @@ These rules must be configured manually in GitHub repository settings.
 
 ## Required Settings
 
-| Rule | Setting | Notes |
-|------|---------|-------|
-| **Require a pull request before merging** | Enabled | |
-| └─ Required approving reviews | 1 | At least one approval required |
-| └─ Dismiss stale pull request approvals | Enabled | New commits require re-review |
-| └─ Require review from Code Owners | Enabled | CODEOWNERS must approve |
-| **Require status checks to pass** | Enabled | |
-| └─ Require branches to be up to date | Enabled | Must merge/rebase before merge |
-| └─ Status checks (add when CI is configured): | | |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `lint` | Required | Format, spelling, markdown |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `build` | Required | Multi-platform build |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `test-unit` | Required | Unit tests with coverage |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `test-system` | Required | BDD system tests |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `test-arch` | Required | Architecture tests |
-| &nbsp;&nbsp;&nbsp;&nbsp;• `codeql` | Required | Security analysis |
-| **Require conversation resolution** | Enabled | All review comments resolved |
-| **Require signed commits** | Enabled | GPG or SSH signed commits |
-| **Require linear history** | Enabled | Squash merge only |
-| **Do not allow bypassing** | Enabled | Applies to admins too |
+| Rule                                          | Setting  | Notes                          |
+| --------------------------------------------- | -------- | ------------------------------ |
+| **Require a pull request before merging**     | Enabled  |                                |
+| └─ Required approving reviews                 | 1        | At least one approval required |
+| └─ Dismiss stale pull request approvals       | Enabled  | New commits require re-review  |
+| └─ Require review from Code Owners            | Enabled  | CODEOWNERS must approve        |
+| **Require status checks to pass**             | Enabled  |                                |
+| └─ Require branches to be up to date          | Enabled  | Must merge/rebase before merge |
+| └─ Status checks (add when CI is configured): |          |                                |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `lint`              | Required | Format, spelling, markdown     |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `build`             | Required | Multi-platform build           |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `test-unit`         | Required | Unit tests with coverage       |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `test-system`       | Required | BDD system tests               |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `test-arch`         | Required | Architecture tests             |
+| &nbsp;&nbsp;&nbsp;&nbsp;• `codeql`            | Required | Security analysis              |
+| **Require conversation resolution**           | Enabled  | All review comments resolved   |
+| **Require signed commits**                    | Enabled  | GPG or SSH signed commits      |
+| **Require linear history**                    | Enabled  | Squash merge only              |
+| **Do not allow bypassing**                    | Enabled  | Applies to admins too          |
 
 ## Merge Settings
 
 Configure in **Settings** > **General** > **Pull Requests**:
 
-| Setting | Value |
-|---------|-------|
-| Allow merge commits | Disabled |
-| Allow squash merging | Enabled (default) |
-| Allow rebase merging | Disabled |
-| Default commit message | Pull request title and description |
-| Automatically delete head branches | Enabled |
+| Setting                            | Value                              |
+| ---------------------------------- | ---------------------------------- |
+| Allow merge commits                | Disabled                           |
+| Allow squash merging               | Enabled (default)                  |
+| Allow rebase merging               | Disabled                           |
+| Default commit message             | Pull request title and description |
+| Automatically delete head branches | Enabled                            |
 
 ## Notes
 
