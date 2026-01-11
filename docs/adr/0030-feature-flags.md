@@ -10,7 +10,7 @@ status: accepted
 
 ## Status
 
-Proposed
+Accepted
 
 ## Date
 
