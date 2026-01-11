@@ -219,11 +219,14 @@ N/A
 Tasks and reviews are assigned based on InnerSource roles. See `docs/standards/roles.md`
 for full role definitions.
 
-| InnerSource Role | Task Types                       | PR Actions                      |
-| ---------------- | -------------------------------- | ------------------------------- |
-| **Owner**        | Repo config, process, direction  | Final approval, merge authority |
-| **Maintainer**   | Code review, architecture review | Approve, request changes        |
-| **Contributor**  | Implementation, bug fixes, tests | Submit PRs, address feedback    |
+| InnerSource Role | Task Types                       | PR Actions                       |
+| ---------------- | -------------------------------- | -------------------------------- |
+| **Owner**        | Repo config, process, direction  | Final approval, merge authority  |
+| **Maintainer**   | Code review, architecture review | Approve, request changes         |
+| **Contributor**  | Implementation, bug fixes, tests | **Submit PRs**, address feedback |
+
+**Separation of Duties:** Only Contributor roles may open PRs. Owner and Maintainer roles review
+and approve but do not author PRs. See `docs/standards/roles.md` for full policy.
 
 **Reviewer Assignment by Change Type:**
 
