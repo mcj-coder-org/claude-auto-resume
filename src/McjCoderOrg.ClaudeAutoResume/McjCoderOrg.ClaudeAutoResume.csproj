@@ -21,10 +21,11 @@
     <PackageTags>claude;ai;cli;auto-resume</PackageTags>
   </PropertyGroup>
 
-  <!-- Expose internals to Unit and System tests -->
+  <!-- Expose internals to Unit, System, and Architecture tests -->
   <ItemGroup>
     <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.Tests" />
     <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.SystemTests" />
+    <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.ArchTests" />
   </ItemGroup>
 
   <!-- Public API Analyzer -->
