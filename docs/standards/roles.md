@@ -15,11 +15,32 @@ planning, and validation. Roles map to InnerSource responsibilities for task ass
 
 Roles map to standard InnerSource roles to guide task assignment:
 
-| InnerSource Role | Responsibilities                                | Task Types                                             | PR Actions                      |
-| ---------------- | ----------------------------------------------- | ------------------------------------------------------ | ------------------------------- |
-| **Owner**        | Process, admin, repo config, direction          | Repo settings, branch protection, process docs         | Final approval, merge authority |
-| **Maintainer**   | Review, approve, request changes, quality gates | Code review, architecture review, documentation review | Approve, request changes, block |
-| **Contributor**  | Implement change, write code/tests/docs         | Feature implementation, bug fixes, test creation       | Submit PRs, address feedback    |
+| InnerSource Role | Responsibilities                                | Task Types                                             | PR Actions                       |
+| ---------------- | ----------------------------------------------- | ------------------------------------------------------ | -------------------------------- |
+| **Owner**        | Process, admin, repo config, direction          | Repo settings, branch protection, process docs         | Final approval, merge authority  |
+| **Maintainer**   | Review, approve, request changes, quality gates | Code review, architecture review, documentation review | Approve, request changes, block  |
+| **Contributor**  | Implement change, write code/tests/docs         | Feature implementation, bug fixes, test creation       | **Submit PRs**, address feedback |
+
+### Separation of Duties
+
+**Rule:** Only Contributor roles may open pull requests. Owner and Maintainer roles review and
+approve but do not author PRs.
+
+| Role            | Can Open PR | Can Review PR | Can Merge PR |
+| --------------- | ----------- | ------------- | ------------ |
+| **Owner**       | No          | Yes           | Yes          |
+| **Maintainer**  | No          | Yes           | No           |
+| **Contributor** | Yes         | No            | No           |
+
+**Rationale:**
+
+- Prevents self-approval of changes
+- Ensures independent review of all code
+- Maintains audit trail integrity
+- Aligns with compliance requirements (SOC 2, ISO 27001)
+
+**Exception:** Repository bootstrap or emergency fixes may require Owner to submit PRs, but these
+must be reviewed by another Owner or external reviewer before merge.
 
 ### Task Assignment by InnerSource Role
 
