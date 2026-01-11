@@ -1,0 +1,31 @@
+{
+  "name": "McjCoderOrg.ClaudeAutoResume",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:10.0",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "davidanson.vscode-markdownlint"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[csharp]": {
+          "editor.defaultFormatter": "ms-dotnettools.csharp"
+        },
+        "cSpell.language": "en-GB"
+      }
+    }
+  },
+  "postCreateCommand": "npm install && dotnet restore && dotnet tool restore",
+  "remoteUser": "vscode"
+}
