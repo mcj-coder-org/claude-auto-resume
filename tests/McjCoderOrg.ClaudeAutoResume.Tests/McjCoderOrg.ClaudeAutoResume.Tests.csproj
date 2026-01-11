@@ -19,6 +19,8 @@
     <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Moq.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.InMemory" />
   </ItemGroup>
 
   <ItemGroup>
