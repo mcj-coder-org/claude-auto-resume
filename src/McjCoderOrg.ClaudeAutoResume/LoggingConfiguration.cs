@@ -17,6 +17,10 @@ internal static class LoggingConfiguration
     public static string GetLogDirectory()
     {
         var basePath = GetPlatformLogBasePath();
+        if (OperatingSystem.IsMacOS())
+        {
+            return Path.Combine(basePath, AppName);
+        }
         return Path.Combine(basePath, AppName, "logs");
     }
 
