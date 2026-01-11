@@ -1,3 +1,6 @@
 # Project-specific terms for spell checking
 # Add words here that are specific to this project
 # One word per line
+
+# XML Schema terms (used in .resx files)
+msdata
