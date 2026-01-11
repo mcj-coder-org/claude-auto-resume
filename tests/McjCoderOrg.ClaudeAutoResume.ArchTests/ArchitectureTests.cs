@@ -7,13 +7,13 @@ namespace McjCoderOrg.ClaudeAutoResume.ArchTests;
 /// </summary>
 public sealed class ArchitectureTests
 {
-    private static readonly System.Reflection.Assembly MainAssembly = typeof(Program).Assembly;
+    private static readonly System.Reflection.Assembly _mainAssembly = typeof(Program).Assembly;
 
     [Fact]
     public void MainAssembly_ShouldHaveNoCircularDependencies()
     {
         // Arrange & Act
-        var types = Types.InAssembly(MainAssembly).GetTypes();
+        var types = Types.InAssembly(_mainAssembly).GetTypes();
 
         // Assert - assembly should be loadable (no circular refs at assembly level)
         types.Should().NotBeEmpty();
@@ -23,7 +23,7 @@ public sealed class ArchitectureTests
     public void AllPublicClasses_ShouldBeSealed_OrAbstract_OrStatic()
     {
         // Arrange & Act
-        var result = Types.InAssembly(MainAssembly)
+        var result = Types.InAssembly(_mainAssembly)
             .That()
             .ArePublic()
             .And()
@@ -45,7 +45,7 @@ public sealed class ArchitectureTests
     public void AllClasses_ShouldResideInCorrectNamespace()
     {
         // Arrange & Act
-        var result = Types.InAssembly(MainAssembly)
+        var result = Types.InAssembly(_mainAssembly)
             .That()
             .AreClasses()
             .And()
@@ -65,7 +65,7 @@ public sealed class ArchitectureTests
     public void Interfaces_ShouldStartWithI()
     {
         // Arrange & Act
-        var result = Types.InAssembly(MainAssembly)
+        var result = Types.InAssembly(_mainAssembly)
             .That()
             .AreInterfaces()
             .Should()

@@ -110,7 +110,7 @@ Command-line interface output must be accessible:
 
 ### Example: Good CLI Output
 
-```
+```text
 Checking environment...
   .NET Runtime:    [OK] 10.0.0
   Claude CLI:      [OK] Found at /usr/local/bin/claude
@@ -121,7 +121,7 @@ Ready to start.
 
 ### Example: Bad CLI Output
 
-```
+```text
 Checking environment...
   .NET Runtime:    ✓
   Claude CLI:      ✓

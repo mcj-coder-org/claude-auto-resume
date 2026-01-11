@@ -11,7 +11,7 @@ namespace McjCoderOrg.ClaudeAutoResume;
 /// </remarks>
 internal sealed class PlatformInfo
 {
-    private static readonly Lazy<PlatformInfo> LazyInstance = new(Create);
+    private static readonly Lazy<PlatformInfo> _lazyInstance = new(Create);
 
     private PlatformInfo()
     {
@@ -20,7 +20,7 @@ internal sealed class PlatformInfo
     /// <summary>
     /// Gets the current platform information.
     /// </summary>
-    public static PlatformInfo Current => LazyInstance.Value;
+    public static PlatformInfo Current => _lazyInstance.Value;
 
     /// <summary>Gets the .NET runtime version.</summary>
     public string DotNetVersion { get; private init; } = string.Empty;

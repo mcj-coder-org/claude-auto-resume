@@ -6,8 +6,8 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
 
-    <!-- Suppress XML doc warnings and underscore naming for tests -->
-    <NoWarn>$(NoWarn);CS1591;CA1707</NoWarn>
+    <!-- Suppress warnings for tests: XML docs, underscore naming, make internal -->
+    <NoWarn>$(NoWarn);CS1591;CA1707;CA1515</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
