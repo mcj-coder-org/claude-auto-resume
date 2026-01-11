@@ -5,8 +5,8 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
 
-    <!-- Suppress XML doc warnings for tests -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Suppress XML doc warnings and underscore naming for tests -->
+    <NoWarn>$(NoWarn);CS1591;CA1707</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,7 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
     <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
+    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
     <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="NetArchTest.eNhancedEdition" />
   </ItemGroup>

@@ -17,6 +17,8 @@
     <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
     <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="Moq.Analyzers" PrivateAssets="all" />
     <PackageReference Include="Reqnroll" />
     <PackageReference Include="Reqnroll.xUnit" />
   </ItemGroup>
