@@ -19,6 +19,9 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>claude;ai;cli;auto-resume</PackageTags>
+
+    <!-- Globalization -->
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <!-- Expose internals to Unit, System, and Architecture tests -->
