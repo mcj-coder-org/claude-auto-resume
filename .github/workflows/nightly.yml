@@ -1,0 +1,145 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      run_mutation:
+        description: 'Run mutation testing'
+        type: boolean
+        default: true
+      run_benchmarks:
+        description: 'Run benchmarks'
+        type: boolean
+        default: true
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  system-tests:
+    name: System Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/Directory.*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Run system tests
+        run: dotnet test tests/McjCoderOrg.ClaudeAutoResume.SystemTests --no-build -c Release --logger "trx;LogFileName=system-tests.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-test-results
+          path: '**/TestResults/*.trx'
+          retention-days: 30
+
+  mutation-testing:
+    name: Mutation Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    if: github.event_name == 'schedule' || inputs.run_mutation == true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/Directory.*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Install Stryker
+        run: dotnet tool install -g dotnet-stryker
+
+      - name: Run mutation testing
+        continue-on-error: true
+        run: dotnet stryker --reporter "html" --reporter "json" --output StrykerOutput
+
+      - name: Upload mutation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report
+          path: StrykerOutput/
+          retention-days: 30
+
+  benchmarks:
+    name: Benchmarks
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: github.event_name == 'schedule' || inputs.run_benchmarks == true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/Directory.*.props') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Check if benchmark project exists
+        id: check-benchmarks
+        run: |
+          if [ -d "tests/McjCoderOrg.ClaudeAutoResume.Benchmarks" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Restore dependencies
+        if: steps.check-benchmarks.outputs.exists == 'true'
+        run: dotnet restore
+
+      - name: Build benchmarks
+        if: steps.check-benchmarks.outputs.exists == 'true'
+        run: dotnet build tests/McjCoderOrg.ClaudeAutoResume.Benchmarks --no-restore --configuration Release
+
+      - name: Run benchmarks
+        if: steps.check-benchmarks.outputs.exists == 'true'
+        run: dotnet run --project tests/McjCoderOrg.ClaudeAutoResume.Benchmarks --configuration Release --no-build -- --export-json BenchmarkResults/results.json
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: BenchmarkResults/
+          if-no-files-found: ignore
+          retention-days: 30
