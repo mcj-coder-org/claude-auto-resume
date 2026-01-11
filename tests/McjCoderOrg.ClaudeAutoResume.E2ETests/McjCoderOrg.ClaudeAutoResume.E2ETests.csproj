@@ -16,7 +16,7 @@
     <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
     <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="Reqnroll" />
     <PackageReference Include="Reqnroll.xUnit" />
   </ItemGroup>
