@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- E2E tests have their own namespace - black-box testing -->
+    <RootNamespace>McjCoderOrg.ClaudeAutoResume.E2ETests</RootNamespace>
+    <AssemblyName>McjCoderOrg.ClaudeAutoResume.E2ETests</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+
+    <!-- Suppress XML doc warnings for tests -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
+    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Reqnroll" />
+    <PackageReference Include="Reqnroll.xUnit" />
+  </ItemGroup>
+
+  <!-- NOTE: No project reference - E2E tests use public API only -->
+</Project>

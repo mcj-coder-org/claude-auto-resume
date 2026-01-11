@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McjCoderOrg.ClaudeAutoResum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McjCoderOrg.ClaudeAutoResume.SystemTests", "tests\McjCoderOrg.ClaudeAutoResume.SystemTests\McjCoderOrg.ClaudeAutoResume.SystemTests.csproj", "{86996707-1C6B-4C70-A51B-E235D71A4059}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "McjCoderOrg.ClaudeAutoResume.E2ETests", "tests\McjCoderOrg.ClaudeAutoResume.E2ETests\McjCoderOrg.ClaudeAutoResume.E2ETests.csproj", "{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,18 @@ Global
 		{86996707-1C6B-4C70-A51B-E235D71A4059}.Release|x64.Build.0 = Release|Any CPU
 		{86996707-1C6B-4C70-A51B-E235D71A4059}.Release|x86.ActiveCfg = Release|Any CPU
 		{86996707-1C6B-4C70-A51B-E235D71A4059}.Release|x86.Build.0 = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|x64.Build.0 = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Debug|x86.Build.0 = Debug|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|x64.ActiveCfg = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|x64.Build.0 = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|x86.ActiveCfg = Release|Any CPU
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +81,6 @@ Global
 		{B76091D2-F969-4968-8DAB-2882D79F1582} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{FEFC5160-29BB-4B4F-B3E3-3B765E78484C} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{86996707-1C6B-4C70-A51B-E235D71A4059} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{7CF1758A-AD94-45D3-853D-FD1AB4BD3FA7} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
