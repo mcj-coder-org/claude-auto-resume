@@ -1,0 +1,21 @@
+{
+  "stryker-config": {
+    "project": "src/McjCoderOrg.ClaudeAutoResume/McjCoderOrg.ClaudeAutoResume.csproj",
+    "test-projects": [
+      "tests/McjCoderOrg.ClaudeAutoResume.Tests/McjCoderOrg.ClaudeAutoResume.Tests.csproj"
+    ],
+    "reporters": ["html", "json", "progress"],
+    "log-level": "info",
+    "mutation-level": "Standard",
+    "threshold-high": 80,
+    "threshold-low": 60,
+    "threshold-break": 50,
+    "concurrency": 4,
+    "language-version": "latest",
+    "ignore-mutations": [],
+    "ignore-methods": ["*.ToString", "*.GetHashCode"],
+    "excluded-mutations": [],
+    "solution": "ClaudeAutoResume.sln",
+    "output": "StrykerOutput"
+  }
+}
