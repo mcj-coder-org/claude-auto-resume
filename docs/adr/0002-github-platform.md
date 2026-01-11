@@ -1,3 +1,12 @@
+---
+name: github-platform
+description: |
+  When setting up repository infrastructure, CI/CD, or integrations.
+  Applies when choosing tools for code hosting, issues, packages, or security scanning.
+decision: Use GitHub as unified development platform for source, CI/CD, packages, and security features.
+status: accepted
+---
+
 # ADR-0002: GitHub as Development Platform
 
 ## Status
@@ -35,6 +44,7 @@ We need a unified platform for:
 Full-stack development platform with integrated CI/CD, packages, and security.
 
 **Pros:**
+
 - Industry standard for open source
 - GitHub Actions for CI/CD (covered in ADR-0004)
 - Integrated package registry (GitHub Packages + NuGet.org)
@@ -46,6 +56,7 @@ Full-stack development platform with integrated CI/CD, packages, and security.
 - GitHub Projects for issue tracking
 
 **Cons:**
+
 - Vendor lock-in (Microsoft/GitHub)
 - Some advanced features require paid plans
 - GitHub-specific workflow syntax
@@ -55,12 +66,14 @@ Full-stack development platform with integrated CI/CD, packages, and security.
 Self-hosted or cloud DevOps platform.
 
 **Pros:**
+
 - Complete DevOps platform in one tool
 - Self-hosting option for control
 - Built-in container registry
 - Strong CI/CD features
 
 **Cons:**
+
 - Less adoption than GitHub for open source
 - Migration cost from GitHub ecosystem
 - Smaller community action ecosystem
@@ -71,11 +84,13 @@ Self-hosted or cloud DevOps platform.
 Microsoft's enterprise DevOps platform.
 
 **Pros:**
+
 - Deep Azure integration
 - Enterprise-grade features
 - Good .NET tooling support
 
 **Cons:**
+
 - Less open source friendly
 - Separate from code hosting (uses GitHub)
 - More complex for simple projects
@@ -86,11 +101,13 @@ Microsoft's enterprise DevOps platform.
 Self-hosted Git with external CI (Drone, Jenkins, etc.).
 
 **Pros:**
+
 - Full control
 - No vendor lock-in
 - Lightweight
 
 **Cons:**
+
 - Multiple tools to integrate
 - Operational overhead
 - Smaller ecosystem
@@ -100,15 +117,15 @@ Self-hosted Git with external CI (Drone, Jenkins, etc.).
 
 We will use **GitHub** as our unified development platform, leveraging:
 
-| Feature | GitHub Service |
-|---------|----------------|
-| Source hosting | GitHub Repositories |
-| Code review | Pull Requests |
-| CI/CD | GitHub Actions (ADR-0004) |
+| Feature            | GitHub Service              |
+| ------------------ | --------------------------- |
+| Source hosting     | GitHub Repositories         |
+| Code review        | Pull Requests               |
+| CI/CD              | GitHub Actions (ADR-0004)   |
 | Package publishing | GitHub Packages + NuGet.org |
-| Issue tracking | GitHub Issues |
-| Documentation | GitHub Wiki/Pages |
-| Security | Dependabot, Secret Scanning |
+| Issue tracking     | GitHub Issues               |
+| Documentation      | GitHub Wiki/Pages           |
+| Security           | Dependabot, Secret Scanning |
 
 ### Platform Configuration
 
@@ -138,7 +155,7 @@ We will use **GitHub** as our unified development platform, leveraging:
 
 ### Integration Points
 
-```
+```text
 GitHub Repository
     │
     ├── Push Event ──► GitHub Actions (CI)
@@ -161,10 +178,10 @@ GitHub Repository
 
 ### Package Publishing Strategy
 
-| Package Type | Primary Registry | Backup/Mirror |
-|--------------|-----------------|---------------|
-| NuGet (.NET) | NuGet.org | GitHub Packages |
-| npm (hooks tooling) | Not published | - |
+| Package Type        | Primary Registry | Backup/Mirror   |
+| ------------------- | ---------------- | --------------- |
+| NuGet (.NET)        | NuGet.org        | GitHub Packages |
+| npm (hooks tooling) | Not published    | -               |
 
 ## Consequences
 

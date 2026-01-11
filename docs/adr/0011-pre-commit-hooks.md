@@ -1,3 +1,12 @@
+---
+name: pre-commit-hooks
+description: |
+  When setting up Git hooks or commit validation. Apply when configuring pre-commit,
+  commit-msg, or pre-push hooks, or when enforcing conventional commits and work item references.
+decision: Use Husky + commitlint + lint-staged for pre-commit hooks with CI enforcement as backup.
+status: accepted
+---
+
 # ADR-0011: Pre-commit Hooks
 
 ## Status
@@ -25,10 +34,12 @@ We need Git hooks to enforce code quality and commit standards locally before co
 .NET port of Husky for managing Git hooks.
 
 **Pros:**
+
 - Pure .NET, no Node dependency
 - Integrates with .NET tooling
 
 **Cons:**
+
 - Less mature than Node ecosystem
 - Fewer plugins and integrations
 - No commitlint equivalent in .NET
@@ -38,6 +49,7 @@ We need Git hooks to enforce code quality and commit standards locally before co
 Industry-standard toolchain for Git hooks.
 
 **Pros:**
+
 - Mature, battle-tested ecosystem
 - commitlint has extensive configuration
 - lint-staged enables efficient staged-file-only checks
@@ -45,6 +57,7 @@ Industry-standard toolchain for Git hooks.
 - Works across all platforms
 
 **Cons:**
+
 - Requires Node.js as dev dependency
 - Additional package.json in .NET project
 
@@ -53,10 +66,12 @@ Industry-standard toolchain for Git hooks.
 Custom shell scripts in `.git/hooks/`.
 
 **Pros:**
+
 - No additional dependencies
 - Full control
 
 **Cons:**
+
 - Manual maintenance
 - Not portable across platforms
 - No standardized commit linting
@@ -99,10 +114,23 @@ We will use **Node.js-based tooling** (Husky + commitlint + lint-staged) for pre
 export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
-    'type-enum': [2, 'always', [
-      'feat', 'fix', 'perf', 'refactor', 'docs',
-      'test', 'build', 'ci', 'chore', 'revert', 'style'
-    ]],
+    'type-enum': [
+      2,
+      'always',
+      [
+        'feat',
+        'fix',
+        'perf',
+        'refactor',
+        'docs',
+        'test',
+        'build',
+        'ci',
+        'chore',
+        'revert',
+        'style',
+      ],
+    ],
     'scope-case': [2, 'always', 'lower-case'],
     'subject-case': [2, 'always', 'lower-case'],
     'subject-empty': [2, 'never'],
@@ -115,14 +143,16 @@ export default {
       issuePrefixes: ['#', 'GH-', 'AB#'],
     },
   },
-  plugins: [{
-    rules: {
-      'references-empty': ({ references }) => {
-        const valid = references && references.length > 0;
-        return [valid, 'commit must reference a work item (e.g., "Refs: #123")'];
+  plugins: [
+    {
+      rules: {
+        'references-empty': ({ references }) => {
+          const valid = references && references.length > 0;
+          return [valid, 'commit must reference a work item (e.g., "Refs: #123")'];
+        },
       },
     },
-  }],
+  ],
 };
 ```
 

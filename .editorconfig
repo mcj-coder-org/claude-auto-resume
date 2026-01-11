@@ -124,6 +124,18 @@ dotnet_naming_symbols.local_symbols.applicable_accessibilities = *
 
 dotnet_naming_style.camel_case_style.capitalization = camel_case
 
+# Naming: async methods end with Async
+dotnet_naming_rule.async_methods_async_suffix.symbols = async_method_symbols
+dotnet_naming_rule.async_methods_async_suffix.style = async_suffix_style
+dotnet_naming_rule.async_methods_async_suffix.severity = warning
+
+dotnet_naming_symbols.async_method_symbols.applicable_kinds = method
+dotnet_naming_symbols.async_method_symbols.applicable_accessibilities = *
+dotnet_naming_symbols.async_method_symbols.required_modifiers = async
+
+dotnet_naming_style.async_suffix_style.capitalization = pascal_case
+dotnet_naming_style.async_suffix_style.required_suffix = Async
+
 # Code quality
 dotnet_code_quality_unused_parameters = all:warning
 dotnet_style_readonly_field = true:warning
@@ -159,6 +171,79 @@ dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_coalesce_expression = true:warning
 dotnet_style_null_propagation = true:warning
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+
+# =============================================================================
+# Analyzer Configuration
+# =============================================================================
+
+# XML Documentation (CS1591 - Missing XML comment for publicly visible type)
+# Enforce on public API, suppress for test projects via Directory.Build.props
+dotnet_diagnostic.CS1591.severity = warning
+
+# -----------------------------------------------------------------------------
+# .NET Analyzers (CA*)
+# -----------------------------------------------------------------------------
+dotnet_diagnostic.CA1062.severity = none      # Null check - nullable handles this
+dotnet_diagnostic.CA1303.severity = none      # Localizable strings - overkill for CLI
+dotnet_diagnostic.CA2007.severity = none      # ConfigureAwait - not needed in apps
+dotnet_diagnostic.CA1848.severity = suggestion # LoggerMessage delegates - nice to have
+dotnet_diagnostic.CA2100.severity = error     # SQL injection
+dotnet_diagnostic.CA2300.severity = error     # Insecure deserialization
+dotnet_diagnostic.CA2301.severity = error     # BinaryFormatter deserialization
+dotnet_diagnostic.CA2302.severity = error     # BinaryFormatter deserialization
+dotnet_diagnostic.CA5350.severity = error     # Weak cryptographic algorithms
+dotnet_diagnostic.CA5351.severity = error     # Broken cryptographic algorithms
+
+# -----------------------------------------------------------------------------
+# StyleCop Analyzers (SA*)
+# -----------------------------------------------------------------------------
+# File organisation
+dotnet_diagnostic.SA1200.severity = none      # Using directives inside namespace
+dotnet_diagnostic.SA1633.severity = none      # File must have header
+dotnet_diagnostic.SA1600.severity = none      # Elements must be documented (use CS1591)
+dotnet_diagnostic.SA1101.severity = none      # Prefix local calls with this
+
+# Member ordering - enforce our documented order
+dotnet_diagnostic.SA1201.severity = warning   # Elements must appear in correct order
+dotnet_diagnostic.SA1202.severity = warning   # Elements must be ordered by access
+dotnet_diagnostic.SA1203.severity = warning   # Constants must appear before fields
+dotnet_diagnostic.SA1204.severity = warning   # Static elements before instance
+dotnet_diagnostic.SA1214.severity = warning   # Readonly fields before non-readonly
+
+# Single type per file
+dotnet_diagnostic.SA1402.severity = warning   # File may only contain single type
+
+# Braces
+dotnet_diagnostic.SA1503.severity = warning   # Braces must not be omitted
+
+# -----------------------------------------------------------------------------
+# Meziantou Analyzer (MA*)
+# -----------------------------------------------------------------------------
+dotnet_diagnostic.MA0004.severity = warning   # Use ConfigureAwait(false)
+dotnet_diagnostic.MA0006.severity = warning   # Use string.Equals
+dotnet_diagnostic.MA0001.severity = warning   # StringComparison should be specified
+dotnet_diagnostic.MA0002.severity = warning   # IEqualityComparer in methods
+dotnet_diagnostic.MA0076.severity = warning   # Do not use implicit culture
+
+# Structured logging
+dotnet_diagnostic.MA0003.severity = warning   # Named parameter in log message
+
+# -----------------------------------------------------------------------------
+# Roslynator (RCS*)
+# -----------------------------------------------------------------------------
+dotnet_diagnostic.RCS1036.severity = warning  # Remove unnecessary blank line
+dotnet_diagnostic.RCS1037.severity = warning  # Remove trailing whitespace
+dotnet_diagnostic.RCS1090.severity = suggestion # ConfigureAwait
+dotnet_diagnostic.RCS1194.severity = warning  # Implement exception constructors
+
+# -----------------------------------------------------------------------------
+# SonarAnalyzer (S*)
+# -----------------------------------------------------------------------------
+dotnet_diagnostic.S1075.severity = warning    # URIs should not be hardcoded
+dotnet_diagnostic.S2068.severity = error      # Credentials should not be hardcoded
+dotnet_diagnostic.S2092.severity = error      # Cookies should be secure
+dotnet_diagnostic.S3011.severity = error      # Reflection should not bypass access
+dotnet_diagnostic.S5773.severity = error      # Types should not be deserialized
 
 [Makefile]
 indent_style = tab

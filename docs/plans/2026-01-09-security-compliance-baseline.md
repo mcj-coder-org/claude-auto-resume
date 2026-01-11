@@ -17,6 +17,7 @@
 ## Task 1: Create Security Policy
 
 **Files:**
+
 - Create: `.github/SECURITY.md`
 
 **Step 1: Create the security policy file**
@@ -112,6 +113,7 @@ Refs: #4"
 ## Task 2: Create Dependabot Configuration
 
 **Files:**
+
 - Create: `.github/dependabot.yml`
 
 **Step 1: Create the Dependabot configuration file**
@@ -123,115 +125,115 @@ Refs: #4"
 version: 2
 updates:
   # NuGet dependencies (.NET)
-  - package-ecosystem: "nuget"
-    directory: "/"
+  - package-ecosystem: 'nuget'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "UTC"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'UTC'
     open-pull-requests-limit: 10
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     groups:
       # Group all patch updates together
       nuget-patch:
         applies-to: version-updates
         update-types:
-          - "patch"
+          - 'patch'
       # Group Microsoft packages
       microsoft:
         applies-to: version-updates
         patterns:
-          - "Microsoft.*"
-          - "System.*"
+          - 'Microsoft.*'
+          - 'System.*'
       # Group test packages
       testing:
         applies-to: version-updates
         patterns:
-          - "xunit*"
-          - "Moq*"
-          - "coverlet*"
-          - "AwesomeAssertions"
-          - "NetArchTest*"
-          - "BenchmarkDotNet*"
-          - "Reqnroll*"
+          - 'xunit*'
+          - 'Moq*'
+          - 'coverlet*'
+          - 'AwesomeAssertions'
+          - 'NetArchTest*'
+          - 'BenchmarkDotNet*'
+          - 'Reqnroll*'
       # Group analyzers
       analyzers:
         applies-to: version-updates
         patterns:
-          - "*Analyzer*"
-          - "Roslynator*"
-          - "Meziantou*"
-          - "SonarAnalyzer*"
+          - '*Analyzer*'
+          - 'Roslynator*'
+          - 'Meziantou*'
+          - 'SonarAnalyzer*'
     labels:
-      - "dependencies"
-      - "nuget"
+      - 'dependencies'
+      - 'nuget'
 
   # npm dependencies (tooling: prettier, husky, secretlint, etc.)
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "UTC"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'UTC'
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "deps"
-      include: "scope"
+      prefix: 'deps'
+      include: 'scope'
     groups:
       # Group all npm patch updates
       npm-patch:
         applies-to: version-updates
         update-types:
-          - "patch"
+          - 'patch'
       # Group linting tools
       linting:
         applies-to: version-updates
         patterns:
-          - "prettier"
-          - "eslint*"
-          - "markdownlint*"
-          - "cspell"
+          - 'prettier'
+          - 'eslint*'
+          - 'markdownlint*'
+          - 'cspell'
       # Group git hooks
       git-hooks:
         applies-to: version-updates
         patterns:
-          - "husky"
-          - "lint-staged"
-          - "@commitlint/*"
+          - 'husky'
+          - 'lint-staged'
+          - '@commitlint/*'
       # Group security scanning
       security:
         applies-to: version-updates
         patterns:
-          - "secretlint"
-          - "@secretlint/*"
+          - 'secretlint'
+          - '@secretlint/*'
     labels:
-      - "dependencies"
-      - "npm"
+      - 'dependencies'
+      - 'npm'
 
   # GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "06:00"
-      timezone: "UTC"
+      interval: 'weekly'
+      day: 'monday'
+      time: '06:00'
+      timezone: 'UTC'
     open-pull-requests-limit: 5
     commit-message:
-      prefix: "ci"
-      include: "scope"
+      prefix: 'ci'
+      include: 'scope'
     groups:
       github-actions:
         applies-to: version-updates
         patterns:
-          - "*"
+          - '*'
     labels:
-      - "dependencies"
-      - "github-actions"
+      - 'dependencies'
+      - 'github-actions'
 ```
 
 **Step 2: Validate YAML syntax**
@@ -268,6 +270,7 @@ Refs: #4"
 ## Task 3: Create secretlint Configuration
 
 **Files:**
+
 - Create: `.secretlintrc.json`
 
 **Step 1: Create the secretlint configuration file**
@@ -326,6 +329,7 @@ Refs: #4"
 ## Task 4: Create package.json with secretlint Dependencies
 
 **Files:**
+
 - Create: `package.json`
 
 **Step 1: Create package.json with secretlint plugins**
@@ -397,12 +401,13 @@ Refs: #4"
 ## Task 5: Create CodeQL Workflow
 
 **Files:**
+
 - Create: `.github/workflows/codeql.yml`
 
 **Step 1: Create the CodeQL workflow file**
 
 ```yaml
-name: "CodeQL"
+name: 'CodeQL'
 
 on:
   push:
@@ -411,7 +416,7 @@ on:
     branches: [main]
   schedule:
     # Run weekly on Sundays at 00:00 UTC
-    - cron: "0 0 * * 0"
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
@@ -425,7 +430,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["csharp"]
+        language: ['csharp']
 
     steps:
       - name: Checkout repository
@@ -442,7 +447,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: '10.0.x'
 
       - name: Restore dependencies
         run: dotnet restore
@@ -453,7 +458,7 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{ matrix.language }}"
+          category: '/language:${{ matrix.language }}'
 ```
 
 **Step 2: Validate YAML syntax**
@@ -481,6 +486,7 @@ Refs: #4"
 ## Task 6: Create Accessibility Standards Document
 
 **Files:**
+
 - Create: `docs/standards/accessibility.md`
 
 **Step 1: Create the docs/standards directory**
@@ -602,26 +608,29 @@ Command-line interface output must be accessible:
    - Progress indicators work with screen readers
 
 ### Example: Good CLI Output
-
 ```
+
 Checking environment...
-  .NET Runtime:    [OK] 10.0.0
-  Claude CLI:      [OK] Found at /usr/local/bin/claude
-  Configuration:   [OK] Valid
+.NET Runtime: [OK] 10.0.0
+Claude CLI: [OK] Found at /usr/local/bin/claude
+Configuration: [OK] Valid
 
 Ready to start.
+
 ```
 
 ### Example: Bad CLI Output
 
 ```
+
 Checking environment...
-  .NET Runtime:    ✓
-  Claude CLI:      ✓
-  Configuration:   ✓
+.NET Runtime: ✓
+Claude CLI: ✓
+Configuration: ✓
 
 Ready!
-```
+
+````
 
 (Bad: relies on colour and symbols that may not render correctly)
 
@@ -637,7 +646,7 @@ npx lighthouse https://your-docs-site.com --only-categories=accessibility --outp
 
 # axe-core for automated testing
 npx @axe-core/cli https://your-docs-site.com
-```
+````
 
 ### Manual Testing
 
@@ -654,7 +663,8 @@ Perform quarterly:
 - [Docusaurus Accessibility](https://docusaurus.io/docs/accessibility)
 - [axe-core](https://github.com/dequelabs/axe-core)
 - [ADR-0006: Accessibility](../adr/0006-accessibility.md)
-```
+
+````
 
 **Step 3: Verify the file was created**
 
@@ -680,13 +690,14 @@ Covers WCAG 2.1 AA criteria:
 Includes validation approach with Lighthouse and axe-core.
 
 Refs: #4"
-```
+````
 
 ---
 
 ## Task 7: Create Privacy Policy Document
 
 **Files:**
+
 - Create: `docs/standards/privacy.md`
 
 **Step 1: Create the privacy policy document**
@@ -754,6 +765,7 @@ The `--diagnose` command outputs environment information:
 - Claude CLI location
 
 This information is:
+
 - Displayed locally only
 - Never transmitted anywhere
 - Intended for you to include in bug reports (your choice)
@@ -819,6 +831,7 @@ Refs: #4"
 ## Task 8: Final Verification and Push
 
 **Files:**
+
 - All files from previous tasks
 
 **Step 1: Verify all files exist**
@@ -871,9 +884,9 @@ Establishes security scanning and compliance standards for the repository (Phase
 
 ## ADRs Implemented
 
-- [ADR-0005: Security Scanning](docs/adr/0005-security-scanning.md)
-- [ADR-0006: Accessibility](docs/adr/0006-accessibility.md)
-- [ADR-0007: Telemetry](docs/adr/0007-telemetry.md)
+- [ADR-0005: Security Scanning](../adr/0005-security-scanning.md)
+- [ADR-0006: Accessibility](../adr/0006-accessibility.md)
+- [ADR-0007: Telemetry](../adr/0007-telemetry.md)
 
 ## Test Plan
 
@@ -948,5 +961,6 @@ This minimal solution will be expanded in Phase 4 (Solution Structure) with the 
 **Issue:** PR review identified missing front-matter on SECURITY.md and inconsistent `related` field paths.
 
 **Resolution:**
+
 - Added YAML front-matter to `.github/SECURITY.md` per ADR-0008
 - Fixed `related` paths in `accessibility.md` and `privacy.md` (removed `docs/` prefix)

@@ -960,6 +960,33 @@ Phase 8: Release
 
 This section documents modifications made during implementation that deviate from or extend the original plan.
 
+### Sub-Issue #5: Documentation Foundation (PR #32)
+
+**Date:** 2026-01-10
+
+**Additional Scope:**
+
+The following documents were added based on issue feedback requesting "ways of working" documentation:
+
+1. **Definition of Ready** (`docs/practices/definition-of-ready.md`): Criteria a ticket must meet
+   before development can begin. Covers required fields, feature-specific requirements, bug-specific
+   requirements, and "not ready" indicators.
+
+2. **Definition of Done** (`docs/practices/definition-of-done.md`): Criteria that must be satisfied
+   before a ticket can be closed. Covers code complete, testing complete, documentation complete,
+   and deployment ready checklists.
+
+3. **Ticket Lifecycle** (`docs/practices/ticket-lifecycle.md`): Workflow states and transitions for
+   issues from creation to completion. Documents states (Backlog, Ready, In Progress, In Review,
+   Done, Blocked, Changes Requested), transitions, labels, and GitHub Project integration.
+
+**Related Documentation Updates:**
+
+- Updated cross-references in related documents to link to new process documents
+- Added `ticket-lifecycle.md` to `related` field in Definition of Ready and Definition of Done
+
+---
+
 ### Sub-Issue #6: Quality Gates & Hooks (PR #24)
 
 **Date:** 2026-01-09

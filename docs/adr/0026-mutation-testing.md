@@ -1,3 +1,11 @@
+---
+name: mutation-testing
+description: |
+  When validating test effectiveness beyond code coverage or identifying weak tests. Apply when setting up mutation testing infrastructure or interpreting mutation scores.
+decision: Use Stryker.NET for mutation testing with nightly CI execution and dashboard reporting.
+status: accepted
+---
+
 # ADR-0026: Mutation Testing
 
 ## Status
@@ -31,9 +39,7 @@ Configuration via `stryker-config.json`:
 {
   "stryker-config": {
     "project": "McjCoderOrg.ClaudeAutoResume.csproj",
-    "test-projects": [
-      "McjCoderOrg.ClaudeAutoResume.Tests.csproj"
-    ],
+    "test-projects": ["McjCoderOrg.ClaudeAutoResume.Tests.csproj"],
     "reporters": ["html", "json", "dashboard"],
     "threshold-high": 80,
     "threshold-low": 60,
@@ -44,15 +50,16 @@ Configuration via `stryker-config.json`:
 
 ### Execution Strategy
 
-| Trigger | Scope |
-|---------|-------|
-| Nightly | Full mutation suite |
-| Manual | Developer-triggered |
-| Local | Per playbook instructions |
+| Trigger | Scope                     |
+| ------- | ------------------------- |
+| Nightly | Full mutation suite       |
+| Manual  | Developer-triggered       |
+| Local   | Per playbook instructions |
 
 ### Playbook
 
 `docs/playbooks/mutation-testing.md` covers:
+
 1. Local installation
 2. Running mutations
 3. Interpreting results
@@ -65,11 +72,13 @@ Mutation reports published to GitHub Pages alongside benchmark results.
 ## Consequences
 
 ### Positive
+
 - Validates test quality
 - Finds weak tests
 - Complements coverage metrics
 
 ### Negative
+
 - Long execution time
 - Resource intensive
 - Nightly-only feedback

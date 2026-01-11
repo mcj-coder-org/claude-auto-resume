@@ -1,3 +1,12 @@
+---
+name: code-analyzers
+description: |
+  When configuring static analysis or adding analyzer packages. Apply when setting up code
+  quality rules, suppressing diagnostics, or enforcing coding standards at compile time.
+decision: Use comprehensive analyzer stack with Meziantou, Roslynator, and SonarAnalyzer alongside built-in analyzers.
+status: accepted
+---
+
 # ADR-0015: Code Analyzers
 
 ## Status
@@ -10,7 +19,8 @@ Proposed
 
 ## Context
 
-We need static analysis tooling to enforce code quality, security best practices, and consistent coding standards across the codebase. The analyzers should:
+We need static analysis tooling to enforce code quality, security best practices, and
+consistent coding standards across the codebase. The analyzers should:
 
 1. Catch bugs and security issues at compile time
 2. Enforce consistent code style
@@ -25,11 +35,13 @@ We need static analysis tooling to enforce code quality, security best practices
 Using `AnalysisLevel=latest-all` enables Microsoft's built-in analyzers.
 
 **Pros:**
+
 - No additional dependencies
 - Microsoft-supported
 - Covers CA (code analysis) and IDE rules
 
 **Cons:**
+
 - Limited coverage compared to third-party analyzers
 - Some important patterns not covered
 
@@ -39,21 +51,23 @@ Combine built-in analyzers with third-party analyzers for comprehensive coverage
 
 **Selected Analyzers:**
 
-| Analyzer | Focus Area | Rules |
-|----------|------------|-------|
-| Built-in (.NET) | Microsoft best practices | CA*, IDE* |
-| Meziantou.Analyzer | Security, perf, practices | MA* |
-| Roslynator.Analyzers | Code quality, refactoring | RCS* |
-| SonarAnalyzer.CSharp | Security, reliability | S* |
-| xunit.analyzers | Test patterns | xUnit* |
+| Analyzer             | Focus Area                | Rules     |
+| -------------------- | ------------------------- | --------- |
+| Built-in (.NET)      | Microsoft best practices  | CA*, IDE* |
+| Meziantou.Analyzer   | Security, perf, practices | MA\*      |
+| Roslynator.Analyzers | Code quality, refactoring | RCS\*     |
+| SonarAnalyzer.CSharp | Security, reliability     | S\*       |
+| xunit.analyzers      | Test patterns             | xUnit\*   |
 
 **Pros:**
+
 - Comprehensive coverage across multiple domains
 - Catches issues that individual analyzers miss
 - Active maintenance on all packages
 - All open source
 
 **Cons:**
+
 - More dependencies
 - Potential rule conflicts (mitigated by configuration)
 - Longer build times (minimal impact)
@@ -63,11 +77,13 @@ Combine built-in analyzers with third-party analyzers for comprehensive coverage
 External SonarQube server or SonarCloud service.
 
 **Pros:**
+
 - Centralized quality dashboard
 - Historical trends
 - Quality gates
 
 **Cons:**
+
 - External service dependency
 - Additional infrastructure (self-hosted)
 - Cost (SonarCloud for private repos)
@@ -75,7 +91,9 @@ External SonarQube server or SonarCloud service.
 
 ## Decision
 
-We will use a **comprehensive analyzer stack** combining built-in .NET analyzers with Meziantou.Analyzer, Roslynator.Analyzers, and SonarAnalyzer.CSharp. Test projects additionally include xunit.analyzers.
+We will use a **comprehensive analyzer stack** combining built-in .NET analyzers with
+Meziantou.Analyzer, Roslynator.Analyzers, and SonarAnalyzer.CSharp. Test projects
+additionally include xunit.analyzers.
 
 ### Configuration
 
@@ -124,14 +142,14 @@ dotnet_diagnostic.CA2300.severity = error  # Insecure deserialization
 
 ### Analyzer Coverage
 
-| Category | Analyzers | Examples |
-|----------|-----------|----------|
-| Security | CA, S, MA | SQL injection, XSS, insecure crypto |
-| Performance | CA, RCS, MA | Allocations, async patterns |
-| Reliability | S, CA | Null handling, disposal, exceptions |
-| Maintainability | RCS, IDE | Complexity, naming, dead code |
-| Style | IDE, RCS | Formatting, modern syntax |
-| Testing | xUnit | Test patterns, assertion usage |
+| Category        | Analyzers   | Examples                            |
+| --------------- | ----------- | ----------------------------------- |
+| Security        | CA, S, MA   | SQL injection, XSS, insecure crypto |
+| Performance     | CA, RCS, MA | Allocations, async patterns         |
+| Reliability     | S, CA       | Null handling, disposal, exceptions |
+| Maintainability | RCS, IDE    | Complexity, naming, dead code       |
+| Style           | IDE, RCS    | Formatting, modern syntax           |
+| Testing         | xUnit       | Test patterns, assertion usage      |
 
 ## Consequences
 
@@ -165,9 +183,9 @@ dotnet_diagnostic.CA2300.severity = error  # Insecure deserialization
 
 ## License Verification
 
-| Package | License | Verification Date |
-|---------|---------|-------------------|
-| Meziantou.Analyzer | MIT | 2026-01-09 |
-| Roslynator.Analyzers | Apache 2.0 | 2026-01-09 |
-| SonarAnalyzer.CSharp | LGPL 3.0 | 2026-01-09 |
-| xunit.analyzers | Apache 2.0 | 2026-01-09 |
+| Package              | License    | Verification Date |
+| -------------------- | ---------- | ----------------- |
+| Meziantou.Analyzer   | MIT        | 2026-01-09        |
+| Roslynator.Analyzers | Apache 2.0 | 2026-01-09        |
+| SonarAnalyzer.CSharp | LGPL 3.0   | 2026-01-09        |
+| xunit.analyzers      | Apache 2.0 | 2026-01-09        |

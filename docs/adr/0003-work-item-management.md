@@ -1,3 +1,12 @@
+---
+name: work-item-management
+description: |
+  When creating issues, tracking features, or organizing work breakdown.
+  Applies when structuring epics, sub-issues, or linking work to branches and PRs.
+decision: Use GitHub Issues with sub-issues and task lists for hierarchical work tracking.
+status: accepted
+---
+
 # ADR-0003: Work Item Management
 
 ## Status
@@ -33,6 +42,7 @@ We need a work item management system to:
 Native GitHub issue tracking with hierarchical support.
 
 **Pros:**
+
 - Native integration with GitHub (ADR-0009)
 - Sub-issues for hierarchical breakdown
 - Task lists with progress tracking
@@ -42,6 +52,7 @@ Native GitHub issue tracking with hierarchical support.
 - Markdown support for rich descriptions
 
 **Cons:**
+
 - Less sophisticated than dedicated project management tools
 - Sub-issues are relatively new feature
 - Limited custom fields without GitHub Projects
@@ -51,12 +62,14 @@ Native GitHub issue tracking with hierarchical support.
 GitHub's project management layer on top of Issues.
 
 **Pros:**
+
 - Board/table views
 - Custom fields and workflows
 - Roadmap views
 - Automation rules
 
 **Cons:**
+
 - Additional complexity layer
 - Overkill for single-project repos
 - Learning curve for contributors
@@ -66,12 +79,14 @@ GitHub's project management layer on top of Issues.
 Modern issue tracking designed for software teams.
 
 **Pros:**
+
 - Excellent UX
 - Powerful automation
 - Great keyboard shortcuts
 - Cycles and roadmaps
 
 **Cons:**
+
 - External tool (context switching)
 - Paid for teams
 - Requires GitHub integration setup
@@ -82,12 +97,14 @@ Modern issue tracking designed for software teams.
 Enterprise project management platform.
 
 **Pros:**
+
 - Industry standard for enterprises
 - Highly configurable
 - Rich reporting
 - Extensive integrations
 
 **Cons:**
+
 - Heavy and complex
 - Expensive
 - Overkill for open source
@@ -100,7 +117,7 @@ We will use **GitHub Issues with Sub-Issues and Task Lists** for work item manag
 
 ### Work Item Hierarchy
 
-```
+```text
 Epic (Parent Issue)
 ├── Feature Branch: feature/{issue#}-{description}
 ├── Design Document: docs/plans/{date}-{topic}-design.md
@@ -121,19 +138,24 @@ Epic (Parent Issue)
 ### Issue Templates
 
 **Epic Template:**
+
 ```markdown
 ## Summary
+
 {Brief description of the epic}
 
 ## Design Documents
+
 - [ ] [Design Document](link-to-design-doc)
 - [ ] ADRs: {list of related ADRs}
 
 ## Sub-Issues
+
 - [ ] #{sub-issue-1}
 - [ ] #{sub-issue-2}
 
 ## Acceptance Criteria
+
 - [ ] All sub-issues completed
 - [ ] All ADRs marked as Accepted
 - [ ] Documentation updated
@@ -141,19 +163,24 @@ Epic (Parent Issue)
 ```
 
 **Sub-Issue Template:**
+
 ```markdown
 ## Parent Issue
+
 Refs: #{parent-issue}
 
 ## Context
+
 - [Design Document](immutable-link-to-design-doc)
 - [Implementation Plan](immutable-link-to-plan)
 
 ## Tasks
+
 - [ ] Task 1
 - [ ] Task 2
 
 ## Acceptance Criteria
+
 - [ ] Feature implemented per design
 - [ ] Tests added and passing
 - [ ] No new analyzer warnings
@@ -162,6 +189,7 @@ Refs: #{parent-issue}
 ### Branch Naming Convention
 
 As per [ADR-0004: Contribution Workflow](./0004-contribution-workflow.md):
+
 - `feature/{issue#}-{description}` - New features
 - `fix/{issue#}-{description}` - Bug fixes
 - `docs/{issue#}-{description}` - Documentation only
@@ -169,14 +197,14 @@ As per [ADR-0004: Contribution Workflow](./0004-contribution-workflow.md):
 
 ### Linking Strategy
 
-| Artifact | Link Format | Example |
-|----------|-------------|---------|
-| Issue → Branch | Automatic via naming | `feature/123-add-auth` |
-| Commit → Issue | Footer reference | `Refs: #123` |
-| PR → Issue | Body reference | `Closes #123` or `Refs: #123` |
-| Sub-issue → Parent | Body reference | `Refs: #100` |
-| Issue → Design Doc | Markdown link | `[Design](../plans/...)` |
-| Issue → ADR | Markdown link | `[ADR-0010](../adr/0010-...)` |
+| Artifact           | Link Format          | Example                       |
+| ------------------ | -------------------- | ----------------------------- |
+| Issue → Branch     | Automatic via naming | `feature/123-add-auth`        |
+| Commit → Issue     | Footer reference     | `Refs: #123`                  |
+| PR → Issue         | Body reference       | `Closes #123` or `Refs: #123` |
+| Sub-issue → Parent | Body reference       | `Refs: #100`                  |
+| Issue → Design Doc | Markdown link        | `[Design](../plans/...)`      |
+| Issue → ADR        | Markdown link        | `[ADR-0010](../adr/0010-...)` |
 
 ### Immutable Links for Agent Context
 
@@ -184,6 +212,7 @@ Sub-issues reference design documents using immutable links (commit SHA or tag):
 
 ```markdown
 ## Context
+
 - [Design Document](https://github.com/org/repo/blob/{sha}/docs/plans/design.md)
 - [Implementation Plan](https://github.com/org/repo/blob/{sha}/docs/plans/plan.md)
 ```

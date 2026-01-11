@@ -60,6 +60,7 @@ The `--diagnose` command outputs environment information:
 - Claude CLI location
 
 This information is:
+
 - Displayed locally only
 - Never transmitted anywhere
 - Intended for you to include in bug reports (your choice)

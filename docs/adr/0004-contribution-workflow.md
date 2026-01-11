@@ -1,8 +1,17 @@
+---
+name: contribution-workflow
+description: |
+  When contributing code, creating branches, or submitting PRs.
+  Applies to all ticket-to-merge workflows including commit format and PR requirements.
+decision: Follow GitHub Flow with conventional commits, branch naming conventions, and squash merges.
+status: accepted
+---
+
 # ADR-0004: Contribution Workflow
 
 ## Status
 
-Proposed
+Accepted
 
 ## Date
 
@@ -11,6 +20,7 @@ Proposed
 ## Context
 
 We need a documented contribution workflow that:
+
 1. Defines the complete ticket-to-merge process
 2. Establishes PR requirements and review process
 3. Integrates work items, branches, commits, and CI
@@ -31,48 +41,49 @@ We need a documented contribution workflow that:
 
 ### Workflow Overview
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         CONTRIBUTION WORKFLOW                            │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│  1. TICKET          2. BRANCH           3. DEVELOP         4. PR        │
-│  ┌─────────┐       ┌─────────┐        ┌─────────┐       ┌─────────┐    │
-│  │ Create  │──────▶│ Create  │───────▶│ Commit  │──────▶│ Open    │    │
-│  │ Issue   │       │ Branch  │        │ Changes │       │ PR      │    │
-│  └─────────┘       └─────────┘        └─────────┘       └─────────┘    │
-│       │                 │                  │                 │          │
-│       ▼                 ▼                  ▼                 ▼          │
-│  - Describe work   - From main        - Pre-commit      - CI runs      │
-│  - Add labels      - Name: type/      - Conventional    - Review       │
-│  - Link to epic      {issue#}-desc      commits         - Approval     │
-│                                       - Refs: #{issue}                  │
-│                                                                          │
-│  5. MERGE           6. CLEANUP                                          │
-│  ┌─────────┐       ┌─────────┐                                         │
-│  │ Squash  │──────▶│ Delete  │                                         │
-│  │ Merge   │       │ Branch  │                                         │
-│  └─────────┘       └─────────┘                                         │
-│       │                 │                                               │
-│       ▼                 ▼                                               │
-│  - Close issue     - Auto-deleted                                       │
-│  - Update ADRs     - Issue closed                                       │
-│                                                                          │
-└─────────────────────────────────────────────────────────────────────────┘
+```text
+┌───────────────────────────────────────────────────────────────────────┐
+│                       CONTRIBUTION WORKFLOW                           │
+├───────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│  1. TICKET          2. BRANCH         3. DEVELOP       4. PR          │
+│  ┌─────────┐       ┌─────────┐       ┌─────────┐      ┌─────────┐     │
+│  │ Create  │──────▶│ Create  │──────▶│ Commit  │─────▶│ Open    │     │
+│  │ Issue   │       │ Branch  │       │ Changes │      │ PR      │     │
+│  └─────────┘       └─────────┘       └─────────┘      └─────────┘     │
+│       │                 │                 │                │           │
+│       ▼                 ▼                 ▼                ▼           │
+│  - Describe work   - From main       - Pre-commit     - CI runs       │
+│  - Add labels      - Name: type/     - Conventional   - Review        │
+│  - Link to epic      {issue#}-desc     commits        - Approval      │
+│                                      - Refs: #{issue}                  │
+│                                                                        │
+│  5. MERGE           6. CLEANUP                                         │
+│  ┌─────────┐       ┌─────────┐                                        │
+│  │ Squash  │──────▶│ Delete  │                                        │
+│  │ Merge   │       │ Branch  │                                        │
+│  └─────────┘       └─────────┘                                        │
+│       │                 │                                              │
+│       ▼                 ▼                                              │
+│  - Close issue     - Auto-deleted                                      │
+│  - Update ADRs     - Issue closed                                      │
+│                                                                        │
+└───────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Stage 1: Create Ticket
 
 **Before any work begins, create or identify the work item.**
 
-| Action | Details |
-|--------|---------|
-| Create Issue | Use appropriate template (bug, feature, sub-issue) |
-| Link to Parent | If sub-issue, add `Refs: #{parent}` |
-| Add Labels | `type:*`, `priority:*`, `area:*` |
-| Add Context Links | Immutable links to design docs (commit SHA) |
+| Action            | Details                                            |
+| ----------------- | -------------------------------------------------- |
+| Create Issue      | Use appropriate template (bug, feature, sub-issue) |
+| Link to Parent    | If sub-issue, add `Refs: #{parent}`                |
+| Add Labels        | `type:*`, `priority:*`, `area:*`                   |
+| Add Context Links | Immutable links to design docs (commit SHA)        |
 
 **Definition of Done - Ticket:**
+
 - [ ] Issue has clear description
 - [ ] Acceptance criteria defined
 - [ ] Labels applied
@@ -83,11 +94,11 @@ We need a documented contribution workflow that:
 
 **Create a branch from main following naming conventions.**
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Feature | `feature/{issue#}-{description}` | `feature/123-add-rate-limit` |
-| Fix | `fix/{issue#}-{description}` | `fix/456-null-check` |
-| Docs | `docs/{issue#}-{description}` | `docs/789-update-readme` |
+| Type     | Pattern                           | Example                      |
+| -------- | --------------------------------- | ---------------------------- |
+| Feature  | `feature/{issue#}-{description}`  | `feature/123-add-rate-limit` |
+| Fix      | `fix/{issue#}-{description}`      | `fix/456-null-check`         |
+| Docs     | `docs/{issue#}-{description}`     | `docs/789-update-readme`     |
 | Refactor | `refactor/{issue#}-{description}` | `refactor/101-extract-class` |
 
 ```bash
@@ -97,6 +108,7 @@ git checkout -b feature/123-add-rate-limit
 ```
 
 **Definition of Done - Branch:**
+
 - [ ] Branch created from latest main
 - [ ] Branch name follows `{type}/{issue#}-{description}` pattern
 - [ ] Issue number in branch name matches work item
@@ -107,7 +119,7 @@ git checkout -b feature/123-add-rate-limit
 
 #### Commit Message Format
 
-```
+```text
 type(scope): description
 
 Body explaining what and why (not how).
@@ -121,16 +133,17 @@ Co-Authored-By: Name <email> (if applicable)
 
 #### Pre-commit Checks (Automated)
 
-| Check | Tool | Failure Action |
-|-------|------|----------------|
-| Commit message | commitlint | Commit rejected |
+| Check           | Tool                    | Failure Action         |
+| --------------- | ----------------------- | ---------------------- |
+| Commit message  | commitlint              | Commit rejected        |
 | Code formatting | dotnet format, prettier | Auto-fixed or rejected |
-| Spelling | cspell | Commit rejected |
-| Secrets | secretlint | Commit rejected |
-| Markdown | markdownlint | Commit rejected |
-| Main branch | custom hook | Commit rejected |
+| Spelling        | cspell                  | Commit rejected        |
+| Secrets         | secretlint              | Commit rejected        |
+| Markdown        | markdownlint            | Commit rejected        |
+| Main branch     | custom hook             | Commit rejected        |
 
 **Definition of Done - Development:**
+
 - [ ] Code follows coding standards
 - [ ] All pre-commit hooks pass
 - [ ] Unit tests written for new code
@@ -143,7 +156,7 @@ Co-Authored-By: Name <email> (if applicable)
 
 #### PR Title Format
 
-```
+```text
 type(scope): description (#123)
 ```
 
@@ -182,26 +195,59 @@ N/A
 
 #### CI Checks (Must Pass)
 
-| Check | Description | Required |
-|-------|-------------|----------|
-| lint | Format, spelling, markdown, secrets | Yes |
-| build | All platforms (continue-on-error per platform) | Yes |
-| test-unit | Unit tests with coverage | Yes |
-| test-system | BDD system tests | Yes |
-| test-arch | Architecture tests | Yes |
-| codeql | Security analysis | Yes |
-| pr-title | Conventional commit format | Yes |
+| Check       | Description                                    | Required |
+| ----------- | ---------------------------------------------- | -------- |
+| lint        | Format, spelling, markdown, secrets            | Yes      |
+| build       | All platforms (continue-on-error per platform) | Yes      |
+| test-unit   | Unit tests with coverage                       | Yes      |
+| test-system | BDD system tests                               | Yes      |
+| test-arch   | Architecture tests                             | Yes      |
+| codeql      | Security analysis                              | Yes      |
+| pr-title    | Conventional commit format                     | Yes      |
 
 #### Review Requirements
 
-| Requirement | Details |
-|-------------|---------|
-| Reviewers | Minimum 1 approval |
-| Conversations | All resolved |
-| CI Status | All required checks pass |
-| Commits | Signed |
+| Requirement   | Details                  |
+| ------------- | ------------------------ |
+| Reviewers     | Minimum 1 approval       |
+| Conversations | All resolved             |
+| CI Status     | All required checks pass |
+| Commits       | Signed                   |
+
+#### Role-Based Task Assignment
+
+Tasks and reviews are assigned based on InnerSource roles. See `docs/standards/roles.md`
+for full role definitions.
+
+| InnerSource Role | Task Types                       | PR Actions                      |
+| ---------------- | -------------------------------- | ------------------------------- |
+| **Owner**        | Repo config, process, direction  | Final approval, merge authority |
+| **Maintainer**   | Code review, architecture review | Approve, request changes        |
+| **Contributor**  | Implementation, bug fixes, tests | Submit PRs, address feedback    |
+
+**Reviewer Assignment by Change Type:**
+
+| Change Type          | Primary Reviewer Role          | Secondary Reviewer           |
+| -------------------- | ------------------------------ | ---------------------------- |
+| New feature code     | Senior Developer (Maintainer)  | Domain specialist            |
+| Bug fix              | Senior Developer (Maintainer)  | Original author if available |
+| Security changes     | Security Reviewer (Maintainer) | Senior Developer             |
+| Architecture changes | Tech Lead (Owner)              | Technical Architect          |
+| Documentation        | Documentation Specialist       | Domain expert                |
+| Test changes         | QA Engineer (Maintainer)       | Senior Developer             |
+
+**Specialist Inheritance:**
+
+Specialist roles (e.g., DotNet Developer) operate at multiple InnerSource levels:
+
+- **As Contributor:** Implements using generic skills + specialist expertise
+- **As Maintainer:** Reviews using senior role skills + specialist expertise
+
+Example: DotNet Developer reviewing C# code applies Senior Developer review criteria
+plus .NET-specific patterns and idioms.
 
 **Definition of Done - PR:**
+
 - [ ] PR title follows conventional commit format
 - [ ] PR body uses template
 - [ ] All CI checks pass
@@ -217,7 +263,7 @@ N/A
 
 The squash merge commit message should be the PR title plus a summary:
 
-```
+```text
 feat(monitor): add rate limit detection (#123)
 
 Implements automatic detection of Claude rate limit responses
@@ -232,13 +278,14 @@ Closes #123
 
 #### Post-Merge Actions
 
-| Action | Automation |
-|--------|------------|
+| Action        | Automation                       |
+| ------------- | -------------------------------- |
 | Delete branch | Auto (branch protection setting) |
-| Close issue | Auto (via `Closes #123` in PR) |
-| Update ADRs | Manual (if completing feature) |
+| Close issue   | Auto (via `Closes #123` in PR)   |
+| Update ADRs   | Manual (if completing feature)   |
 
 **Definition of Done - Merge:**
+
 - [ ] Squash merged with descriptive message
 - [ ] Branch deleted
 - [ ] Issue closed
@@ -248,14 +295,15 @@ Closes #123
 
 **When completing a feature (all sub-issues done):**
 
-| Action | Details |
-|--------|---------|
-| Update ADRs | Change Status from "Proposed" to "Accepted" |
-| Update docs | Ensure no placeholder content |
-| Run full suite | Unit, system, E2E, architecture tests |
-| Close epic | Mark parent issue as complete |
+| Action         | Details                                     |
+| -------------- | ------------------------------------------- |
+| Update ADRs    | Change Status from "Proposed" to "Accepted" |
+| Update docs    | Ensure no placeholder content               |
+| Run full suite | Unit, system, E2E, architecture tests       |
+| Close epic     | Mark parent issue as complete               |
 
 **Definition of Done - Feature:**
+
 - [ ] All sub-issues completed and merged
 - [ ] All related ADRs marked "Accepted"
 - [ ] Documentation complete (no placeholders)
@@ -268,51 +316,51 @@ Closes #123
 
 Applied to `main` branch:
 
-| Rule | Setting |
-|------|---------|
-| Require PR | Yes |
-| Required reviewers | 1 |
-| Dismiss stale reviews | Yes |
-| Require status checks | lint, build, test-unit, test-system, test-arch, codeql |
-| Require branches up to date | Yes |
-| Require signed commits | Yes |
-| Require conversation resolution | Yes |
-| Require linear history | Yes (squash merge only) |
-| Allow force pushes | No |
-| Allow deletions | No |
-| Auto-delete head branches | Yes |
+| Rule                            | Setting                                                |
+| ------------------------------- | ------------------------------------------------------ |
+| Require PR                      | Yes                                                    |
+| Required reviewers              | 1                                                      |
+| Dismiss stale reviews           | Yes                                                    |
+| Require status checks           | lint, build, test-unit, test-system, test-arch, codeql |
+| Require branches up to date     | Yes                                                    |
+| Require signed commits          | Yes                                                    |
+| Require conversation resolution | Yes                                                    |
+| Require linear history          | Yes (squash merge only)                                |
+| Allow force pushes              | No                                                     |
+| Allow deletions                 | No                                                     |
+| Auto-delete head branches       | Yes                                                    |
 
 ---
 
 ## CI/CD Integration Points
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│                    CI/CD PIPELINE FLOW                        │
-├──────────────────────────────────────────────────────────────┤
-│                                                               │
-│  PUSH TO BRANCH              PR OPENED                MERGE  │
-│  ┌───────────┐              ┌───────────┐          ┌───────┐ │
-│  │ ci.yml    │              │ ci.yml    │          │ ci.yml│ │
-│  │ - lint    │              │ - lint    │          │ + docs│ │
-│  │ - build   │              │ - build   │          │ + tag │ │
-│  │ - test    │              │ - test    │          └───────┘ │
-│  └───────────┘              │ - codeql  │                    │
-│                              ├───────────┤                    │
-│                              │ pr-title  │                    │
-│                              │ - validate│                    │
-│                              └───────────┘                    │
-│                                                               │
-│  NIGHTLY                     RELEASE TAG                      │
-│  ┌───────────┐              ┌───────────┐                    │
-│  │ nightly   │              │ release   │                    │
-│  │ - e2e     │              │ - build   │                    │
-│  │ - mutate  │              │ - sign    │                    │
-│  │ - bench   │              │ - publish │                    │
-│  └───────────┘              │ - sbom    │                    │
-│                              └───────────┘                    │
-│                                                               │
-└──────────────────────────────────────────────────────────────┘
+```text
+┌────────────────────────────────────────────────────────────┐
+│                   CI/CD PIPELINE FLOW                      │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  PUSH TO BRANCH            PR OPENED              MERGE    │
+│  ┌───────────┐            ┌───────────┐        ┌───────┐   │
+│  │ ci.yml    │            │ ci.yml    │        │ ci.yml│   │
+│  │ - lint    │            │ - lint    │        │ + docs│   │
+│  │ - build   │            │ - build   │        │ + tag │   │
+│  │ - test    │            │ - test    │        └───────┘   │
+│  └───────────┘            │ - codeql  │                    │
+│                           ├───────────┤                    │
+│                           │ pr-title  │                    │
+│                           │ - validate│                    │
+│                           └───────────┘                    │
+│                                                            │
+│  NIGHTLY                   RELEASE TAG                     │
+│  ┌───────────┐            ┌───────────┐                    │
+│  │ nightly   │            │ release   │                    │
+│  │ - e2e     │            │ - build   │                    │
+│  │ - mutate  │            │ - sign    │                    │
+│  │ - bench   │            │ - publish │                    │
+│  └───────────┘            │ - sbom    │                    │
+│                           └───────────┘                    │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -340,18 +388,18 @@ gh pr create --fill
 
 ### Commit Types
 
-| Type | Description | Changelog Section |
-|------|-------------|-------------------|
-| feat | New feature | Features |
-| fix | Bug fix | Bug Fixes |
-| docs | Documentation | Documentation |
-| style | Formatting | (hidden) |
-| refactor | Code restructure | (hidden) |
-| perf | Performance | Performance |
-| test | Tests | (hidden) |
-| build | Build system | (hidden) |
-| ci | CI/CD | (hidden) |
-| chore | Maintenance | (hidden) |
+| Type     | Description      | Changelog Section |
+| -------- | ---------------- | ----------------- |
+| feat     | New feature      | Features          |
+| fix      | Bug fix          | Bug Fixes         |
+| docs     | Documentation    | Documentation     |
+| style    | Formatting       | (hidden)          |
+| refactor | Code restructure | (hidden)          |
+| perf     | Performance      | Performance       |
+| test     | Tests            | (hidden)          |
+| build    | Build system     | (hidden)          |
+| ci       | CI/CD            | (hidden)          |
+| chore    | Maintenance      | (hidden)          |
 
 ### PR Checklist (Copy-Paste)
 

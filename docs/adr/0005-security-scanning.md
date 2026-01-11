@@ -1,3 +1,12 @@
+---
+name: security-scanning
+description: |
+  When configuring security tools or responding to security alerts.
+  Applies when setting up secret detection, SAST, or dependency vulnerability scanning.
+decision: Use multi-layered security with secretlint pre-commit, GitHub CodeQL, and Dependabot.
+status: accepted
+---
+
 # ADR-0005: Security Scanning
 
 ## Status
@@ -11,6 +20,7 @@ Proposed
 ## Context
 
 We need automated security scanning to detect:
+
 1. Secrets accidentally committed to the repository
 2. Vulnerabilities in application code (SAST)
 3. Vulnerabilities in dependencies
@@ -27,12 +37,14 @@ We need automated security scanning to detect:
 
 #### Secret Scanning
 
-**Option A: secretlint (Selected)**
+#### Option A: secretlint (Selected)
+
 - npm-based, cross-platform
 - Pre-commit hook integration via lint-staged
 - Extensible with plugins
 
-**Option B: gitleaks**
+#### Option B: gitleaks
+
 - Go binary, fast
 - Complex cross-platform installation
 - No npm integration
@@ -41,12 +53,14 @@ We need automated security scanning to detect:
 
 #### SAST
 
-**Option A: GitHub CodeQL (Selected)**
+#### Option A: GitHub CodeQL (Selected)
+
 - Native GitHub integration
 - Free for public repositories
 - C# support included
 
-**Option B: SonarQube**
+#### Option B: SonarQube
+
 - More comprehensive
 - Requires separate infrastructure
 - Overkill for single project
@@ -55,12 +69,14 @@ We need automated security scanning to detect:
 
 #### Dependency Scanning
 
-**Option A: Dependabot (Selected)**
+#### Option A: Dependabot (Selected)
+
 - Native GitHub integration
 - Automatic PRs for updates
 - Security advisories
 
-**Option B: OWASP Dependency-Check**
+#### Option B: OWASP Dependency-Check
+
 - More comprehensive database
 - Requires CI setup
 - Additional maintenance
@@ -71,17 +87,18 @@ We need automated security scanning to detect:
 
 Multi-layered security scanning:
 
-| Layer | Tool | Trigger |
-|-------|------|---------|
-| Pre-commit | secretlint | Local commit |
-| Push | GitHub Secret Scanning | Remote push |
-| PR/Main | GitHub CodeQL | PR, main push, weekly |
-| Daily | Dependabot | Scheduled |
-| PR | `dotnet list package --vulnerable` | PR CI |
+| Layer      | Tool                               | Trigger               |
+| ---------- | ---------------------------------- | --------------------- |
+| Pre-commit | secretlint                         | Local commit          |
+| Push       | GitHub Secret Scanning             | Remote push           |
+| PR/Main    | GitHub CodeQL                      | PR, main push, weekly |
+| Daily      | Dependabot                         | Scheduled             |
+| PR         | `dotnet list package --vulnerable` | PR CI                 |
 
 ### Configuration
 
 **.secretlintrc.json:**
+
 ```json
 {
   "rules": [
@@ -97,12 +114,14 @@ Multi-layered security scanning:
 ## Consequences
 
 ### Positive
+
 - Multiple layers of defense
 - Local detection before push
 - Automated dependency updates
 - Free for public repos
 
 ### Negative
+
 - npm dependency for secretlint
 - CodeQL adds CI time
 - False positives require triage

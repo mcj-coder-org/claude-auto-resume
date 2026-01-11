@@ -92,30 +92,30 @@ McjCoderOrg.ClaudeAutoResume/
 
 ### Naming & Namespace Convention
 
-| Item | Convention | Example |
-|------|------------|---------|
-| Repository | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
-| Solution file | `{org}.{project}.sln` | `McjCoderOrg.ClaudeAutoResume.sln` |
-| Main project | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
-| Unit tests | `{org}.{project}.Tests` | `McjCoderOrg.ClaudeAutoResume.Tests` |
-| System tests | `{org}.{project}.SystemTests` | `McjCoderOrg.ClaudeAutoResume.SystemTests` |
-| E2E tests | `{org}.{project}.E2ETests` | `McjCoderOrg.ClaudeAutoResume.E2ETests` |
-| Architecture tests | `{org}.{project}.ArchTests` | `McjCoderOrg.ClaudeAutoResume.ArchTests` |
-| Benchmarks | `{org}.{project}.Benchmarks` | `McjCoderOrg.ClaudeAutoResume.Benchmarks` |
-| NuGet Package | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
+| Item               | Convention                    | Example                                    |
+| ------------------ | ----------------------------- | ------------------------------------------ |
+| Repository         | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
+| Solution file      | `{org}.{project}.sln`         | `McjCoderOrg.ClaudeAutoResume.sln`         |
+| Main project       | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
+| Unit tests         | `{org}.{project}.Tests`       | `McjCoderOrg.ClaudeAutoResume.Tests`       |
+| System tests       | `{org}.{project}.SystemTests` | `McjCoderOrg.ClaudeAutoResume.SystemTests` |
+| E2E tests          | `{org}.{project}.E2ETests`    | `McjCoderOrg.ClaudeAutoResume.E2ETests`    |
+| Architecture tests | `{org}.{project}.ArchTests`   | `McjCoderOrg.ClaudeAutoResume.ArchTests`   |
+| Benchmarks         | `{org}.{project}.Benchmarks`  | `McjCoderOrg.ClaudeAutoResume.Benchmarks`  |
+| NuGet Package      | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
 
 ### Namespace Strategy
 
 Test projects omit their suffix in `RootNamespace`, placing tests in the same namespace as production code:
 
-| Project | RootNamespace | Can Access Internals |
-|---------|---------------|---------------------|
-| Main | `McjCoderOrg.ClaudeAutoResume` | N/A |
-| Tests | `McjCoderOrg.ClaudeAutoResume` | Yes |
-| SystemTests | `McjCoderOrg.ClaudeAutoResume` | Yes |
-| ArchTests | `McjCoderOrg.ClaudeAutoResume` | Yes |
-| Benchmarks | `McjCoderOrg.ClaudeAutoResume` | Yes |
-| E2ETests | `McjCoderOrg.ClaudeAutoResume.E2ETests` | No (public API only) |
+| Project     | RootNamespace                           | Can Access Internals |
+| ----------- | --------------------------------------- | -------------------- |
+| Main        | `McjCoderOrg.ClaudeAutoResume`          | N/A                  |
+| Tests       | `McjCoderOrg.ClaudeAutoResume`          | Yes                  |
+| SystemTests | `McjCoderOrg.ClaudeAutoResume`          | Yes                  |
+| ArchTests   | `McjCoderOrg.ClaudeAutoResume`          | Yes                  |
+| Benchmarks  | `McjCoderOrg.ClaudeAutoResume`          | Yes                  |
+| E2ETests    | `McjCoderOrg.ClaudeAutoResume.E2ETests` | No (public API only) |
 
 ### Directory.Build.props
 
@@ -183,13 +183,13 @@ Test projects omit their suffix in `RootNamespace`, placing tests in the same na
 
 ### Test Project Matrix
 
-| Project | Type | Purpose | Framework | Internals Access |
-|---------|------|---------|-----------|------------------|
-| `.Tests` | Unit | Isolated component tests | xUnit + Moq | Yes |
-| `.SystemTests` | System | E2E with mocked externals | xUnit + Reqnroll (BDD) | Yes |
-| `.E2ETests` | E2E | Production-safe smoke tests | xUnit + Reqnroll (BDD) | No |
-| `.ArchTests` | Architecture | Dependency/structure rules | xUnit + NetArchTest | Yes |
-| `.Benchmarks` | Performance | Regression detection | BenchmarkDotNet | Yes |
+| Project        | Type         | Purpose                     | Framework              | Internals Access |
+| -------------- | ------------ | --------------------------- | ---------------------- | ---------------- |
+| `.Tests`       | Unit         | Isolated component tests    | xUnit + Moq            | Yes              |
+| `.SystemTests` | System       | E2E with mocked externals   | xUnit + Reqnroll (BDD) | Yes              |
+| `.E2ETests`    | E2E          | Production-safe smoke tests | xUnit + Reqnroll (BDD) | No               |
+| `.ArchTests`   | Architecture | Dependency/structure rules  | xUnit + NetArchTest    | Yes              |
+| `.Benchmarks`  | Performance  | Regression detection        | BenchmarkDotNet        | Yes              |
 
 ### Common Test Stack
 
@@ -329,14 +329,14 @@ Stryker.NET runs on nightly schedule to validate test effectiveness:
 
 ### Test Execution Strategy
 
-| Test Type | Trigger | Scope |
-|-----------|---------|-------|
-| Unit | Pre-push hook, PR, main | Affected tests only |
-| System | PR, main | Affected tests only |
-| E2E | Nightly, manual | Full suite |
-| Architecture | PR, main | Full suite |
-| Benchmarks | PR (compare), main (baseline) | Full suite |
-| Mutation | Nightly | Full suite |
+| Test Type    | Trigger                       | Scope               |
+| ------------ | ----------------------------- | ------------------- |
+| Unit         | Pre-push hook, PR, main       | Affected tests only |
+| System       | PR, main                      | Affected tests only |
+| E2E          | Nightly, manual               | Full suite          |
+| Architecture | PR, main                      | Full suite          |
+| Benchmarks   | PR (compare), main (baseline) | Full suite          |
+| Mutation     | Nightly                       | Full suite          |
 
 ### Code Coverage
 
@@ -351,19 +351,20 @@ Stryker.NET runs on nightly schedule to validate test effectiveness:
 
 ### Security Scanning Matrix
 
-| Scan Type | Tool | Trigger | Scope |
-|-----------|------|---------|-------|
-| Secret Detection | secretlint (pre-commit) | Every commit | Staged files |
-| Secret Detection | GitHub Secret Scanning | Push to remote | All branches |
-| SAST | GitHub CodeQL | PR, main push | Full codebase |
-| Dependency Vulnerabilities | Dependabot | Daily | All dependencies |
-| Dependency Vulnerabilities | `dotnet list package --vulnerable` | PR | Direct deps |
+| Scan Type                  | Tool                               | Trigger        | Scope            |
+| -------------------------- | ---------------------------------- | -------------- | ---------------- |
+| Secret Detection           | secretlint (pre-commit)            | Every commit   | Staged files     |
+| Secret Detection           | GitHub Secret Scanning             | Push to remote | All branches     |
+| SAST                       | GitHub CodeQL                      | PR, main push  | Full codebase    |
+| Dependency Vulnerabilities | Dependabot                         | Daily          | All dependencies |
+| Dependency Vulnerabilities | `dotnet list package --vulnerable` | PR             | Direct deps      |
 
 ### Pre-Commit Secret Scanning
 
 secretlint runs as part of pre-commit hook via lint-staged:
 
 **.secretlintrc.json:**
+
 ```json
 {
   "rules": [
@@ -387,6 +388,7 @@ secretlint runs as part of pre-commit hook via lint-staged:
 ### Security Policy
 
 `.github/SECURITY.md` documents:
+
 - Supported versions
 - Vulnerability reporting process (GitHub Security Advisories)
 - Expected response times
@@ -408,19 +410,20 @@ Generated during release using `Microsoft.Sbom.DotNetTool` and attached to GitHu
 
 ### Analyzer Stack
 
-| Analyzer | Purpose | Scope |
-|----------|---------|-------|
-| .NET Analyzers (built-in) | Microsoft CA/IDE rules | All projects |
-| Meziantou.Analyzer | Security, performance, best practices | All projects |
-| Roslynator.Analyzers | 500+ code quality rules | All projects |
-| SonarAnalyzer.CSharp | Security, reliability, maintainability | All projects |
-| Microsoft.CodeAnalysis.PublicApiAnalyzers | Breaking change detection | Main project |
-| xunit.analyzers | Test-specific rules | Test projects |
-| Moq.Analyzers | Mock setup validation | Test projects |
+| Analyzer                                  | Purpose                                | Scope         |
+| ----------------------------------------- | -------------------------------------- | ------------- |
+| .NET Analyzers (built-in)                 | Microsoft CA/IDE rules                 | All projects  |
+| Meziantou.Analyzer                        | Security, performance, best practices  | All projects  |
+| Roslynator.Analyzers                      | 500+ code quality rules                | All projects  |
+| SonarAnalyzer.CSharp                      | Security, reliability, maintainability | All projects  |
+| Microsoft.CodeAnalysis.PublicApiAnalyzers | Breaking change detection              | Main project  |
+| xunit.analyzers                           | Test-specific rules                    | Test projects |
+| Moq.Analyzers                             | Mock setup validation                  | Test projects |
 
 ### Public API Tracking
 
 Breaking changes detected via `PublicAPI.Shipped.txt` and `PublicAPI.Unshipped.txt`. Changes must align with conventional commits:
+
 - Additions → `feat:` → minor version bump
 - Removals/changes → `BREAKING CHANGE:` → major version bump
 
@@ -435,6 +438,7 @@ Breaking changes detected via `PublicAPI.Shipped.txt` and `PublicAPI.Unshipped.t
 ### Linting Integration
 
 **lint-staged configuration:**
+
 ```json
 {
   "lint-staged": {
@@ -468,15 +472,15 @@ Breaking changes detected via `PublicAPI.Shipped.txt` and `PublicAPI.Unshipped.t
 
 ### Documentation Architecture
 
-| Location | Purpose | Audience |
-|----------|---------|----------|
-| `docs/docusaurus/` | Published website source | End users, contributors |
-| `docs/standards/` | Coding conventions, style guides | Developers, agents |
-| `docs/practices/` | Workflows, processes, decision guides | Developers, agents |
-| `docs/playbooks/` | Runbooks for specific tasks | Developers, operators |
-| `docs/agents/` | Agent-specific guidance | AI agents |
-| `docs/adr/` | Architecture Decision Records | All |
-| `AGENTS.md` | Agent orientation & routing | AI agents |
+| Location           | Purpose                               | Audience                |
+| ------------------ | ------------------------------------- | ----------------------- |
+| `docs/docusaurus/` | Published website source              | End users, contributors |
+| `docs/standards/`  | Coding conventions, style guides      | Developers, agents      |
+| `docs/practices/`  | Workflows, processes, decision guides | Developers, agents      |
+| `docs/playbooks/`  | Runbooks for specific tasks           | Developers, operators   |
+| `docs/agents/`     | Agent-specific guidance               | AI agents               |
+| `docs/adr/`        | Architecture Decision Records         | All                     |
+| `AGENTS.md`        | Agent orientation & routing           | AI agents               |
 
 ### Agent-Friendly Front-Matter
 
@@ -489,7 +493,7 @@ summary: C# conventions, naming rules, and style guidelines for the project
 audience: [developer, agent]
 topics: [csharp, conventions, code-style]
 prerequisites: [docs/getting-started/development-environment.md]
-related: [docs/practices/code-review.md, docs/standards/testing.md]
+related: [docs/practices/code-review.md, docs/standards/coding/testing-examples.md]
 last_validated: 2026-01-09
 ---
 ```
@@ -499,8 +503,8 @@ last_validated: 2026-01-09
 The agent routing document mandates when to read front-matter vs. full content:
 
 - **Always Read (Full Content):** AGENTS.md, docs/agents/ORIENTATION.md, docs/agents/CONVENTIONS.md
-- **Read Front-Matter First:** docs/standards/*, docs/practices/*, docs/playbooks/*
-- **Read On-Demand:** docs/adr/*, CHANGELOG.md
+- **Read Front-Matter First:** docs/standards/_, docs/practices/_, docs/playbooks/\*
+- **Read On-Demand:** docs/adr/\*, CHANGELOG.md
 
 ### Documentation Website
 
@@ -511,12 +515,12 @@ The agent routing document mandates when to read front-matter vs. full content:
 
 ### Playbooks
 
-| Playbook | Purpose |
-|----------|---------|
-| `mutation-testing.md` | How to run Stryker.NET locally and interpret results |
-| `release-hotfix.md` | Emergency hotfix process from release tag |
-| `troubleshooting.md` | Common issues and diagnostics |
-| `dependency-update.md` | Manual dependency update process |
+| Playbook               | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| `mutation-testing.md`  | How to run Stryker.NET locally and interpret results |
+| `release-hotfix.md`    | Emergency hotfix process from release tag            |
+| `troubleshooting.md`   | Common issues and diagnostics                        |
+| `dependency-update.md` | Manual dependency update process                     |
 
 ---
 
@@ -524,19 +528,20 @@ The agent routing document mandates when to read front-matter vs. full content:
 
 ### Pipeline Architecture
 
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| `ci.yml` | Push, PR | Lint, build, test (affected only) |
-| `pr-title.yml` | PR open/edit | Validate PR title for squash merge |
-| `release.yml` | Push to main | Version, changelog, release, publish |
-| `codeql.yml` | PR, main, weekly | Security scanning |
-| `docs.yml` | Push to main (docs/**) | Deploy documentation site |
-| `nightly.yml` | Scheduled (daily) | E2E tests, mutation testing, benchmarks |
-| `dependabot-automerge.yml` | Dependabot PRs | Auto-approve and merge patches |
+| Workflow                   | Trigger                  | Purpose                                 |
+| -------------------------- | ------------------------ | --------------------------------------- |
+| `ci.yml`                   | Push, PR                 | Lint, build, test (affected only)       |
+| `pr-title.yml`             | PR open/edit             | Validate PR title for squash merge      |
+| `release.yml`              | Push to main             | Version, changelog, release, publish    |
+| `codeql.yml`               | PR, main, weekly         | Security scanning                       |
+| `docs.yml`                 | Push to main (docs/\*\*) | Deploy documentation site               |
+| `nightly.yml`              | Scheduled (daily)        | E2E tests, mutation testing, benchmarks |
+| `dependabot-automerge.yml` | Dependabot PRs           | Auto-approve and merge patches          |
 
 ### Branch Protection
 
 Main branch protection rules:
+
 - Require PR reviews (1 reviewer)
 - Require status checks: `lint`, `build` (all OS), `CodeQL`, `pr-title`
 - Require signed commits
@@ -596,26 +601,27 @@ With squash merges, PR title becomes the commit message on main. Validated via w
 ### Automated PR Approvals
 
 Org-scoped `MACHINE_USER_PAT` used for:
+
 - Changelog PR auto-approval
 - Dependabot patch update auto-approval
 
 ### Caching Strategy
 
-| Cache | Key |
-|-------|-----|
-| NuGet packages | `${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Packages.props') }}` |
-| npm packages | `${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}` |
-| .NET build outputs | `${{ runner.os }}-build-${{ hashFiles('**/*.csproj') }}` |
+| Cache              | Key                                                                      |
+| ------------------ | ------------------------------------------------------------------------ |
+| NuGet packages     | `${{ runner.os }}-nuget-${{ hashFiles('**/Directory.Packages.props') }}` |
+| npm packages       | `${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}`             |
+| .NET build outputs | `${{ runner.os }}-build-${{ hashFiles('**/*.csproj') }}`                 |
 
 ### Artifact Retention
 
-| Artifact Type | Retention |
-|---------------|-----------|
-| PR artifacts | 7 days |
-| Main branch artifacts | 30 days |
-| Release artifacts | Permanent (GitHub Release) |
-| Mutation reports | 30 days |
-| Benchmark history | Permanent (gh-pages) |
+| Artifact Type         | Retention                  |
+| --------------------- | -------------------------- |
+| PR artifacts          | 7 days                     |
+| Main branch artifacts | 30 days                    |
+| Release artifacts     | Permanent (GitHub Release) |
+| Mutation reports      | 30 days                    |
+| Benchmark history     | Permanent (gh-pages)       |
 
 ---
 
@@ -623,15 +629,16 @@ Org-scoped `MACHINE_USER_PAT` used for:
 
 ### Versioning Strategy
 
-| Tool | Purpose |
-|------|---------|
-| GitVersion | Semantic version calculation from git history |
-| git-cliff | Changelog generation from conventional commits |
+| Tool               | Purpose                                          |
+| ------------------ | ------------------------------------------------ |
+| GitVersion         | Semantic version calculation from git history    |
+| git-cliff          | Changelog generation from conventional commits   |
 | PublicApiAnalyzers | Breaking change detection synced with versioning |
 
 ### Conventional Commits
 
 Required format:
+
 ```
 <type>(<scope>): <subject>
 
@@ -640,19 +647,19 @@ Required format:
 <footer with Refs: #123>
 ```
 
-| Type | Description | Version Impact |
-|------|-------------|----------------|
-| `feat` | New feature | Minor bump |
-| `fix` | Bug fix | Patch bump |
-| `perf` | Performance improvement | Patch bump |
-| `refactor` | Code refactoring | No bump |
-| `docs` | Documentation only | No bump |
-| `test` | Adding/updating tests | No bump |
-| `build` | Build system changes | No bump |
-| `ci` | CI configuration | No bump |
-| `chore` | Maintenance tasks | No bump |
-| `revert` | Revert previous commit | Inherits reverted type |
-| `style` | Code style (formatting) | No bump |
+| Type       | Description             | Version Impact         |
+| ---------- | ----------------------- | ---------------------- |
+| `feat`     | New feature             | Minor bump             |
+| `fix`      | Bug fix                 | Patch bump             |
+| `perf`     | Performance improvement | Patch bump             |
+| `refactor` | Code refactoring        | No bump                |
+| `docs`     | Documentation only      | No bump                |
+| `test`     | Adding/updating tests   | No bump                |
+| `build`    | Build system changes    | No bump                |
+| `ci`       | CI configuration        | No bump                |
+| `chore`    | Maintenance tasks       | No bump                |
+| `revert`   | Revert previous commit  | Inherits reverted type |
+| `style`    | Code style (formatting) | No bump                |
 
 Breaking changes: Add `!` after type or `BREAKING CHANGE:` in footer → Major bump
 
@@ -661,6 +668,7 @@ Breaking changes: Add `!` after type or `BREAKING CHANGE:` in footer → Major b
 Issue-linked pattern: `type/issue#-description`
 
 Examples:
+
 - `feature/123-add-rate-limit-detection`
 - `fix/456-handle-empty-config`
 
@@ -668,24 +676,24 @@ Validated via pre-push hook.
 
 ### Version Flow
 
-| Branch | Example Version |
-|--------|-----------------|
-| `main` | `1.2.0` |
-| `feature/123-add-auth` | `1.3.0-add-auth.1` |
-| `fix/456-null-check` | `1.2.1-null-check.1` |
+| Branch                 | Example Version      |
+| ---------------------- | -------------------- |
+| `main`                 | `1.2.0`              |
+| `feature/123-add-auth` | `1.3.0-add-auth.1`   |
+| `fix/456-null-check`   | `1.2.1-null-check.1` |
 
 ### Release Artifacts
 
-| Artifact | Description |
-|----------|-------------|
-| `McjCoderOrg.ClaudeAutoResume.x.y.z.nupkg` | NuGet package (dotnet tool) with Source Link |
-| `McjCoderOrg.ClaudeAutoResume.x.y.z.snupkg` | Symbol package |
-| `win-x64/claude-auto-resume.exe` | Windows standalone executable |
-| `linux-x64/claude-auto-resume` | Linux standalone executable |
-| `osx-x64/claude-auto-resume` | macOS Intel standalone executable |
-| `osx-arm64/claude-auto-resume` | macOS Apple Silicon standalone executable |
-| `checksums.sha256` | SHA256 checksums for all artifacts |
-| `manifest.spdx.json` | SBOM (Software Bill of Materials) |
+| Artifact                                    | Description                                  |
+| ------------------------------------------- | -------------------------------------------- |
+| `McjCoderOrg.ClaudeAutoResume.x.y.z.nupkg`  | NuGet package (dotnet tool) with Source Link |
+| `McjCoderOrg.ClaudeAutoResume.x.y.z.snupkg` | Symbol package                               |
+| `win-x64/claude-auto-resume.exe`            | Windows standalone executable                |
+| `linux-x64/claude-auto-resume`              | Linux standalone executable                  |
+| `osx-x64/claude-auto-resume`                | macOS Intel standalone executable            |
+| `osx-arm64/claude-auto-resume`              | macOS Apple Silicon standalone executable    |
+| `checksums.sha256`                          | SHA256 checksums for all artifacts           |
+| `manifest.spdx.json`                        | SBOM (Software Bill of Materials)            |
 
 ---
 
@@ -705,6 +713,7 @@ Isolated development environment with all tooling pre-configured:
 ### Bootstrap Scripts
 
 `scripts/setup.ps1` (Windows) and `scripts/setup.sh` (Unix):
+
 - Check prerequisites (.NET, Node.js)
 - Restore .NET and npm dependencies
 - Install .NET local tools
@@ -714,15 +723,15 @@ Isolated development environment with all tooling pre-configured:
 
 ### npm Scripts
 
-| Script | Purpose |
-|--------|---------|
-| `npm run setup` | Run bootstrap script |
-| `npm run build` | Build solution |
-| `npm run test` | Run all tests |
-| `npm run test:unit` | Run unit tests only |
-| `npm run lint` | Run all linters |
-| `npm run format` | Format all files |
-| `npm run docs:dev` | Start docs dev server |
+| Script              | Purpose               |
+| ------------------- | --------------------- |
+| `npm run setup`     | Run bootstrap script  |
+| `npm run build`     | Build solution        |
+| `npm run test`      | Run all tests         |
+| `npm run test:unit` | Run unit tests only   |
+| `npm run lint`      | Run all linters       |
+| `npm run format`    | Format all files      |
+| `npm run docs:dev`  | Start docs dev server |
 
 ### .NET Local Tools
 
@@ -758,6 +767,7 @@ Options:
 ### Layered Configuration
 
 Priority order (highest to lowest):
+
 1. CLI arguments
 2. Environment variables (`CLAUDE_AUTO_RESUME_*`)
 3. Project config (`.claude-auto-resume.json`)
@@ -766,18 +776,19 @@ Priority order (highest to lowest):
 
 ### Semantic Exit Codes
 
-| Code | Name | Description |
-|------|------|-------------|
-| 0 | Success | Normal completion |
-| 1 | GeneralError | Unhandled exception |
-| 2 | ConfigurationError | Invalid config file or options |
-| 3 | DependencyMissing | Claude CLI not found |
-| 4 | RateLimitDetected | Exited due to rate limit |
-| 5 | UserCancelled | User interrupted (Ctrl+C) |
+| Code | Name               | Description                    |
+| ---- | ------------------ | ------------------------------ |
+| 0    | Success            | Normal completion              |
+| 1    | GeneralError       | Unhandled exception            |
+| 2    | ConfigurationError | Invalid config file or options |
+| 3    | DependencyMissing  | Claude CLI not found           |
+| 4    | RateLimitDetected  | Exited due to rate limit       |
+| 5    | UserCancelled      | User interrupted (Ctrl+C)      |
 
 ### Diagnostics Command
 
 `--diagnose` outputs structured environment report including:
+
 - Runtime environment (.NET version, OS, architecture)
 - Dependencies (Claude CLI location/version)
 - Configuration validity
@@ -787,6 +798,7 @@ Priority order (highest to lowest):
 ### Verbose Logging
 
 `--verbose` enables file logging:
+
 - Windows: `%LOCALAPPDATA%\claude-auto-resume\logs\`
 - macOS: `~/Library/Logs/claude-auto-resume/`
 - Linux: `~/.local/share/claude-auto-resume/logs/`
@@ -794,6 +806,7 @@ Priority order (highest to lowest):
 ### Internationalization
 
 English only initially, but i18n-ready:
+
 - All user-facing strings in resource files
 - Named parameters for structured logging: `{ResetTime}`, `{WaitMinutes}`
 - Structure allows adding translations without code changes
@@ -804,15 +817,16 @@ English only initially, but i18n-ready:
 
 ### Logging Strategy
 
-| Mode | Console Output | File Logging |
-|------|----------------|--------------|
-| Default | Errors only | Bootstrap errors |
-| `--verbose` | None (passthrough) | Full debug |
-| Exception | Error + log path | Full stack trace |
+| Mode        | Console Output     | File Logging     |
+| ----------- | ------------------ | ---------------- |
+| Default     | Errors only        | Bootstrap errors |
+| `--verbose` | None (passthrough) | Full debug       |
+| Exception   | Error + log path   | Full stack trace |
 
 ### Platform Context Capture
 
 Anonymous environment details captured at startup:
+
 - .NET version, runtime identifier
 - OS description and architecture
 - App version
@@ -860,57 +874,57 @@ ADRs are ordered by decision dependency: foundational constraints first, then co
 
 ### Tier 1: Foundational Constraints
 
-| ADR | Title | Rationale |
-|-----|-------|-----------|
-| 0001 | License | Legal framework - constrains everything |
-| 0002 | GitHub Platform | Where we develop - informs tooling |
-| 0003 | Work Item Management | How we track/organize work |
-| 0004 | Contribution Workflow | Full ticket-to-merge process |
+| ADR  | Title                 | Rationale                               |
+| ---- | --------------------- | --------------------------------------- |
+| 0001 | License               | Legal framework - constrains everything |
+| 0002 | GitHub Platform       | Where we develop - informs tooling      |
+| 0003 | Work Item Management  | How we track/organize work              |
+| 0004 | Contribution Workflow | Full ticket-to-merge process            |
 
 ### Tier 2: Compliance & Standards
 
-| ADR | Title | Rationale |
-|-----|-------|-----------|
-| 0005 | Security Scanning | Security baseline before code |
-| 0006 | Accessibility | WCAG compliance requirements |
-| 0007 | Telemetry | Privacy policy - affects architecture |
+| ADR  | Title             | Rationale                             |
+| ---- | ----------------- | ------------------------------------- |
+| 0005 | Security Scanning | Security baseline before code         |
+| 0006 | Accessibility     | WCAG compliance requirements          |
+| 0007 | Telemetry         | Privacy policy - affects architecture |
 
 ### Tier 3: Process & Workflow
 
-| ADR | Title | Rationale |
-|-----|-------|-----------|
+| ADR  | Title                  | Rationale                |
+| ---- | ---------------------- | ------------------------ |
 | 0008 | Documentation Strategy | How we capture knowledge |
-| 0009 | Agent Onboarding | How AI agents interact |
-| 0010 | Code Formatting | Style consistency |
-| 0011 | Pre-commit Hooks | Quality gates |
+| 0009 | Agent Onboarding       | How AI agents interact   |
+| 0010 | Code Formatting        | Style consistency        |
+| 0011 | Pre-commit Hooks       | Quality gates            |
 
 ### Tier 4: Technology Choices
 
-| ADR | Title | Rationale |
-|-----|-------|-----------|
-| 0012 | Namespace and Project Naming | Based on org standards |
-| 0013 | Testing Framework | What testing approach |
-| 0014 | Test Project Structure | How to organize tests |
-| 0015 | Code Analyzers | Which analyzers for .NET 10 |
-| 0016 | Architecture Testing | Enforce structure rules |
-| 0017 | Observability | Logging/diagnostics |
-| 0018 | CLI Design | Command-line interface |
-| 0019 | Internationalization | String handling |
-| 0020 | Breaking Change Detection | API stability tooling |
+| ADR  | Title                        | Rationale                   |
+| ---- | ---------------------------- | --------------------------- |
+| 0012 | Namespace and Project Naming | Based on org standards      |
+| 0013 | Testing Framework            | What testing approach       |
+| 0014 | Test Project Structure       | How to organize tests       |
+| 0015 | Code Analyzers               | Which analyzers for .NET 10 |
+| 0016 | Architecture Testing         | Enforce structure rules     |
+| 0017 | Observability                | Logging/diagnostics         |
+| 0018 | CLI Design                   | Command-line interface      |
+| 0019 | Internationalization         | String handling             |
+| 0020 | Breaking Change Detection    | API stability tooling       |
 
 ### Tier 5: CI/CD & Release
 
-| ADR | Title | Rationale |
-|-----|-------|-----------|
-| 0021 | CI/CD Pipeline | Implements above decisions |
-| 0022 | Versioning and Changelog | Release process |
-| 0023 | Dependency Management | Update strategy |
-| 0024 | Code Coverage | Coverage enforcement |
-| 0025 | Performance Testing | Benchmark approach |
-| 0026 | Mutation Testing | Test quality validation |
-| 0027 | Release Artifacts | What we ship |
-| 0028 | Documentation Versioning | Docs release alignment |
-| 0029 | Developer Environment | Onboarding experience |
+| ADR  | Title                    | Rationale                  |
+| ---- | ------------------------ | -------------------------- |
+| 0021 | CI/CD Pipeline           | Implements above decisions |
+| 0022 | Versioning and Changelog | Release process            |
+| 0023 | Dependency Management    | Update strategy            |
+| 0024 | Code Coverage            | Coverage enforcement       |
+| 0025 | Performance Testing      | Benchmark approach         |
+| 0026 | Mutation Testing         | Test quality validation    |
+| 0027 | Release Artifacts        | What we ship               |
+| 0028 | Documentation Versioning | Docs release alignment     |
+| 0029 | Developer Environment    | Onboarding experience      |
 
 ---
 

@@ -1,3 +1,12 @@
+---
+name: namespace-and-project-naming
+description: |
+  When creating new projects, namespaces, or test assemblies. Apply when naming solutions,
+  configuring RootNamespace, setting up InternalsVisibleTo, or structuring test projects.
+decision: Use McjCoderOrg prefix with folder-parallel namespaces and test projects sharing production namespace.
+status: accepted
+---
+
 # ADR-0012: Namespace and Project Naming Conventions
 
 ## Status
@@ -32,22 +41,23 @@ We need consistent naming conventions for:
 
 **Organization Prefix:** `McjCoderOrg`
 
-| Item | Convention | Example |
-|------|------------|---------|
-| Repository | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
-| Solution file | `{org}.{project}.sln` | `McjCoderOrg.ClaudeAutoResume.sln` |
-| Main project | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
-| Unit test project | `{org}.{project}.Tests` | `McjCoderOrg.ClaudeAutoResume.Tests` |
+| Item                | Convention                    | Example                                    |
+| ------------------- | ----------------------------- | ------------------------------------------ |
+| Repository          | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
+| Solution file       | `{org}.{project}.sln`         | `McjCoderOrg.ClaudeAutoResume.sln`         |
+| Main project        | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
+| Unit test project   | `{org}.{project}.Tests`       | `McjCoderOrg.ClaudeAutoResume.Tests`       |
 | System test project | `{org}.{project}.SystemTests` | `McjCoderOrg.ClaudeAutoResume.SystemTests` |
-| E2E test project | `{org}.{project}.E2ETests` | `McjCoderOrg.ClaudeAutoResume.E2ETests` |
-| NuGet Package ID | `{org}.{project}` | `McjCoderOrg.ClaudeAutoResume` |
+| E2E test project    | `{org}.{project}.E2ETests`    | `McjCoderOrg.ClaudeAutoResume.E2ETests`    |
+| NuGet Package ID    | `{org}.{project}`             | `McjCoderOrg.ClaudeAutoResume`             |
 
 ### Namespace Convention
 
 **Folder-parallel namespaces:** Namespaces mirror the folder structure within each project.
 
 **Main Project:**
-```
+
+```text
 src/McjCoderOrg.ClaudeAutoResume/
 ├── Program.cs                    → McjCoderOrg.ClaudeAutoResume
 ├── ClaudeMonitor.cs              → McjCoderOrg.ClaudeAutoResume
@@ -60,7 +70,7 @@ src/McjCoderOrg.ClaudeAutoResume/
 
 **Test Projects (RootNamespace omits "Tests" suffix):**
 
-```
+```text
 tests/McjCoderOrg.ClaudeAutoResume.Tests/
 ├── WrapperConfigTests.cs         → McjCoderOrg.ClaudeAutoResume
 ├── ClaudeMonitorTests.cs         → McjCoderOrg.ClaudeAutoResume
@@ -71,6 +81,7 @@ tests/McjCoderOrg.ClaudeAutoResume.Tests/
 ```
 
 This allows test classes to reside in the **same namespace** as the classes they test, enabling:
+
 - Access to `internal` members (with `InternalsVisibleTo`)
 - Natural discoverability (test next to implementation in IDE namespace view)
 - Simpler using statements
@@ -157,15 +168,15 @@ Using `<InternalsVisibleTo>` in the project file (modern approach, no AssemblyIn
 
 ### Test Visibility Matrix
 
-| Test Project | Namespace | Can Access Internals | Testing Style |
-|--------------|-----------|---------------------|---------------|
-| `.Tests` | Same as production | Yes | White-box unit testing |
-| `.SystemTests` | Same as production | Yes | White-box integration |
-| `.E2ETests` | Own namespace | No | Black-box, public API |
+| Test Project   | Namespace          | Can Access Internals | Testing Style          |
+| -------------- | ------------------ | -------------------- | ---------------------- |
+| `.Tests`       | Same as production | Yes                  | White-box unit testing |
+| `.SystemTests` | Same as production | Yes                  | White-box integration  |
+| `.E2ETests`    | Own namespace      | No                   | Black-box, public API  |
 
 ### Folder Structure
 
-```
+```text
 McjCoderOrg.ClaudeAutoResume/
 ├── src/
 │   └── McjCoderOrg.ClaudeAutoResume/

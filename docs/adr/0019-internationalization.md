@@ -1,3 +1,12 @@
+---
+name: internationalization
+description: |
+  When adding user-facing strings or planning localization. Apply when creating resource files,
+  formatting messages with named parameters, or structuring for future translations.
+decision: Use i18n-ready structure with resource files and named parameters, English only initially.
+status: accepted
+---
+
 # ADR-0019: Internationalization
 
 ## Status
@@ -25,11 +34,13 @@ We need to decide on internationalization (i18n) strategy.
 Structure for i18n but only English strings.
 
 **Pros:**
+
 - No translation overhead
 - Ready for future localization
 - Named parameters in strings
 
 **Cons:**
+
 - No immediate multi-language support
 
 #### Option 2: Full i18n from Start
@@ -37,9 +48,11 @@ Structure for i18n but only English strings.
 Multiple languages from day one.
 
 **Pros:**
+
 - Immediate global reach
 
 **Cons:**
+
 - Translation maintenance burden
 - Delays initial release
 
@@ -48,9 +61,11 @@ Multiple languages from day one.
 Hardcoded English strings.
 
 **Pros:**
+
 - Simplest implementation
 
 **Cons:**
+
 - Difficult to add translations later
 - Technical debt
 
@@ -67,7 +82,7 @@ Hardcoded English strings.
 
 ### Resource Files
 
-```
+```text
 src/McjCoderOrg.ClaudeAutoResume/
 └── Resources/
     ├── Strings.resx           # Default (en-GB)
@@ -85,11 +100,13 @@ WaitingForReset = "Waiting {WaitMinutes} minutes for rate limit reset"
 ## Consequences
 
 ### Positive
+
 - Ready for future localization
 - Consistent string management
 - Named parameters aid translation
 
 ### Negative
+
 - Slight overhead vs hardcoded strings
 - Resource file maintenance
 

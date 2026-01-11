@@ -1,0 +1,24 @@
+<Project>
+  <PropertyGroup>
+    <!-- Enforce code style and analysis -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-all</AnalysisLevel>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+
+    <!-- XML documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn><!-- Suppress in Debug, enforce via .editorconfig -->
+
+    <!-- Central package management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!-- Analyzers for all projects -->
+  <ItemGroup>
+    <PackageReference Include="Meziantou.Analyzer" PrivateAssets="all" />
+    <PackageReference Include="Roslynator.Analyzers" PrivateAssets="all" />
+    <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

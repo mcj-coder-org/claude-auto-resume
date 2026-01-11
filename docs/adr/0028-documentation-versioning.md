@@ -1,3 +1,11 @@
+---
+name: documentation-versioning
+description: |
+  When versioning documentation alongside software releases or managing docs for multiple versions. Apply when configuring Docusaurus versioning or documentation site structure.
+decision: Use Docusaurus versioned docs with version snapshots created at each release.
+status: accepted
+---
+
 # ADR-0028: Documentation Versioning
 
 ## Status
@@ -11,6 +19,7 @@ Proposed
 ## Context
 
 We need versioned documentation to:
+
 1. Match docs to software versions
 2. Support users on older versions
 3. Show what's new in each release
@@ -36,7 +45,8 @@ npm run docusaurus docs:version 1.0.0
 ```
 
 Creates:
-```
+
+```text
 docs/docusaurus/
 ├── docs/                    # Next/unreleased
 ├── versioned_docs/
@@ -48,10 +58,10 @@ docs/docusaurus/
 
 ### Version Strategy
 
-| Version | Docs Location | When Created |
-|---------|---------------|--------------|
-| Next | `docs/` | Ongoing |
-| Latest | `versioned_docs/version-x.y.z/` | Each release |
+| Version  | Docs Location                   | When Created      |
+| -------- | ------------------------------- | ----------------- |
+| Next     | `docs/`                         | Ongoing           |
+| Latest   | `versioned_docs/version-x.y.z/` | Each release      |
 | Archived | `versioned_docs/version-x.y.z/` | Previous releases |
 
 ### Release Workflow
@@ -69,11 +79,13 @@ docs/docusaurus/
 ## Consequences
 
 ### Positive
+
 - Users find version-appropriate docs
 - History preserved
 - Clear upgrade paths
 
 ### Negative
+
 - Doc maintenance across versions
 - Storage for versioned content
 - Complexity in doc site

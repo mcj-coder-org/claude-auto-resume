@@ -1,0 +1,33 @@
+{
+  "recommendations": [
+    // C# / .NET
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.vscode-dotnet-runtime",
+
+    // Formatting
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+
+    // Markdown
+    "davidanson.vscode-markdownlint",
+    "yzhang.markdown-all-in-one",
+
+    // Spell checking
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-british-english",
+
+    // Git
+    "eamodio.gitlens",
+
+    // XML
+    "redhat.vscode-xml",
+
+    // Gherkin/BDD
+    "alexkrechik.cucumberautocomplete",
+
+    // YAML
+    "redhat.vscode-yaml"
+  ],
+  "unwantedRecommendations": []
+}

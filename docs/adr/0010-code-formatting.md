@@ -1,3 +1,12 @@
+---
+name: code-formatting
+description: |
+  When configuring formatters or resolving formatting issues.
+  Applies when setting up .editorconfig, Prettier, or pre-commit hooks for code style.
+decision: Use dotnet format for C# with .editorconfig and Prettier for Markdown/JSON/YAML files.
+status: accepted
+---
+
 # ADR-0010: Code Formatting
 
 ## Status
@@ -31,12 +40,14 @@ Formatting should be:
 Use `dotnet format` for C# and Prettier for everything else.
 
 **Pros:**
+
 - `dotnet format` respects `.editorconfig` (single source of truth)
 - Prettier is industry standard for Markdown/JSON/YAML
 - Both integrate with pre-commit hooks
 - Both have CI verification modes
 
 **Cons:**
+
 - Two tools instead of one
 - Prettier requires Node.js
 
@@ -45,10 +56,12 @@ Use `dotnet format` for C# and Prettier for everything else.
 Use `dotnet format` for C# and rely on IDE formatting for other files.
 
 **Pros:**
+
 - No Node.js dependency
 - Simpler setup
 
 **Cons:**
+
 - No automated Markdown/JSON formatting
 - Inconsistent non-C# files
 
@@ -57,17 +70,20 @@ Use `dotnet format` for C# and rely on IDE formatting for other files.
 Use CSharpier (opinionated C# formatter) instead of `dotnet format`.
 
 **Pros:**
+
 - Opinionated = less configuration
 - Faster than `dotnet format`
 
 **Cons:**
+
 - Less control over formatting rules
 - Additional tool to maintain
 - May conflict with `.editorconfig` preferences
 
 ## Decision
 
-We will use **dotnet format** for C# files and **Prettier** for Markdown, JSON, and YAML files. Line endings are enforced via `.gitattributes`.
+We will use **dotnet format** for C# files and **Prettier** for Markdown, JSON, and YAML
+files. Line endings are enforced via `.gitattributes`.
 
 ### Configuration Files
 
@@ -198,12 +214,12 @@ dotnet_naming_style.underscore_prefix.required_prefix = _
 
 ### Configuration Sync
 
-| File Type | Formatter | Config Source |
-|-----------|-----------|---------------|
-| C# | `dotnet format` | `.editorconfig` |
-| Markdown | Prettier | `.prettierrc` |
-| JSON | Prettier | `.prettierrc` |
-| YAML | Prettier | `.prettierrc` |
+| File Type  | Formatter       | Config Source   |
+| ---------- | --------------- | --------------- |
+| C#         | `dotnet format` | `.editorconfig` |
+| Markdown   | Prettier        | `.prettierrc`   |
+| JSON       | Prettier        | `.prettierrc`   |
+| YAML       | Prettier        | `.prettierrc`   |
 | XML/csproj | `dotnet format` | `.editorconfig` |
 
 ### IDE Integration

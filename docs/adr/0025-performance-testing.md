@@ -1,3 +1,11 @@
+---
+name: performance-testing
+description: |
+  When implementing performance benchmarks, detecting regressions, or tracking performance over time. Apply when setting up benchmark projects or CI performance checks.
+decision: Use BenchmarkDotNet with CI baseline comparisons and nightly full benchmark suites.
+status: accepted
+---
+
 # ADR-0025: Performance Testing
 
 ## Status
@@ -11,6 +19,7 @@ Proposed
 ## Context
 
 We need performance testing to:
+
 1. Detect performance regressions
 2. Establish baselines
 3. Track improvements over time
@@ -54,20 +63,22 @@ public class OutputParsingBenchmarks
 
 ### Execution Strategy
 
-| Trigger | Action |
-|---------|--------|
-| PR | Compare to baseline, warn on regression |
-| Main push | Update baseline |
-| Nightly | Full benchmark suite |
+| Trigger   | Action                                  |
+| --------- | --------------------------------------- |
+| PR        | Compare to baseline, warn on regression |
+| Main push | Update baseline                         |
+| Nightly   | Full benchmark suite                    |
 
 ## Consequences
 
 ### Positive
+
 - Automated regression detection
 - Historical tracking
 - Industry-standard tooling
 
 ### Negative
+
 - CI time for benchmarks
 - Baseline management
 - Environment variability

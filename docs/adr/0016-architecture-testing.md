@@ -1,3 +1,12 @@
+---
+name: architecture-testing
+description: |
+  When enforcing dependency rules or layer separation. Apply when writing architecture tests
+  to prevent circular dependencies, cross-slice references, or layer violations.
+decision: Use NetArchTest with slice support for automated architecture enforcement.
+status: accepted
+---
+
 # ADR-0016: Architecture Testing
 
 ## Status
@@ -11,6 +20,7 @@ Proposed
 ## Context
 
 We need automated architecture tests to enforce structural rules:
+
 1. Dependency direction (no circular dependencies)
 2. Layer separation (domain doesn't depend on infrastructure)
 3. Slice isolation (feature modules don't cross-reference)
@@ -30,12 +40,14 @@ We need automated architecture tests to enforce structural rules:
 Fluent API for .NET architecture testing.
 
 **Pros:**
+
 - Fluent, readable syntax
 - Slice support via `SliceRuleDefinition`
 - Active maintenance
 - xUnit integration
 
 **Cons:**
+
 - Less comprehensive than ArchUnitNET
 - Smaller community
 
@@ -44,11 +56,13 @@ Fluent API for .NET architecture testing.
 C# port of Java's ArchUnit.
 
 **Pros:**
+
 - Comprehensive rule engine
 - Large feature set
 - Java ArchUnit compatibility
 
 **Cons:**
+
 - Heavier API
 - No native slice support
 - Steeper learning curve
@@ -89,12 +103,14 @@ public void Slices_ShouldNotHaveCrossSliceDependencies()
 ## Consequences
 
 ### Positive
+
 - Automated architecture enforcement
 - Prevents architecture drift
 - Self-documenting structural rules
 - Fast feedback in CI
 
 ### Negative
+
 - Additional test project to maintain
 - Rules need updating as architecture evolves
 

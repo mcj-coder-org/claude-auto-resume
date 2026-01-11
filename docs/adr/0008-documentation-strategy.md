@@ -1,3 +1,12 @@
+---
+name: documentation-strategy
+description: |
+  When creating or organizing documentation for users, developers, or agents.
+  Applies when structuring docs, adding front-matter, or setting up the documentation site.
+decision: Use Docusaurus on GitHub Pages with structured front-matter for agent-friendly documentation.
+status: accepted
+---
+
 # ADR-0008: Documentation Strategy
 
 ## Status
@@ -11,6 +20,7 @@ Proposed
 ## Context
 
 We need a documentation strategy that supports:
+
 1. End-user documentation (installation, usage)
 2. Developer documentation (contributing, architecture)
 3. Agent-friendly documentation (progressive loading, structured metadata)
@@ -28,18 +38,21 @@ We need a documentation strategy that supports:
 
 #### Documentation Platform
 
-**Option A: Docusaurus on GitHub Pages (Selected)**
+#### Option A: Docusaurus on GitHub Pages (Selected)
+
 - React-based static site generator
 - Native versioning support
 - MDX for interactive docs
 - Free hosting on GitHub Pages
 
-**Option B: MkDocs with Material**
+#### Option B: MkDocs with Material
+
 - Python-based
 - Clean Material Design
 - Good search
 
-**Option C: GitBook**
+#### Option C: GitBook
+
 - Hosted solution
 - Nice editor
 - Paid for advanced features
@@ -50,7 +63,7 @@ We need a documentation strategy that supports:
 
 ### Documentation Structure
 
-```
+```text
 docs/
 ├── docusaurus/          # Website source
 ├── standards/           # Coding conventions
@@ -79,25 +92,27 @@ last_validated: 2026-01-09
 
 ### Documentation Types
 
-| Location | Purpose | Audience |
-|----------|---------|----------|
-| `docs/docusaurus/` | Published website | End users |
-| `docs/standards/` | Coding conventions | Developers, agents |
-| `docs/practices/` | Workflows | Developers, agents |
-| `docs/playbooks/` | Runbooks | Operators |
-| `docs/agents/` | Agent guidance | AI agents |
-| `docs/adr/` | Architecture decisions | All |
-| `AGENTS.md` | Agent routing | AI agents |
+| Location           | Purpose                | Audience           |
+| ------------------ | ---------------------- | ------------------ |
+| `docs/docusaurus/` | Published website      | End users          |
+| `docs/standards/`  | Coding conventions     | Developers, agents |
+| `docs/practices/`  | Workflows              | Developers, agents |
+| `docs/playbooks/`  | Runbooks               | Operators          |
+| `docs/agents/`     | Agent guidance         | AI agents          |
+| `docs/adr/`        | Architecture decisions | All                |
+| `AGENTS.md`        | Agent routing          | AI agents          |
 
 ## Consequences
 
 ### Positive
+
 - Version-controlled documentation
 - Published website for users
 - Agent-friendly metadata
 - Free hosting
 
 ### Negative
+
 - Docusaurus learning curve
 - Build step for website
 - Front-matter maintenance overhead

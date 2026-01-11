@@ -1,3 +1,11 @@
+---
+name: cicd-pipeline
+description: |
+  When configuring CI/CD workflows, setting up build automation, or implementing release pipelines. Apply when deciding on pipeline tools, branching strategies, or quality gates.
+decision: Use GitHub Actions with GitHub Flow branching for CI/CD with automated releases to NuGet.
+status: accepted
+---
+
 # ADR-0021: CI/CD Pipeline
 
 ## Status
@@ -23,6 +31,7 @@ We need a CI/CD pipeline that:
 #### Option 1: GitHub Actions (Selected)
 
 **Pros:**
+
 - Native GitHub integration
 - Free for public repos, generous limits for private
 - Excellent .NET support
@@ -31,17 +40,20 @@ We need a CI/CD pipeline that:
 - Large marketplace of actions
 
 **Cons:**
+
 - Vendor lock-in to GitHub
 - YAML configuration can be complex
 
 #### Option 2: Azure DevOps Pipelines
 
 **Pros:**
+
 - Microsoft ecosystem integration
 - Powerful pipeline features
 - Good .NET support
 
 **Cons:**
+
 - Separate service from GitHub
 - More complex setup for GitHub repos
 - Less community action ecosystem
@@ -49,10 +61,12 @@ We need a CI/CD pipeline that:
 #### Option 3: GitLab CI
 
 **Pros:**
+
 - GitLab-native
 - Powerful pipeline features
 
 **Cons:**
+
 - Requires GitLab (we use GitHub)
 - Migration overhead
 
@@ -187,13 +201,13 @@ jobs:
 
 ### Quality Gates
 
-| Gate | Enforcement |
-|------|-------------|
-| Commit message format | commitlint in CI |
-| Code formatting | `dotnet format --verify-no-changes` |
-| Build success | All platforms must pass |
-| Tests pass | All platforms must pass |
-| PR approval | Required for merge to main |
+| Gate                  | Enforcement                         |
+| --------------------- | ----------------------------------- |
+| Commit message format | commitlint in CI                    |
+| Code formatting       | `dotnet format --verify-no-changes` |
+| Build success         | All platforms must pass             |
+| Tests pass            | All platforms must pass             |
+| PR approval           | Required for merge to main          |
 
 ## Consequences
 
