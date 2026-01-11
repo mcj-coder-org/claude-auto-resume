@@ -17,7 +17,7 @@
     "secretlint:fix": "secretlint \"**/*\" --fix"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.1",
+    "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@secretlint/secretlint-rule-aws": "^11.2.5",
     "@secretlint/secretlint-rule-gcp": "^8.0.0",
