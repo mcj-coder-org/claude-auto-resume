@@ -13,10 +13,10 @@ public sealed class ArchitectureTests
     public void MainAssembly_ShouldHaveNoCircularDependencies()
     {
         // Arrange & Act
-        var types = Types.InAssembly(MainAssembly);
+        var types = Types.InAssembly(MainAssembly).GetTypes();
 
         // Assert - assembly should be loadable (no circular refs at assembly level)
-        types.Should().NotBeNull();
+        types.Should().NotBeEmpty();
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public sealed class ArchitectureTests
         result.IsSuccessful.Should().BeTrue(
             "Public classes should be sealed to prevent unintended inheritance. " +
             "Failing types: {0}",
-            string.Join(", ", result.FailingTypeNames ?? Array.Empty<string>()));
+            string.Join(", ", result.FailingTypes?.Select(t => t.FullName) ?? []));
     }
 
     [Fact]
@@ -48,6 +48,8 @@ public sealed class ArchitectureTests
         var result = Types.InAssembly(MainAssembly)
             .That()
             .AreClasses()
+            .And()
+            .DoNotResideInNamespaceStartingWith("Coverlet.Core") // Exclude Coverlet instrumentation
             .Should()
             .ResideInNamespaceStartingWith("McjCoderOrg.ClaudeAutoResume")
             .GetResult();
@@ -56,7 +58,7 @@ public sealed class ArchitectureTests
         result.IsSuccessful.Should().BeTrue(
             "All classes should be in McjCoderOrg.ClaudeAutoResume namespace. " +
             "Failing types: {0}",
-            string.Join(", ", result.FailingTypeNames ?? Array.Empty<string>()));
+            string.Join(", ", result.FailingTypes?.Select(t => t.FullName) ?? []));
     }
 
     [Fact]
@@ -67,13 +69,13 @@ public sealed class ArchitectureTests
             .That()
             .AreInterfaces()
             .Should()
-            .HaveNameStartingWith("I")
+            .HaveNameStartingWith("I", StringComparison.Ordinal)
             .GetResult();
 
         // Assert
         result.IsSuccessful.Should().BeTrue(
             "Interface names should start with 'I'. " +
             "Failing types: {0}",
-            string.Join(", ", result.FailingTypeNames ?? Array.Empty<string>()));
+            string.Join(", ", result.FailingTypes?.Select(t => t.FullName) ?? []));
     }
 }
