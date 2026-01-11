@@ -1,0 +1,49 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# NOTE: Auto-merge waits for required status checks per branch protection rules
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    name: Auto-merge Dependabot PRs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Approve patch updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for patch updates
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on minor/major updates
+        if: steps.metadata.outputs.update-type != 'version-update:semver-patch'
+        run: |
+          gh pr comment "$PR_URL" --body "This Dependabot PR contains a **${{ steps.metadata.outputs.update-type }}** update and requires manual review before merging."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
