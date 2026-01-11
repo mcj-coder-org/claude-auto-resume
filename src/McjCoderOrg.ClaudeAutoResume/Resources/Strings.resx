@@ -57,18 +57,18 @@
     <value>An unexpected error occurred. See log file for details.</value>
   </data>
   <data name="ErrorLogLocation" xml:space="preserve">
-    <value>Log file: {LogPath}</value>
-    <comment>{LogPath} = path to log file</comment>
+    <value>Log file: {0}</value>
+    <comment>{0} = path to log file</comment>
   </data>
   <data name="DiagnoseHeader" xml:space="preserve">
     <value>Claude Auto Resume Diagnostics</value>
   </data>
   <data name="DiagnoseRuntimeInfo" xml:space="preserve">
-    <value>Runtime: .NET {DotNetVersion} ({RuntimeIdentifier})</value>
-    <comment>{DotNetVersion} = .NET version, {RuntimeIdentifier} = RID</comment>
+    <value>Runtime: .NET {0} ({1})</value>
+    <comment>{0} = .NET version, {1} = runtime identifier</comment>
   </data>
   <data name="DiagnoseOsInfo" xml:space="preserve">
-    <value>OS: {OsDescription} ({Architecture})</value>
-    <comment>{OsDescription} = OS name, {Architecture} = CPU arch</comment>
+    <value>OS: {0} ({1})</value>
+    <comment>{0} = OS description, {1} = CPU architecture</comment>
   </data>
 </root>
