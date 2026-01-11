@@ -160,7 +160,8 @@
     "DangerJS",
     "dangerjs",
     "dangerfile",
-    "innersource"
+    "innersource",
+    "msdata"
   ],
   "flagWords": [],
   "allowCompoundWords": true,
