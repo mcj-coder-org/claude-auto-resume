@@ -162,7 +162,8 @@
     "dangerfile",
     "innersource",
     "amannn",
-    "msbuild"
+    "msbuild",
+    "msdata"
   ],
   "flagWords": [],
   "allowCompoundWords": true,
