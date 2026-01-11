@@ -1,0 +1,298 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no publish)'
+        required: false
+        default: 'true'
+        type: boolean
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  version:
+    name: Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      semver: ${{ steps.version.outputs.semver }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore tools
+        run: dotnet tool restore
+
+      - name: Calculate version
+        id: version
+        run: |
+          VERSION=$(dotnet gitversion /showvariable FullSemVer)
+          SEMVER=$(dotnet gitversion /showvariable SemVer)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "semver=$SEMVER" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+  changelog:
+    name: Generate Changelog
+    runs-on: ubuntu-latest
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        id: changelog
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+
+      - name: Upload changelog artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: CHANGELOG.md
+          retention-days: 1
+
+  build:
+    name: Build (${{ matrix.rid }})
+    needs: version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            rid: win-x64
+            artifact: claude-auto-resume.exe
+          - os: ubuntu-latest
+            rid: linux-x64
+            artifact: claude-auto-resume
+          - os: macos-latest
+            rid: osx-x64
+            artifact: claude-auto-resume
+          - os: macos-latest
+            rid: osx-arm64
+            artifact: claude-auto-resume
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: |
+          dotnet publish src/McjCoderOrg.ClaudeAutoResume/McjCoderOrg.ClaudeAutoResume.csproj \
+            --configuration Release \
+            --runtime ${{ matrix.rid }} \
+            --self-contained true \
+            --output ./artifacts/${{ matrix.rid }} \
+            -p:Version=${{ needs.version.outputs.version }} \
+            -p:PublishSingleFile=true \
+            -p:EnableCompressionInSingleFile=true \
+            -p:DebugType=embedded
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.rid }}
+          path: ./artifacts/${{ matrix.rid }}/${{ matrix.artifact }}
+          retention-days: 1
+
+  package:
+    name: Create NuGet Package
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Pack
+        run: |
+          dotnet pack src/McjCoderOrg.ClaudeAutoResume/McjCoderOrg.ClaudeAutoResume.csproj \
+            --configuration Release \
+            --output ./artifacts/nuget \
+            -p:Version=${{ needs.version.outputs.version }} \
+            -p:PackageVersion=${{ needs.version.outputs.version }}
+
+      - name: Upload NuGet artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget
+          path: ./artifacts/nuget/*.nupkg
+          retention-days: 1
+
+      - name: Upload symbol package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-symbols
+          path: ./artifacts/nuget/*.snupkg
+          retention-days: 1
+          if-no-files-found: ignore
+
+  sbom:
+    name: Generate SBOM
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: build-*
+          path: ./artifacts
+          merge-multiple: false
+
+      - name: Install SBOM tool
+        run: dotnet tool install --global Microsoft.Sbom.DotNetTool
+
+      - name: Generate SBOM
+        run: |
+          sbom-tool generate \
+            -b ./artifacts \
+            -bc . \
+            -pn ClaudeAutoResume \
+            -pv ${{ needs.version.outputs.version }} \
+            -ps McjCoderOrg \
+            -nsb https://github.com/mcj-coder-org/claude-auto-resume
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: ./artifacts/_manifest/spdx_2.2/manifest.spdx.json
+          retention-days: 1
+
+  checksums:
+    name: Generate Checksums
+    needs: [build, package, sbom]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Generate checksums
+        run: |
+          cd artifacts
+          find . -type f \( -name "*.exe" -o -name "claude-auto-resume" -o -name "*.nupkg" -o -name "*.snupkg" -o -name "*.json" \) \
+            | while read file; do
+              sha256sum "$file" >> checksums.sha256
+            done
+          cat checksums.sha256
+
+      - name: Upload checksums artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: checksums
+          path: ./artifacts/checksums.sha256
+          retention-days: 1
+
+  release:
+    name: Create Release
+    needs: [version, changelog, build, package, sbom, checksums]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          # Copy binaries with RID in filename
+          cp artifacts/build-win-x64/claude-auto-resume.exe release/claude-auto-resume-win-x64.exe
+          cp artifacts/build-linux-x64/claude-auto-resume release/claude-auto-resume-linux-x64
+          cp artifacts/build-osx-x64/claude-auto-resume release/claude-auto-resume-osx-x64
+          cp artifacts/build-osx-arm64/claude-auto-resume release/claude-auto-resume-osx-arm64
+          # Copy NuGet packages
+          cp artifacts/nuget/*.nupkg release/ || true
+          cp artifacts/nuget-symbols/*.snupkg release/ || true
+          # Copy SBOM
+          cp artifacts/sbom/manifest.spdx.json release/ || true
+          # Copy checksums
+          cp artifacts/checksums/checksums.sha256 release/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.version.outputs.semver }}
+          name: Release v${{ needs.version.outputs.semver }}
+          body: ${{ needs.changelog.outputs.changelog }}
+          draft: false
+          prerelease: ${{ contains(needs.version.outputs.version, '-') }}
+          files: |
+            release/*
+
+  publish-nuget:
+    name: Publish to NuGet
+    needs: [version, release]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && !contains(needs.version.outputs.version, '-')
+    steps:
+      - name: Download NuGet package
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget
+          path: ./artifacts/nuget
+
+      - name: Download symbol package
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget-symbols
+          path: ./artifacts/nuget
+          if-no-files-found: ignore
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish to NuGet
+        run: |
+          dotnet nuget push ./artifacts/nuget/*.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
