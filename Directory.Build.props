@@ -1,17 +1,25 @@
 <Project>
   <PropertyGroup>
-    <!-- Enforce code style and analysis -->
+    <!-- .NET 10 / C# 14 -->
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14.0</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Strict Warnings -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest-all</AnalysisLevel>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
 
-    <!-- XML documentation -->
+    <!-- Documentation -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CS1591</NoWarn><!-- Suppress in Debug, enforce via .editorconfig -->
 
-    <!-- Central package management -->
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Source Link -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <!-- Analyzers for all projects -->
@@ -19,6 +27,10 @@
     <PackageReference Include="Meziantou.Analyzer" PrivateAssets="all" />
     <PackageReference Include="Roslynator.Analyzers" PrivateAssets="all" />
     <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
-    <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Source Link -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
   </ItemGroup>
 </Project>

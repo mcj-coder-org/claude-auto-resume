@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>McjCoderOrg.ClaudeAutoResume.ArchTests</RootNamespace>
+    <AssemblyName>McjCoderOrg.ClaudeAutoResume.ArchTests</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+
+    <!-- Suppress XML doc warnings for tests -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="NetArchTest.eNhancedEdition" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\McjCoderOrg.ClaudeAutoResume\McjCoderOrg.ClaudeAutoResume.csproj" />
+  </ItemGroup>
+</Project>

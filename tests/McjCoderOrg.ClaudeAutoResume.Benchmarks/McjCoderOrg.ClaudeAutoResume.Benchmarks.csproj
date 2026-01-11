@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>McjCoderOrg.ClaudeAutoResume.Benchmarks</RootNamespace>
+    <AssemblyName>McjCoderOrg.ClaudeAutoResume.Benchmarks</AssemblyName>
+    <IsPackable>false</IsPackable>
+
+    <!-- Not a test project - benchmarks are run manually -->
+    <IsTestProject>false</IsTestProject>
+
+    <!-- Suppress XML doc warnings and CA1515 (BenchmarkDotNet requires public classes) -->
+    <NoWarn>$(NoWarn);CS1591;CA1515</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\McjCoderOrg.ClaudeAutoResume\McjCoderOrg.ClaudeAutoResume.csproj" />
+  </ItemGroup>
+</Project>
