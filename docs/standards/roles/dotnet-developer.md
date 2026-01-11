@@ -5,9 +5,11 @@ description: |
   Apply when writing new features, debugging runtime issues, or
   choosing between implementation approaches.
 model: balanced
+innersource_roles: [contributor, maintainer]
+inherits_from: [developer, senior-developer]
 audience: [developer, agent]
 topics: [csharp, dotnet, async, implementation, patterns]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # DotNet Developer

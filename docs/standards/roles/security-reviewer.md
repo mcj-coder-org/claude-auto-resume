@@ -6,9 +6,11 @@ description: |
   authorization, and data protection in code. For architecture-level security,
   threat modelling, or compliance requirements, use Security Architect instead.
 model: balanced
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [security, owasp, authentication, authorization, input-validation]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Security Reviewer

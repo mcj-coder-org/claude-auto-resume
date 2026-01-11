@@ -5,9 +5,11 @@ description: |
   principles. Validates code readability, maintainability, and adherence
   to team conventions.
 model: balanced
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [code-quality, clean-code, refactoring, best-practices, mentoring]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Senior Developer

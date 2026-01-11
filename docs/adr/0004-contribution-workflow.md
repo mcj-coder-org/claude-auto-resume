@@ -214,6 +214,38 @@ N/A
 | CI Status     | All required checks pass |
 | Commits       | Signed                   |
 
+#### Role-Based Task Assignment
+
+Tasks and reviews are assigned based on InnerSource roles. See `docs/standards/roles.md`
+for full role definitions.
+
+| InnerSource Role | Task Types                       | PR Actions                      |
+| ---------------- | -------------------------------- | ------------------------------- |
+| **Owner**        | Repo config, process, direction  | Final approval, merge authority |
+| **Maintainer**   | Code review, architecture review | Approve, request changes        |
+| **Contributor**  | Implementation, bug fixes, tests | Submit PRs, address feedback    |
+
+**Reviewer Assignment by Change Type:**
+
+| Change Type          | Primary Reviewer Role          | Secondary Reviewer           |
+| -------------------- | ------------------------------ | ---------------------------- |
+| New feature code     | Senior Developer (Maintainer)  | Domain specialist            |
+| Bug fix              | Senior Developer (Maintainer)  | Original author if available |
+| Security changes     | Security Reviewer (Maintainer) | Senior Developer             |
+| Architecture changes | Tech Lead (Owner)              | Technical Architect          |
+| Documentation        | Documentation Specialist       | Domain expert                |
+| Test changes         | QA Engineer (Maintainer)       | Senior Developer             |
+
+**Specialist Inheritance:**
+
+Specialist roles (e.g., DotNet Developer) operate at multiple InnerSource levels:
+
+- **As Contributor:** Implements using generic skills + specialist expertise
+- **As Maintainer:** Reviews using senior role skills + specialist expertise
+
+Example: DotNet Developer reviewing C# code applies Senior Developer review criteria
+plus .NET-specific patterns and idioms.
+
 **Definition of Done - PR:**
 
 - [ ] PR title follows conventional commit format

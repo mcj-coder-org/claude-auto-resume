@@ -6,9 +6,11 @@ description: |
   (acceptance criteria, sizing, dependencies), backlog prioritization, and
   Definition of Ready/Done documentation.
 model: balanced
+innersource_roles: [owner]
+inherits_from: []
 audience: [developer, agent]
 topics: [process, agile, documentation, workflow, backlog-management]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Scrum Master

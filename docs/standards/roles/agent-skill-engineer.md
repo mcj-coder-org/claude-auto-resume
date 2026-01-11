@@ -5,9 +5,11 @@ description: |
   optimization. Validates skill clarity, composability, and progressive
   disclosure patterns.
 model: balanced
+innersource_roles: [contributor]
+inherits_from: []
 audience: [developer, agent]
 topics: [agent-skills, prompt-engineering, bdd-testing, workflow-design]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Agent Skill Engineer

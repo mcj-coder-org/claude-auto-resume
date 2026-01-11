@@ -156,7 +156,11 @@
     "gpgconf",
     "glab",
     "adrs",
-    "Pulumi"
+    "Pulumi",
+    "DangerJS",
+    "dangerjs",
+    "dangerfile",
+    "innersource"
   ],
   "flagWords": [],
   "allowCompoundWords": true,

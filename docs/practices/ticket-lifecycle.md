@@ -88,19 +88,48 @@ How issues move through the development workflow from creation to completion.
   breaking changes, expected artifacts
 - Version history table for amendments
 
-**Work Breakdown:**
+**Work Breakdown (Multi-Tier Nesting):**
 
-- **Single ticket:** Move to Ready when design approved
-- **Epic:**
-  - Create high-level plan at component/deliverable unit level.
-  - Capture epic requirements and deliverables into sub-tickets.
-  - Define how sub-tickets interrelate (dependencies, data flow).
-  - Identify required skillsets for each sub-ticket.
-  - Move to Ready when high-level plan approved and all sub-issues created.
-- **Sub-issue:**
-  - Create detailed plan with task breakdown.
-  - Each task must be small (1-4 hours) and completable by a single person/role.
-  - Move to Ready when detailed plan approved and all criteria met.
+GitHub supports up to 8 levels of nested sub-issues. Use this hierarchy appropriately:
+
+| Tier | Name         | Has Sub-Issues | Implementation Tasks                   | WIP Count |
+| ---- | ------------ | -------------- | -------------------------------------- | --------- |
+| 0    | Epic         | Yes            | No (coordination only)                 | No        |
+| 1-6  | Parent Issue | Yes            | No (verification, design updates only) | No        |
+| 7    | Leaf Issue   | No             | Yes (all implementation)               | Yes       |
+
+**Tier Rules:**
+
+- **Parent issues (tiers 0-6):** Coordination, verification, design plan updates only
+  - No code implementation tasks
+  - Must be assigned (has owner)
+  - Does NOT count towards WIP limits
+  - Tasks: verify sub-issue completion, update design plans, coordinate reviews
+
+- **Leaf issues (tier 7 or any issue without sub-issues):**
+  - All actionable implementation tasks
+  - Each task must specify recommended skillset (InnerSource role + domain role)
+  - Tasks must be small (1-4 hours) and completable by single person/role
+  - Counts towards WIP limits
+
+**Work Breakdown Process:**
+
+- **Single ticket (no sub-issues):** Move to Ready when design approved
+- **Epic (tier 0):**
+  - Create high-level plan at component/deliverable unit level
+  - Capture epic requirements and deliverables into sub-tickets
+  - Define how sub-tickets interrelate (dependencies, data flow)
+  - Identify required skillsets for each sub-ticket
+  - Move to Ready when high-level plan approved and all sub-issues created
+- **Parent issue (tiers 1-6):**
+  - Break down into smaller sub-issues if still too large
+  - Each level adds specificity until reaching leaf issues
+  - No direct implementation - only coordination tasks
+- **Leaf issue (lowest tier):**
+  - Create detailed plan with task breakdown
+  - Each task includes: description, skillset, estimated hours
+  - Format: `- [ ] Task description (@role:contributor:dotnet-developer, ~2h)`
+  - Move to Ready when detailed plan approved and all criteria met
 
 **Deployment Strategy (for epics):**
 
@@ -201,8 +230,10 @@ How issues move through the development workflow from creation to completion.
 
 **WIP Expectations:**
 
-- No enforced limit, expected ~1 per developer
+- No enforced limit, expected ~1 leaf issue per developer
+- **Parent issues do NOT count towards WIP** - coordination overhead is expected
 - If picking up additional work (e.g., blocking bug), post comment explaining
+- Owning a parent issue while working on its leaf issues is normal workflow
 
 ### In Review Process
 

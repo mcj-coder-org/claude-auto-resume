@@ -6,9 +6,11 @@ description: |
   database query efficiency. For distributed system scalability or complex
   architectural trade-offs, escalate to Technical Architect.
 model: balanced
+innersource_roles: [contributor, maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [performance, scalability, optimization, caching, database-queries]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Performance Engineer

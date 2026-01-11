@@ -5,9 +5,11 @@ description: |
   guide quality. Validates clarity, completeness, and documentation
   standards compliance.
 model: balanced
+innersource_roles: [contributor]
+inherits_from: []
 audience: [developer, agent]
 topics: [documentation, technical-writing, api-docs, user-guides]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Documentation Specialist

@@ -5,9 +5,11 @@ description: |
   optimization. Validates high availability, disaster recovery, and
   cloud-native design patterns.
 model: reasoning
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [cloud, infrastructure, cost-optimization, high-availability, disaster-recovery]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Cloud Architect

@@ -5,9 +5,11 @@ description: |
   concerns. Validates system design, evaluates trade-offs, and ensures
   architectural consistency across the codebase.
 model: reasoning
+innersource_roles: [owner]
+inherits_from: []
 audience: [developer, agent]
 topics: [architecture, design-patterns, technical-decisions, code-review]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Tech Lead

@@ -5,9 +5,11 @@ description: |
   Validates monitoring, logging, rollback strategies, and infrastructure
   as code practices.
 model: balanced
+innersource_roles: [contributor]
+inherits_from: []
 audience: [developer, agent]
 topics: [deployment, ci-cd, monitoring, infrastructure, operations]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # DevOps Engineer

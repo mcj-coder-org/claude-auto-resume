@@ -5,9 +5,11 @@ description: |
   threat modelling frameworks. Validates zero-trust principles, security
   boundaries, and regulatory compliance (SOC2, GDPR).
 model: reasoning
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [security, compliance, threat-modelling, zero-trust, identity-management]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Security Architect

@@ -5,9 +5,11 @@ description: |
   major technology selection. Validates architectural patterns, service
   boundaries, and data architecture.
 model: reasoning
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [architecture, system-design, integration, microservices, data-architecture]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Technical Architect

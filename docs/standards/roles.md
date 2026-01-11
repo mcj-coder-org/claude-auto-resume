@@ -2,14 +2,45 @@
 title: Team Roles
 summary: Role definitions for code review, planning, and validation
 audience: [developer, agent]
-topics: [roles, review, personas]
-last_validated: 2026-01-10
+topics: [roles, review, personas, innersource]
+last_validated: 2026-01-11
 ---
 
 # Team Roles
 
 Role definitions for both human teams and agents. Use roles for focused expertise during reviews,
-planning, and validation.
+planning, and validation. Roles map to InnerSource responsibilities for task assignment.
+
+## InnerSource Role Mapping
+
+Roles map to standard InnerSource roles to guide task assignment:
+
+| InnerSource Role | Responsibilities                                | Task Types                                             | PR Actions                      |
+| ---------------- | ----------------------------------------------- | ------------------------------------------------------ | ------------------------------- |
+| **Owner**        | Process, admin, repo config, direction          | Repo settings, branch protection, process docs         | Final approval, merge authority |
+| **Maintainer**   | Review, approve, request changes, quality gates | Code review, architecture review, documentation review | Approve, request changes, block |
+| **Contributor**  | Implement change, write code/tests/docs         | Feature implementation, bug fixes, test creation       | Submit PRs, address feedback    |
+
+### Task Assignment by InnerSource Role
+
+| Task Type              | Assign To                 | Rationale                              |
+| ---------------------- | ------------------------- | -------------------------------------- |
+| Code implementation    | Contributor roles         | Hands-on implementation skills         |
+| Code review            | Maintainer roles          | Quality oversight, pattern enforcement |
+| Architecture decisions | Owner/Maintainer roles    | Cross-cutting concerns, direction      |
+| Repo configuration     | Owner roles               | Admin access, process authority        |
+| Documentation updates  | Contributor or Maintainer | Depends on doc type                    |
+
+### Specialist Role Inheritance
+
+Specialist roles (e.g., DotNet Developer) inherit from generic roles:
+
+- **As Contributor**: Inherits implementation skills from generic role (e.g., Developer)
+- **As Maintainer**: Inherits review skills from senior role (e.g., Senior Developer)
+- **Specialist overlay**: Adds domain-specific expertise on top
+
+Example: DotNet Developer implementing C# code uses Developer skills + .NET expertise.
+DotNet Developer reviewing C# code uses Senior Developer skills + .NET expertise.
 
 ## Frontmatter Standard
 
@@ -22,22 +53,26 @@ description: |
   When to use this role and what expertise it provides.
   Include specific trigger conditions for agents.
 model: balanced
+innersource_roles: [contributor]
+inherits_from: []
 audience: [developer, agent]
 topics: [relevant, keywords]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 ```
 
 ### Required Fields
 
-| Field            | Description                                                      |
-| ---------------- | ---------------------------------------------------------------- |
-| `name`           | Kebab-case identifier (e.g., `tech-lead`, `senior-developer`)    |
-| `description`    | When to use this role; trigger conditions for agents (1-3 lines) |
-| `model`          | Task-based model tier (see below)                                |
-| `audience`       | Always `[developer, agent]` for role documents                   |
-| `topics`         | Searchable keywords for the role                                 |
-| `last_validated` | Date of last review (YYYY-MM-DD)                                 |
+| Field               | Description                                                      |
+| ------------------- | ---------------------------------------------------------------- |
+| `name`              | Kebab-case identifier (e.g., `tech-lead`, `senior-developer`)    |
+| `description`       | When to use this role; trigger conditions for agents (1-3 lines) |
+| `model`             | Task-based model tier (see below)                                |
+| `innersource_roles` | Array of: `owner`, `maintainer`, `contributor`                   |
+| `inherits_from`     | Array of role names this specialist extends (empty for generic)  |
+| `audience`          | Always `[developer, agent]` for role documents                   |
+| `topics`            | Searchable keywords for the role                                 |
+| `last_validated`    | Date of last review (YYYY-MM-DD)                                 |
 
 ### Model Tiers
 

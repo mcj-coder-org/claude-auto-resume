@@ -5,9 +5,11 @@ description: |
   patterns. Validates user flows, interface consistency, and feedback
   mechanisms.
 model: balanced
+innersource_roles: [contributor, maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [user-experience, interface-design, usability, interaction-patterns]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # UX Expert

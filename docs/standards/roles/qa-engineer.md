@@ -5,9 +5,11 @@ description: |
   coverage analysis. Validates edge cases, test reliability, and
   overall quality assurance approach.
 model: balanced
+innersource_roles: [contributor, maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [testing, quality-assurance, test-coverage, edge-cases, automation]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # QA Engineer

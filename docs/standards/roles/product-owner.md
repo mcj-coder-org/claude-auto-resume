@@ -5,9 +5,11 @@ description: |
   criteria verification. Validates user value, feature scope, and alignment
   with business requirements.
 model: balanced
+innersource_roles: [owner]
+inherits_from: []
 audience: [developer, agent]
 topics: [requirements, business-logic, user-stories, acceptance-criteria, scope]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Product Owner

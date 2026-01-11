@@ -5,9 +5,11 @@ description: |
   technology compatibility. Validates keyboard navigation, screen reader
   support, and inclusive design patterns.
 model: balanced
+innersource_roles: [maintainer]
+inherits_from: []
 audience: [developer, agent]
 topics: [accessibility, wcag, assistive-technology, inclusive-design]
-last_validated: 2026-01-10
+last_validated: 2026-01-11
 ---
 
 # Accessibility Expert
