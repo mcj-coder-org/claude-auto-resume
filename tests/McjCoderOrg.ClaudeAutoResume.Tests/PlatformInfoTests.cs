@@ -4,7 +4,7 @@ namespace McjCoderOrg.ClaudeAutoResume;
 
 public sealed class PlatformInfoTests
 {
-    private static readonly bool[] ValidBooleans = [true, false];
+    private static readonly bool[] _validBooleans = [true, false];
 
     [Fact]
     public void Current_ShouldReturnNonNullInstance()
@@ -60,7 +60,7 @@ public sealed class PlatformInfoTests
         var info = PlatformInfo.Current;
 
         // Verify boolean property is accessible (value depends on environment)
-        ValidBooleans.Should().Contain(info.IsContainer);
+        _validBooleans.Should().Contain(info.IsContainer);
     }
 
     [Fact]
@@ -69,6 +69,6 @@ public sealed class PlatformInfoTests
         var info = PlatformInfo.Current;
 
         // Verify boolean property is accessible (value depends on environment)
-        ValidBooleans.Should().Contain(info.IsCI);
+        _validBooleans.Should().Contain(info.IsCI);
     }
 }

@@ -19,9 +19,9 @@ namespace McjCoderOrg.ClaudeAutoResume;
 /// </remarks>
 internal static class Program
 {
-    private static readonly CompositeFormat ErrorLogLocationFormat = CompositeFormat.Parse(Strings.ErrorLogLocation);
-    private static readonly CompositeFormat DiagnoseRuntimeInfoFormat = CompositeFormat.Parse(Strings.DiagnoseRuntimeInfo);
-    private static readonly CompositeFormat DiagnoseOsInfoFormat = CompositeFormat.Parse(Strings.DiagnoseOsInfo);
+    private static readonly CompositeFormat _errorLogLocationFormat = CompositeFormat.Parse(Strings.ErrorLogLocation);
+    private static readonly CompositeFormat _diagnoseRuntimeInfoFormat = CompositeFormat.Parse(Strings.DiagnoseRuntimeInfo);
+    private static readonly CompositeFormat _diagnoseOsInfoFormat = CompositeFormat.Parse(Strings.DiagnoseOsInfo);
 
     /// <summary>
     /// Application entry point.
@@ -44,7 +44,7 @@ internal static class Program
             Console.Error.WriteLine(Strings.ErrorUnhandledException);
             Console.Error.WriteLine(string.Format(
                 CultureInfo.InvariantCulture,
-                ErrorLogLocationFormat,
+                _errorLogLocationFormat,
                 LoggingConfiguration.GetLogFilePath()));
             return ExitCodes.GeneralError;
         }
@@ -172,13 +172,13 @@ internal static class Program
 
         Console.WriteLine(string.Format(
             CultureInfo.InvariantCulture,
-            DiagnoseRuntimeInfoFormat,
+            _diagnoseRuntimeInfoFormat,
             platform.DotNetVersion,
             platform.RuntimeIdentifier));
 
         Console.WriteLine(string.Format(
             CultureInfo.InvariantCulture,
-            DiagnoseOsInfoFormat,
+            _diagnoseOsInfoFormat,
             platform.OsDescription,
             platform.ProcessArchitecture));
 
@@ -194,7 +194,7 @@ internal static class Program
         Console.WriteLine();
         Console.WriteLine(string.Format(
             CultureInfo.InvariantCulture,
-            ErrorLogLocationFormat,
+            _errorLogLocationFormat,
             LoggingConfiguration.GetLogFilePath()));
     }
 
