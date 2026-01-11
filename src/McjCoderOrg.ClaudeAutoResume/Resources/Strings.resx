@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="0" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>CLI tool to monitor Claude Code sessions and automatically resume on rate limits.</value>
+    <comment>Application description shown in help</comment>
+  </data>
+  <data name="StartingApp" xml:space="preserve">
+    <value>Starting Claude Auto Resume v{AppVersion}</value>
+    <comment>{AppVersion} = version string</comment>
+  </data>
+  <data name="RateLimitDetected" xml:space="preserve">
+    <value>Detected Session Limit Reached, resets at {ResetTime}</value>
+    <comment>{ResetTime} = time when limit resets</comment>
+  </data>
+  <data name="WaitingForReset" xml:space="preserve">
+    <value>Waiting {WaitMinutes} minutes for rate limit reset</value>
+    <comment>{WaitMinutes} = number of minutes to wait</comment>
+  </data>
+  <data name="ErrorUnhandledException" xml:space="preserve">
+    <value>An unexpected error occurred. See log file for details.</value>
+  </data>
+  <data name="ErrorLogLocation" xml:space="preserve">
+    <value>Log file: {LogPath}</value>
+    <comment>{LogPath} = path to log file</comment>
+  </data>
+  <data name="DiagnoseHeader" xml:space="preserve">
+    <value>Claude Auto Resume Diagnostics</value>
+  </data>
+  <data name="DiagnoseRuntimeInfo" xml:space="preserve">
+    <value>Runtime: .NET {DotNetVersion} ({RuntimeIdentifier})</value>
+    <comment>{DotNetVersion} = .NET version, {RuntimeIdentifier} = RID</comment>
+  </data>
+  <data name="DiagnoseOsInfo" xml:space="preserve">
+    <value>OS: {OsDescription} ({Architecture})</value>
+    <comment>{OsDescription} = OS name, {Architecture} = CPU arch</comment>
+  </data>
+</root>
