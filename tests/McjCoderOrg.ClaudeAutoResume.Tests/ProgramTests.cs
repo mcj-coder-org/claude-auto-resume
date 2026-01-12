@@ -3,7 +3,7 @@ namespace McjCoderOrg.ClaudeAutoResume;
 public sealed class ProgramTests
 {
     [Fact]
-    public async Task Main_WithVersionFlag_ShouldReturnSuccess()
+    public async Task Main_WithVersionFlag_ShouldReturnSuccessAsync()
     {
         var result = await Program.Main(["--version"]);
 
@@ -11,7 +11,7 @@ public sealed class ProgramTests
     }
 
     [Fact]
-    public async Task Main_WithHelpFlag_ShouldReturnSuccess()
+    public async Task Main_WithHelpFlag_ShouldReturnSuccessAsync()
     {
         var result = await Program.Main(["--help"]);
 
@@ -19,7 +19,7 @@ public sealed class ProgramTests
     }
 
     [Fact]
-    public async Task Main_WithDiagnoseFlag_ShouldReturnSuccess()
+    public async Task Main_WithDiagnoseFlag_ShouldReturnSuccessAsync()
     {
         var result = await Program.Main(["--diagnose"]);
 
@@ -27,12 +27,36 @@ public sealed class ProgramTests
     }
 
     [Fact]
-    public async Task Main_WithNoArgs_ShouldReturnDependencyMissing()
+    public async Task Main_WithNoArgs_ShouldReturnDependencyMissingAsync()
     {
         // Without claude installed, it should return DependencyMissing
         var result = await Program.Main([]);
 
         // Either Success (if claude is installed) or DependencyMissing (if not)
         result.Should().BeOneOf(ExitCodes.Success, ExitCodes.DependencyMissing);
+    }
+
+    [Fact]
+    public async Task Main_WithHeadlessWithoutDangerous_ShouldReturnInvalidArgumentsAsync()
+    {
+        var result = await Program.Main(["--headless"]);
+
+        result.Should().Be(ExitCodes.InvalidArguments);
+    }
+
+    [Fact]
+    public async Task Main_WithPromptWithoutValue_ShouldReturnInvalidArgumentsAsync()
+    {
+        var result = await Program.Main(["--prompt"]);
+
+        result.Should().Be(ExitCodes.InvalidArguments);
+    }
+
+    [Fact]
+    public async Task Main_WithWaitWithoutValue_ShouldReturnInvalidArgumentsAsync()
+    {
+        var result = await Program.Main(["--wait"]);
+
+        result.Should().Be(ExitCodes.InvalidArguments);
     }
 }

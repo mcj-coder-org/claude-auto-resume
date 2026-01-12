@@ -183,7 +183,7 @@ internal sealed class ClaudeMonitor : IDisposable
 #pragma warning restore S6667
     }
 
-    private List<string> BuildCommandLine(IReadOnlyList<string> additionalArgs)
+    internal List<string> BuildCommandLine(IReadOnlyList<string> additionalArgs)
     {
         var args = new List<string>();
 
