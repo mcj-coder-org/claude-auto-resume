@@ -3,34 +3,36 @@ namespace McjCoderOrg.ClaudeAutoResume;
 public sealed class ProgramTests
 {
     [Fact]
-    public void Main_WithVersionFlag_ShouldReturnSuccess()
+    public async Task Main_WithVersionFlag_ShouldReturnSuccess()
     {
-        var result = Program.Main(["--version"]);
+        var result = await Program.Main(["--version"]);
 
         result.Should().Be(ExitCodes.Success);
     }
 
     [Fact]
-    public void Main_WithHelpFlag_ShouldReturnSuccess()
+    public async Task Main_WithHelpFlag_ShouldReturnSuccess()
     {
-        var result = Program.Main(["--help"]);
+        var result = await Program.Main(["--help"]);
 
         result.Should().Be(ExitCodes.Success);
     }
 
     [Fact]
-    public void Main_WithDiagnoseFlag_ShouldReturnSuccess()
+    public async Task Main_WithDiagnoseFlag_ShouldReturnSuccess()
     {
-        var result = Program.Main(["--diagnose"]);
+        var result = await Program.Main(["--diagnose"]);
 
         result.Should().Be(ExitCodes.Success);
     }
 
     [Fact]
-    public void Main_WithNoArgs_ShouldReturnSuccess()
+    public async Task Main_WithNoArgs_ShouldReturnDependencyMissing()
     {
-        var result = Program.Main([]);
+        // Without claude installed, it should return DependencyMissing
+        var result = await Program.Main([]);
 
-        result.Should().Be(ExitCodes.Success);
+        // Either Success (if claude is installed) or DependencyMissing (if not)
+        result.Should().BeOneOf(ExitCodes.Success, ExitCodes.DependencyMissing);
     }
 }

@@ -50,6 +50,8 @@ public sealed class ArchitectureTests
             .AreClasses()
             .And()
             .DoNotResideInNamespaceStartingWith("Coverlet.Core") // Exclude Coverlet instrumentation
+            .And()
+            .DoNotHaveNameMatching(@"^<>.*") // Exclude compiler-generated types (inline arrays, etc.)
             .Should()
             .ResideInNamespaceStartingWith("McjCoderOrg.ClaudeAutoResume")
             .GetResult();

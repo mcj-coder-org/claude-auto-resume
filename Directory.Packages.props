@@ -40,6 +40,9 @@
     <!-- Hosting -->
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
 
+    <!-- PTY (Pseudo-Terminal) -->
+    <PackageVersion Include="PTY" Version="1.0.3" />
+
     <!-- Benchmarking -->
     <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
   </ItemGroup>
