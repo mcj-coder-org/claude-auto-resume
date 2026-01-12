@@ -42,7 +42,8 @@ fi
 echo "Branch name validation passed: $branch"
 
 # Run unit tests before push (if solution exists and dotnet is available)
-if find . -maxdepth 2 -name "*.sln" -print -quit 2>/dev/null | grep -q .; then
+# Note: Using head -1 instead of find -quit for macOS/BSD compatibility
+if find . -maxdepth 2 -name "*.sln" 2>/dev/null | head -1 | grep -q .; then
   if ! command -v dotnet >/dev/null 2>&1; then
     echo "Warning: dotnet not installed, skipping unit tests."
   else
