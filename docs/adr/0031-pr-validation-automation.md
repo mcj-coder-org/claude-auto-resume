@@ -4,7 +4,7 @@ description: |
   Automated PR validation using DangerJS to enforce Definition of Done
   checklists, evidence requirements, and design plan archiving.
 decision: Use DangerJS for automated PR validation with custom rules
-status: proposed
+status: accepted
 audience: [developer, agent]
 topics: [ci, automation, pr, validation, dangerjs]
 last_validated: 2026-01-11
@@ -14,7 +14,7 @@ last_validated: 2026-01-11
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
