@@ -16,6 +16,14 @@ fi
 # Validate branch name format
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
+# Handle detached HEAD state (e.g., tag pushes, CI pipelines)
+# In detached HEAD, git rev-parse returns literal "HEAD"
+if [ "$branch" = "HEAD" ]; then
+  echo "Detached HEAD state detected - skipping branch name validation"
+  echo "(This is expected for tag pushes and CI pipelines)"
+  exit 0
+fi
+
 # Allow main branch pushes (for releases)
 if [ "$branch" = "main" ]; then
   exit 0
