@@ -2,7 +2,54 @@
 title: Ticket Lifecycle
 summary: Workflow states and transitions for issues from creation to completion
 audience: [developer, agent]
-topics: [process, workflow, tickets, github]
+topics:
+  [
+    process,
+    workflow,
+    tickets,
+    github,
+    blocked,
+    blocker,
+    dependencies,
+    triage,
+    ready,
+    review,
+    done,
+    epic,
+    branch,
+    pr,
+  ]
+triggers:
+  # Triage and Refinement
+  - when issue is created and needs triage
+  - when refining requirements for an issue
+  - when breaking down work into sub-issues
+  # Ready State
+  - when checking if issue meets definition of ready
+  - when prioritizing issues in backlog
+  # In Progress
+  - when starting work on an issue
+  - when self-assigning an issue
+  - when creating a branch for implementation
+  - when considering WIP limits
+  # In Review
+  - when creating a pull request
+  - when requesting code review
+  - when addressing review feedback
+  - when changes are requested on PR
+  # Blocked State
+  - when issue cannot proceed due to external dependency
+  - when blocked by another issue or component
+  - when awaiting stakeholder decision
+  - when technical or infrastructure blocker discovered
+  - when transitioning issue to blocked state
+  # Done State
+  - when completing work and merging
+  - when closing an issue
+  # Epic Lifecycle
+  - when creating an epic with sub-issues
+  - when closing an epic after all sub-issues complete
+  - when enabling feature flags for completed epic
 prerequisites: []
 related:
   [
