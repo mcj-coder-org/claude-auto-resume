@@ -7,7 +7,9 @@
     <IsTestProject>true</IsTestProject>
 
     <!-- Suppress XML doc warnings for tests -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- CA1515: Reqnroll step definitions must be public for discovery -->
+    <!-- CA1812: Reqnroll instantiates step classes via reflection -->
+    <NoWarn>$(NoWarn);CS1591;CA1515;CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

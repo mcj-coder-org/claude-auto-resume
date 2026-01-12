@@ -7,7 +7,8 @@
     <IsTestProject>true</IsTestProject>
 
     <!-- Suppress XML doc warnings for tests -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- CA1515: E2E test classes must be public for xUnit discovery -->
+    <NoWarn>$(NoWarn);CS1591;CA1515</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
     <PackageReference Include="xunit.analyzers" PrivateAssets="all" />
+    <PackageReference Include="Xunit.SkippableFact" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
     <PackageReference Include="AwesomeAssertions" />
     <PackageReference Include="Reqnroll" />

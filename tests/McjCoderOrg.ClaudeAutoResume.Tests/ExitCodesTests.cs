@@ -15,26 +15,32 @@ public sealed class ExitCodesTests
     }
 
     [Fact]
-    public void ConfigurationError_ShouldBeTwo()
+    public void InvalidArguments_ShouldBeTwo()
     {
-        ExitCodes.ConfigurationError.Should().Be(2);
+        ExitCodes.InvalidArguments.Should().Be(2);
     }
 
     [Fact]
-    public void DependencyMissing_ShouldBeThree()
+    public void ConfigurationError_ShouldBeThree()
     {
-        ExitCodes.DependencyMissing.Should().Be(3);
+        ExitCodes.ConfigurationError.Should().Be(3);
     }
 
     [Fact]
-    public void RateLimitDetected_ShouldBeFour()
+    public void DependencyMissing_ShouldBeFour()
     {
-        ExitCodes.RateLimitDetected.Should().Be(4);
+        ExitCodes.DependencyMissing.Should().Be(4);
     }
 
     [Fact]
-    public void UserCancelled_ShouldBeFive()
+    public void RateLimitDetected_ShouldBeFive()
     {
-        ExitCodes.UserCancelled.Should().Be(5);
+        ExitCodes.RateLimitDetected.Should().Be(5);
+    }
+
+    [Fact]
+    public void UserCancelled_ShouldBeSix()
+    {
+        ExitCodes.UserCancelled.Should().Be(6);
     }
 }

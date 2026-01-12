@@ -14,15 +14,18 @@ internal static class ExitCodes
     /// <summary>Unhandled exception.</summary>
     public const int GeneralError = 1;
 
+    /// <summary>Invalid command line arguments.</summary>
+    public const int InvalidArguments = 2;
+
     /// <summary>Invalid configuration.</summary>
-    public const int ConfigurationError = 2;
+    public const int ConfigurationError = 3;
 
     /// <summary>Claude CLI not found.</summary>
-    public const int DependencyMissing = 3;
+    public const int DependencyMissing = 4;
 
     /// <summary>Exited due to rate limit.</summary>
-    public const int RateLimitDetected = 4;
+    public const int RateLimitDetected = 5;
 
     /// <summary>User interrupted (Ctrl+C).</summary>
-    public const int UserCancelled = 5;
+    public const int UserCancelled = 6;
 }
