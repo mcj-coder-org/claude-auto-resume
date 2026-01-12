@@ -8,9 +8,9 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests;
 /// </summary>
 public sealed class ApplicationStartupTests
 {
-    private static readonly string ExecutablePath = GetExecutablePath();
+    private static readonly string _executablePath = Get_executablePath();
 
-    private static string GetExecutablePath()
+    private static string Get_executablePath()
     {
         // Navigate from test output to the main project output
         var testDir = AppContext.BaseDirectory;
@@ -105,7 +105,7 @@ public sealed class ApplicationStartupTests
     public async Task ApplicationWithNoArgsStartsOrReportsMissingClaudeAsync()
     {
         // Skip if executable doesn't exist (build not run)
-        Skip.If(!File.Exists(ExecutablePath), $"Executable not found at {ExecutablePath}");
+        Skip.If(!File.Exists(_executablePath), $"Executable not found at {_executablePath}");
 
         // Arrange
         using var process = CreateProcess(string.Empty);
@@ -140,7 +140,7 @@ public sealed class ApplicationStartupTests
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = ExecutablePath,
+                FileName = _executablePath,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
