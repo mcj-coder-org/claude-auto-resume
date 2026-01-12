@@ -1,4 +1,4 @@
-name: PR Title Validation
+name: PR Validation
 
 on:
   pull_request:
@@ -38,6 +38,31 @@ jobs:
           subjectPatternError: |
             The subject "{subject}" must start with a lowercase letter and not end with a period.
             Example: "feat: add user authentication"
+
+      - name: Validate branch name
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          echo "Validating branch name: $BRANCH_NAME"
+
+          # Allow main branch (shouldn't happen in PRs, but just in case)
+          if [ "$BRANCH_NAME" = "main" ]; then
+            echo "Main branch - allowed"
+            exit 0
+          fi
+
+          # Validate branch naming convention
+          # Valid patterns: feature/N-*, fix/N-*, docs/N-*, chore/N-*, refactor/N-*, test/N-*
+          if ! echo "$BRANCH_NAME" | grep -qE "^(feature|fix|docs|chore|refactor|test)/[0-9]+-"; then
+            echo "::error::Invalid branch name: $BRANCH_NAME"
+            echo ""
+            echo "Branch name must follow pattern: {type}/{issue#}-description"
+            echo "Valid types: feature, fix, docs, chore, refactor, test"
+            echo "Example: feature/123-add-login-page"
+            exit 1
+          fi
+
+          echo "Branch name validation passed"
 
       - name: Check issue reference
         env:
