@@ -34,6 +34,7 @@
   "lint-staged": {
     "*.cs": [
       "dotnet format --include",
+      "dotnet format --verify-no-changes --include",
       "cspell --no-must-find-files"
     ],
     "*.md": [
