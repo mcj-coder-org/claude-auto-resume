@@ -56,6 +56,12 @@ Feature: Commit message validation
         And the output should contain "subject-case"
 
     @conventional-commits
+    Scenario: Reject header exceeding max length
+        When I commit with a 101 character header
+        Then the hook should fail
+        And the output should contain "header-max-length"
+
+    @conventional-commits
     Scenario: Auto-ignore merge commits
         When I create a commit message "Merge branch 'feature/123-test'"
         And I run the commit-msg hook

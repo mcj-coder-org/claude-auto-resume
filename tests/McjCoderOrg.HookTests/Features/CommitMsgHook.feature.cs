@@ -313,16 +313,16 @@ namespace McjCoderOrg.HookTests.Features
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Auto-ignore merge commits")]
+        [Xunit.SkippableFactAttribute(DisplayName="Reject header exceeding max length")]
         [Xunit.TraitAttribute("FeatureTitle", "Commit message validation")]
-        [Xunit.TraitAttribute("Description", "Auto-ignore merge commits")]
+        [Xunit.TraitAttribute("Description", "Reject header exceeding max length")]
         [Xunit.TraitAttribute("Category", "conventional-commits")]
-        public async System.Threading.Tasks.Task Auto_IgnoreMergeCommits()
+        public async System.Threading.Tasks.Task RejectHeaderExceedingMaxLength()
         {
             string[] tagsOfScenario = new string[] {
                     "conventional-commits"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Auto-ignore merge commits", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Reject header exceeding max length", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 59
     this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -337,12 +337,48 @@ namespace McjCoderOrg.HookTests.Features
     await this.FeatureBackgroundAsync();
 #line hidden
 #line 60
-        await testRunner.WhenAsync("I create a commit message \"Merge branch \'feature/123-test\'\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+        await testRunner.WhenAsync("I commit with a 101 character header", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 61
-        await testRunner.AndAsync("I run the commit-msg hook", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.ThenAsync("the hook should fail", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 62
+        await testRunner.AndAsync("the output should contain \"header-max-length\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Auto-ignore merge commits")]
+        [Xunit.TraitAttribute("FeatureTitle", "Commit message validation")]
+        [Xunit.TraitAttribute("Description", "Auto-ignore merge commits")]
+        [Xunit.TraitAttribute("Category", "conventional-commits")]
+        public async System.Threading.Tasks.Task Auto_IgnoreMergeCommits()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "conventional-commits"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Auto-ignore merge commits", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 65
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 66
+        await testRunner.WhenAsync("I create a commit message \"Merge branch \'feature/123-test\'\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 67
+        await testRunner.AndAsync("I run the commit-msg hook", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 68
         await testRunner.ThenAsync("the hook should succeed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
