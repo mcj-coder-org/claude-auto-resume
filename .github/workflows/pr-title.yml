@@ -51,6 +51,12 @@ jobs:
             exit 0
           fi
 
+          # Allow dependabot branches
+          if echo "$BRANCH_NAME" | grep -qE "^dependabot/"; then
+            echo "Dependabot branch - allowed"
+            exit 0
+          fi
+
           # Validate branch naming convention
           # Valid patterns: feature/N-*, fix/N-*, docs/N-*, chore/N-*, refactor/N-*, test/N-*
           if ! echo "$BRANCH_NAME" | grep -qE "^(feature|fix|docs|chore|refactor|test)/[0-9]+-"; then
