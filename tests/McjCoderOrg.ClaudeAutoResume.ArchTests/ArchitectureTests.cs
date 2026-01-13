@@ -49,11 +49,11 @@ public sealed class ArchitectureTests
             .That()
             .AreClasses()
             .And()
-            .DoNotResideInNamespaceStartingWith("Coverlet.Core") // Exclude Coverlet instrumentation
+            .DoNotResideInNamespace("Coverlet.Core.Instrumentation") // Exclude Coverlet instrumentation
             .And()
             .DoNotHaveNameMatching(@"^<>.*") // Exclude compiler-generated types (inline arrays, etc.)
             .Should()
-            .ResideInNamespaceStartingWith("McjCoderOrg.ClaudeAutoResume")
+            .ResideInNamespaceMatching(@"^McjCoderOrg\.ClaudeAutoResume")
             .GetResult();
 
         // Assert
@@ -71,7 +71,7 @@ public sealed class ArchitectureTests
             .That()
             .AreInterfaces()
             .Should()
-            .HaveNameStartingWith("I", StringComparison.Ordinal)
+            .HaveNameStartingWith("I")
             .GetResult();
 
         // Assert

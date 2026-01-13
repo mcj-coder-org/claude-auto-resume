@@ -11,30 +11,30 @@
 #region Designer generated code
 #pragma warning disable
 using Reqnroll;
-namespace McjCoderOrg.HookTests.Features
+namespace McjCoderOrg.ClaudeAutoResume.Features
 {
     
     
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::Xunit.TraitAttribute("Category", "pre-commit")]
-    public partial class Pre_CommitHookValidationFeature : object, global::Xunit.IClassFixture<Pre_CommitHookValidationFeature.FixtureData>, global::Xunit.IAsyncLifetime
+    [global::Xunit.TraitAttribute("Category", "rate-limit")]
+    public partial class RateLimitDetectionFeature : object, global::Xunit.IClassFixture<RateLimitDetectionFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "pre-commit"};
+                "rate-limit"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Pre-commit hook validation", "    As a developer\r\n    I want the pre-commit hook to enforce quality standards\r\n" +
-                "    So that code quality is maintained before commits", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Rate Limit Detection", "    As a user running Claude CLI\r\n    I want the wrapper to detect rate limit mes" +
+                "sages\r\n    So that it can automatically wait and resume", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "PreCommitHook.feature"
+#line 1 "RateLimitDetection.feature"
 #line hidden
         
-        public Pre_CommitHookValidationFeature(Pre_CommitHookValidationFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public RateLimitDetectionFeature(RateLimitDetectionFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
         }
@@ -111,13 +111,13 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     #line hidden
 #line 8
-        await testRunner.GivenAsync("I have a git repository with hooks configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.GivenAsync("the default wrapper configuration", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
         }
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/PreCommitHook.feature.ndjson", 7);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RateLimitDetection.feature.ndjson", 10);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -145,17 +145,17 @@ namespace McjCoderOrg.HookTests.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Block direct commits to main branch")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Block direct commits to main branch")]
-        [global::Xunit.TraitAttribute("Category", "branch-protection")]
-        public async global::System.Threading.Tasks.Task BlockDirectCommitsToMainBranch()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Detects standard rate limit message")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Detects standard rate limit message")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task DetectsStandardRateLimitMessage()
         {
             string[] tagsOfScenario = new string[] {
-                    "branch-protection"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Block direct commits to main branch", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Detects standard rate limit message", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 11
@@ -172,38 +172,35 @@ namespace McjCoderOrg.HookTests.Features
     await this.FeatureBackgroundAsync();
 #line hidden
 #line 12
-        await testRunner.GivenAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.GivenAsync("the output buffer contains \"Your usage limit has been reached\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 13
-        await testRunner.AndAsync("I am on the \"main\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.AndAsync("the buffer contains \"limit\" and \"reached\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 15
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 16
-        await testRunner.AndAsync("the output should contain \"Direct commits to main are not allowed\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.ThenAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Allow commits on feature branches")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Allow commits on feature branches")]
-        [global::Xunit.TraitAttribute("Category", "branch-protection")]
-        public async global::System.Threading.Tasks.Task AllowCommitsOnFeatureBranches()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Detects rate limit with reset message")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Detects rate limit with reset message")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task DetectsRateLimitWithResetMessage()
         {
             string[] tagsOfScenario = new string[] {
-                    "branch-protection"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "1";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Allow commits on feature branches", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Detects rate limit with reset message", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 19
+#line 18
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -215,40 +212,37 @@ namespace McjCoderOrg.HookTests.Features
                 await this.ScenarioStartAsync();
 #line 7
     await this.FeatureBackgroundAsync();
+#line hidden
+#line 19
+        await testRunner.GivenAsync("the output buffer contains \"Rate limit exceeded. Resets in 15 minutes\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 20
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.AndAsync("the buffer contains \"limit\" and \"reset\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
-        await testRunner.AndAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 23
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 24
-        await testRunner.ThenAsync("the hook should succeed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+        await testRunner.ThenAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Require GPG signing configuration")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Require GPG signing configuration")]
-        [global::Xunit.TraitAttribute("Category", "signed-commits")]
-        public async global::System.Threading.Tasks.Task RequireGPGSigningConfiguration()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Does not detect normal output as rate limit")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Does not detect normal output as rate limit")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task DoesNotDetectNormalOutputAsRateLimit()
         {
             string[] tagsOfScenario = new string[] {
-                    "signed-commits"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "2";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Require GPG signing configuration", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Does not detect normal output as rate limit", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 27
+#line 25
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -260,43 +254,34 @@ namespace McjCoderOrg.HookTests.Features
                 await this.ScenarioStartAsync();
 #line 7
     await this.FeatureBackgroundAsync();
+#line hidden
+#line 26
+        await testRunner.GivenAsync("the output buffer contains \"Claude is processing your request\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 27
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 28
-        await testRunner.GivenAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 29
-        await testRunner.AndAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 30
-        await testRunner.AndAsync("GPG signing is not configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 31
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 32
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 33
-        await testRunner.AndAsync("the output should contain \"commit.gpgsign\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.ThenAsync("no rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Accept commits with GPG signing enabled")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Accept commits with GPG signing enabled")]
-        [global::Xunit.TraitAttribute("Category", "signed-commits")]
-        public async global::System.Threading.Tasks.Task AcceptCommitsWithGPGSigningEnabled()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Does not trigger during cooldown period")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Does not trigger during cooldown period")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task DoesNotTriggerDuringCooldownPeriod()
         {
             string[] tagsOfScenario = new string[] {
-                    "signed-commits"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "3";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Accept commits with GPG signing enabled", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Does not trigger during cooldown period", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 36
+#line 31
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -309,39 +294,49 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 37
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 32
+        await testRunner.GivenAsync("a rate limit was recently detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 38
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 33
+        await testRunner.AndAsync("the cooldown period has not elapsed", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 39
-        await testRunner.AndAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 34
+        await testRunner.AndAsync("the output buffer contains \"limit reached\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 40
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 35
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 41
-        await testRunner.ThenAsync("the hook should succeed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 36
+        await testRunner.ThenAsync("no rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Require node_modules to be installed")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Require node_modules to be installed")]
-        [global::Xunit.TraitAttribute("Category", "prerequisites")]
-        public async global::System.Threading.Tasks.Task RequireNode_ModulesToBeInstalled()
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Detects various rate limit patterns")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Detects various rate limit patterns")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        [global::Xunit.InlineDataAttribute("claude ai usage limit reached", "4", new string[0])]
+        [global::Xunit.InlineDataAttribute("too many requests, please wait", "5", new string[0])]
+        [global::Xunit.InlineDataAttribute("rate limit exceeded", "6", new string[0])]
+        [global::Xunit.InlineDataAttribute("quota exceeded, limit reached", "7", new string[0])]
+        public async global::System.Threading.Tasks.Task DetectsVariousRateLimitPatterns(string message, string @__pickleIndex, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
-                    "prerequisites"};
+            string[] @__tags = new string[] {
+                    "unit"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "4";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Require node_modules to be installed", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            argumentsOfScenario.Add("message", message);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Detects various rate limit patterns", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 44
+#line 39
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -354,23 +349,17 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 45
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 40
+        await testRunner.GivenAsync(string.Format("the output buffer contains \"{0}\"", message), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 46
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 41
+        await testRunner.AndAsync("the buffer contains \"limit\" or \"requests\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
-        await testRunner.AndAsync("node_modules directory does not exist", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 42
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 48
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 49
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 50
-        await testRunner.AndAsync("the output should contain \"Dependencies not installed\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 43
+        await testRunner.ThenAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -383,12 +372,12 @@ namespace McjCoderOrg.HookTests.Features
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
             {
-                await Pre_CommitHookValidationFeature.FeatureSetupAsync();
+                await RateLimitDetectionFeature.FeatureSetupAsync();
             }
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.DisposeAsync()
             {
-                await Pre_CommitHookValidationFeature.FeatureTearDownAsync();
+                await RateLimitDetectionFeature.FeatureTearDownAsync();
             }
         }
     }
