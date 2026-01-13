@@ -75,3 +75,8 @@ defense
 analyzes
 behavioral
 labeled
+
+# Hex color codes used in labels
+fbca
+d93f0b
+b60205
