@@ -30,13 +30,13 @@ jobs:
             ci
             chore
             revert
-            deps
           requireScope: false
           disallowScopes: |
             wip
-          subjectPattern: ^[a-z].+[^.]$
+          subjectPattern: ^[a-z]([^A-Z]*[^.A-Z])?$
           subjectPatternError: |
-            The subject "{subject}" must start with a lowercase letter and not end with a period.
+            The subject "{subject}" must be entirely lowercase and not end with a period.
+            This matches commitlint's subject-case rule for squash merge commits.
             Example: "feat: add user authentication"
 
       - name: Validate branch name
