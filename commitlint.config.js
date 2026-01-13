@@ -1,7 +1,12 @@
 export default {
   extends: ['@commitlint/config-conventional'],
-  // Ignore auto-generated merge and revert commits
-  ignores: [(commit) => /^Merge\s/.test(commit) || /^Revert\s/.test(commit)],
+  // Ignore auto-generated merge, revert, and dependabot commits
+  ignores: [
+    (commit) =>
+      /^Merge\s/.test(commit) ||
+      /^Revert\s/.test(commit) ||
+      /Signed-off-by: dependabot\[bot\]/i.test(commit),
+  ],
   rules: {
     'type-enum': [
       2,
