@@ -1,0 +1,79 @@
+name: PR Author Check
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  check-author:
+    name: Validate PR Author
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR author is a code owner
+        env:
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          echo "PR Author: $PR_AUTHOR"
+          echo "Repo Owner: $REPO_OWNER"
+
+          # List of code owner accounts (add your owner accounts here)
+          CODE_OWNERS="martincjarvis"
+
+          # Check if PR author is a code owner
+          if echo "$CODE_OWNERS" | grep -qw "$PR_AUTHOR"; then
+            echo ""
+            echo "::warning::PR created by code owner account ($PR_AUTHOR)"
+            echo ""
+            echo "Best practice: Use a separate contributor account to create PRs."
+            echo "This ensures proper separation of duties and avoids approval deadlock."
+            echo ""
+            echo "See: docs/playbooks/persona-switching.md"
+            echo ""
+            # Warning only - don't fail the check
+            # To enforce, change to: exit 1
+          else
+            echo "PR author ($PR_AUTHOR) is not a code owner - OK"
+          fi
+
+      - name: Add reminder comment for code owner PRs
+        if: contains('martincjarvis', github.event.pull_request.user.login)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const author = context.payload.pull_request.user.login;
+            const body = `## Reminder: Code Owner PR
+
+            This PR was created by \`${author}\`, who is a code owner.
+
+            **Potential issue:** Code owners cannot approve their own PRs. This may cause approval deadlock if no other reviewers are available.
+
+            **Recommended workflow:**
+            1. Use a separate contributor account to create PRs
+            2. Use the code owner account only for reviews and approvals
+
+            See [docs/playbooks/persona-switching.md](../docs/playbooks/persona-switching.md) for setup instructions.
+
+            ---
+            *This is an automated reminder. If this PR requires admin bypass, please coordinate with repository administrators.*`;
+
+            // Check if we already commented
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const botComment = comments.data.find(c =>
+              c.user.type === 'Bot' &&
+              c.body.includes('Reminder: Code Owner PR')
+            );
+
+            if (!botComment) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }

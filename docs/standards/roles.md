@@ -42,6 +42,10 @@ approve but do not author PRs.
 **Exception:** Repository bootstrap or emergency fixes may require Owner to submit PRs, but these
 must be reviewed by another Owner or external reviewer before merge.
 
+**Implementation:** To enforce separation of duties, use separate GitHub accounts for Contributor
+and Owner/Maintainer roles. See [persona-switching.md](../playbooks/persona-switching.md) for
+setup instructions.
+
 ### Task Assignment by InnerSource Role
 
 | Task Type              | Assign To                 | Rationale                              |
