@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Xunit.SkippableFact" />
     <ProjectReference Include="..\..\src\McjCoderOrg.ClaudeAutoResume\McjCoderOrg.ClaudeAutoResume.csproj" />
   </ItemGroup>
 </Project>
