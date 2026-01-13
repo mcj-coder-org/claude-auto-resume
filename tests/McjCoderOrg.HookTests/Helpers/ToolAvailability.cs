@@ -7,30 +7,30 @@ namespace McjCoderOrg.HookTests.Helpers;
 /// </summary>
 public static class ToolAvailability
 {
-    private static readonly Lazy<bool> NodeAvailable = new(CheckNodeAvailable);
-    private static readonly Lazy<bool> GpgAvailable = new(CheckGpgAvailable);
-    private static readonly Lazy<bool> DotnetAvailable = new(CheckDotnetAvailable);
-    private static readonly Lazy<bool> GitBashAvailable = new(CheckGitBashAvailable);
+    private static readonly Lazy<bool> _nodeAvailable = new(CheckNodeAvailable);
+    private static readonly Lazy<bool> _gpgAvailable = new(CheckGpgAvailable);
+    private static readonly Lazy<bool> _dotnetAvailable = new(CheckDotnetAvailable);
+    private static readonly Lazy<bool> _gitBashAvailable = new(CheckGitBashAvailable);
 
     /// <summary>
     /// Gets a value indicating whether Node.js is available.
     /// </summary>
-    public static bool IsNodeAvailable => NodeAvailable.Value;
+    public static bool IsNodeAvailable => _nodeAvailable.Value;
 
     /// <summary>
     /// Gets a value indicating whether GPG is available.
     /// </summary>
-    public static bool IsGpgAvailable => GpgAvailable.Value;
+    public static bool IsGpgAvailable => _gpgAvailable.Value;
 
     /// <summary>
     /// Gets a value indicating whether dotnet CLI is available.
     /// </summary>
-    public static bool IsDotnetAvailable => DotnetAvailable.Value;
+    public static bool IsDotnetAvailable => _dotnetAvailable.Value;
 
     /// <summary>
     /// Gets a value indicating whether Git Bash is available (Windows only).
     /// </summary>
-    public static bool IsGitBashAvailable => GitBashAvailable.Value;
+    public static bool IsGitBashAvailable => _gitBashAvailable.Value;
 
     /// <summary>
     /// Skips the test if Node.js is not available.
