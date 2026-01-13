@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate PR title
+        # Skip subject case validation for dependabot PRs (they use "Bump" with uppercase)
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,6 +40,27 @@ jobs:
             The subject "{subject}" must be entirely lowercase and not end with a period.
             This matches commitlint's subject-case rule for squash merge commits.
             Example: "feat: add user authentication"
+
+      - name: Validate dependabot PR title (relaxed)
+        # For dependabot PRs, only validate the type prefix, not subject case
+        if: ${{ github.actor == 'dependabot[bot]' }}
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          requireScope: false
 
       - name: Validate branch name
         env:
