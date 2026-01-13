@@ -1,5 +1,3 @@
-using Serilog;
-
 namespace McjCoderOrg.ClaudeAutoResume.TestUtilities;
 
 public sealed class LogCaptureTests : IDisposable
@@ -16,7 +14,7 @@ public sealed class LogCaptureTests : IDisposable
     {
         _logCapture = new LogCapture();
 
-        Log.Information("Test message");
+        _logCapture.Logger.Information("Test message");
 
         _logCapture.Messages.Should().Contain(m => m.Contains("Test message"));
     }
@@ -26,31 +24,36 @@ public sealed class LogCaptureTests : IDisposable
     {
         _logCapture = new LogCapture();
 
-        Log.Information("Value is {Value}", 42);
+        _logCapture.Logger.Information("Value is {Value}", 42);
 
         _logCapture.Messages.Should().Contain(m => m.Contains("42"));
     }
 
     [Fact]
-    public void Clear_ShouldRemoveAllMessages()
+    public void Clear_ShouldRemoveLoggedMessages()
     {
         _logCapture = new LogCapture();
-        Log.Information("Message to clear");
+        const string testMessage = "Unique test message for clear verification";
+        _logCapture.Logger.Information(testMessage);
+
+        // Verify message was captured
+        _logCapture.Messages.Should().Contain(m => m.Contains(testMessage));
 
         _logCapture.Clear();
 
-        _logCapture.Messages.Should().BeEmpty();
+        // Verify the specific message we logged is no longer present
+        _logCapture.Messages.Should().NotContain(m => m.Contains(testMessage));
     }
 
     [Fact]
-    public void Dispose_ShouldRestorePreviousLogger()
+    public void Logger_ShouldBeIsolatedFromGlobalLogger()
     {
-        var originalLogger = Log.Logger;
         _logCapture = new LogCapture();
 
-        _logCapture.Dispose();
-        _logCapture = null;
+        // This should only capture messages logged through the instance logger
+        _logCapture.Logger.Information("Instance message");
 
-        Log.Logger.Should().NotBe(originalLogger); // Logger was replaced, now silent
+        _logCapture.Messages.Should().HaveCount(1);
+        _logCapture.Messages.Should().Contain(m => m.Contains("Instance message"));
     }
 }

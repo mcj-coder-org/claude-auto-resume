@@ -1,5 +1,6 @@
 using System.Globalization;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.InMemory;
 
@@ -9,11 +10,19 @@ namespace McjCoderOrg.ClaudeAutoResume.TestUtilities;
 /// Captures Serilog messages for test assertions.
 /// </summary>
 /// <remarks>
+/// <para>
+/// This class provides an isolated logger instance for test assertions.
+/// It does NOT modify the global Log.Logger, ensuring test isolation
+/// when tests run in parallel.
+/// </para>
+/// <para>
 /// See ADR-0017 for test capture design.
+/// </para>
 /// </remarks>
 internal sealed class LogCapture : IDisposable
 {
     private readonly InMemorySink _sink;
+    private readonly Logger _logger;
     private bool _disposed;
 
     /// <summary>
@@ -23,11 +32,17 @@ internal sealed class LogCapture : IDisposable
     {
         _sink = new InMemorySink();
 
-        Log.Logger = new LoggerConfiguration()
+        _logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
             .WriteTo.Sink(_sink)
             .CreateLogger();
     }
+
+    /// <summary>
+    /// Gets the isolated logger instance for this capture.
+    /// Use this logger in tests instead of the global Log class.
+    /// </summary>
+    public ILogger Logger => _logger;
 
     /// <summary>
     /// Gets the captured log messages.
@@ -52,7 +67,7 @@ internal sealed class LogCapture : IDisposable
     }
 
     /// <summary>
-    /// Disposes the log capture and restores the previous logger.
+    /// Disposes the log capture.
     /// </summary>
     public void Dispose()
     {
@@ -62,8 +77,7 @@ internal sealed class LogCapture : IDisposable
         }
 
         _disposed = true;
-        Log.CloseAndFlush();
+        _logger.Dispose();
         _sink.Dispose();
-        Log.Logger = new LoggerConfiguration().CreateLogger(); // Silent logger
     }
 }
