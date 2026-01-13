@@ -11,30 +11,31 @@
 #region Designer generated code
 #pragma warning disable
 using Reqnroll;
-namespace McjCoderOrg.HookTests.Features
+namespace McjCoderOrg.ClaudeAutoResume.Features
 {
     
     
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::Xunit.TraitAttribute("Category", "pre-commit")]
-    public partial class Pre_CommitHookValidationFeature : object, global::Xunit.IClassFixture<Pre_CommitHookValidationFeature.FixtureData>, global::Xunit.IAsyncLifetime
+    [global::Xunit.TraitAttribute("Category", "auto-resume")]
+    public partial class Auto_ResumeFunctionalityFeature : object, global::Xunit.IClassFixture<Auto_ResumeFunctionalityFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "pre-commit"};
+                "auto-resume"};
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Pre-commit hook validation", "    As a developer\r\n    I want the pre-commit hook to enforce quality standards\r\n" +
-                "    So that code quality is maintained before commits", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Auto-Resume Functionality", "    As a user running Claude CLI with rate limits\r\n    I want the wrapper to auto" +
+                "matically resume after waiting\r\n    So that long-running tasks complete without " +
+                "manual intervention", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "PreCommitHook.feature"
+#line 1 "AutoResume.feature"
 #line hidden
         
-        public Pre_CommitHookValidationFeature(Pre_CommitHookValidationFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public Auto_ResumeFunctionalityFeature(Auto_ResumeFunctionalityFeature.FixtureData fixtureData, global::Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
         }
@@ -111,13 +112,13 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     #line hidden
 #line 8
-        await testRunner.GivenAsync("I have a git repository with hooks configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.GivenAsync("the default wrapper configuration", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
         }
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/PreCommitHook.feature.ndjson", 7);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/AutoResume.feature.ndjson", 7);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -145,17 +146,17 @@ namespace McjCoderOrg.HookTests.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Block direct commits to main branch")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Block direct commits to main branch")]
-        [global::Xunit.TraitAttribute("Category", "branch-protection")]
-        public async global::System.Threading.Tasks.Task BlockDirectCommitsToMainBranch()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Sends continue command after wait period")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Auto-Resume Functionality")]
+        [global::Xunit.TraitAttribute("Description", "Sends continue command after wait period")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task SendsContinueCommandAfterWaitPeriod()
         {
             string[] tagsOfScenario = new string[] {
-                    "branch-protection"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "0";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Block direct commits to main branch", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sends continue command after wait period", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 11
@@ -172,38 +173,35 @@ namespace McjCoderOrg.HookTests.Features
     await this.FeatureBackgroundAsync();
 #line hidden
 #line 12
-        await testRunner.GivenAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.GivenAsync("a rate limit has been detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 13
-        await testRunner.AndAsync("I am on the \"main\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.WhenAsync("the configured wait period elapses", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 14
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+        await testRunner.ThenAsync("the continue command should be sent", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 15
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 16
-        await testRunner.AndAsync("the output should contain \"Direct commits to main are not allowed\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+        await testRunner.AndAsync("the output buffer should be cleared", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Allow commits on feature branches")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Allow commits on feature branches")]
-        [global::Xunit.TraitAttribute("Category", "branch-protection")]
-        public async global::System.Threading.Tasks.Task AllowCommitsOnFeatureBranches()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Uses configured wait time")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Auto-Resume Functionality")]
+        [global::Xunit.TraitAttribute("Description", "Uses configured wait time")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task UsesConfiguredWaitTime()
         {
             string[] tagsOfScenario = new string[] {
-                    "branch-protection"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "1";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Allow commits on feature branches", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Uses configured wait time", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 19
+#line 18
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -215,40 +213,34 @@ namespace McjCoderOrg.HookTests.Features
                 await this.ScenarioStartAsync();
 #line 7
     await this.FeatureBackgroundAsync();
+#line hidden
+#line 19
+        await testRunner.GivenAsync("the wait time is configured to 10 minutes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 20
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+        await testRunner.WhenAsync("a rate limit is detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 22
-        await testRunner.AndAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 23
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 24
-        await testRunner.ThenAsync("the hook should succeed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+        await testRunner.ThenAsync("the wrapper should wait for 10 minutes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Require GPG signing configuration")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Require GPG signing configuration")]
-        [global::Xunit.TraitAttribute("Category", "signed-commits")]
-        public async global::System.Threading.Tasks.Task RequireGPGSigningConfiguration()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Uses default wait time when not configured")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Auto-Resume Functionality")]
+        [global::Xunit.TraitAttribute("Description", "Uses default wait time when not configured")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task UsesDefaultWaitTimeWhenNotConfigured()
         {
             string[] tagsOfScenario = new string[] {
-                    "signed-commits"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "2";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Require GPG signing configuration", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Uses default wait time when not configured", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 27
+#line 24
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -261,42 +253,30 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 28
-        await testRunner.GivenAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 25
+        await testRunner.WhenAsync("a rate limit is detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 29
-        await testRunner.AndAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 30
-        await testRunner.AndAsync("GPG signing is not configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 31
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 32
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 33
-        await testRunner.AndAsync("the output should contain \"commit.gpgsign\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 26
+        await testRunner.ThenAsync("the wrapper should wait for 15 minutes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Accept commits with GPG signing enabled")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Accept commits with GPG signing enabled")]
-        [global::Xunit.TraitAttribute("Category", "signed-commits")]
-        public async global::System.Threading.Tasks.Task AcceptCommitsWithGPGSigningEnabled()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Sends configured continue command")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Auto-Resume Functionality")]
+        [global::Xunit.TraitAttribute("Description", "Sends configured continue command")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task SendsConfiguredContinueCommand()
         {
             string[] tagsOfScenario = new string[] {
-                    "signed-commits"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "3";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Accept commits with GPG signing enabled", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Sends configured continue command", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 36
+#line 29
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -309,39 +289,33 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 37
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 30
+        await testRunner.GivenAsync("the continue command is configured as \"resume\\n\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 38
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 31
+        await testRunner.WhenAsync("resuming after rate limit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 39
-        await testRunner.AndAsync("node_modules directory exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 40
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 41
-        await testRunner.ThenAsync("the hook should succeed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 32
+        await testRunner.ThenAsync("\"resume\\n\" should be sent to the PTY", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Require node_modules to be installed")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Pre-commit hook validation")]
-        [global::Xunit.TraitAttribute("Description", "Require node_modules to be installed")]
-        [global::Xunit.TraitAttribute("Category", "prerequisites")]
-        public async global::System.Threading.Tasks.Task RequireNode_ModulesToBeInstalled()
+        [global::Xunit.SkippableFactAttribute(DisplayName="Uses default continue command")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Auto-Resume Functionality")]
+        [global::Xunit.TraitAttribute("Description", "Uses default continue command")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task UsesDefaultContinueCommand()
         {
             string[] tagsOfScenario = new string[] {
-                    "prerequisites"};
+                    "unit"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "4";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Require node_modules to be installed", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Uses default continue command", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 44
+#line 35
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -354,23 +328,11 @@ namespace McjCoderOrg.HookTests.Features
 #line 7
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 45
-        await testRunner.GivenAsync("I am on a \"feature/123-test\" branch", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 36
+        await testRunner.WhenAsync("resuming after rate limit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 46
-        await testRunner.AndAsync("GPG signing is configured", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 47
-        await testRunner.AndAsync("node_modules directory does not exist", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 48
-        await testRunner.WhenAsync("I attempt to commit", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 49
-        await testRunner.ThenAsync("the hook should fail with exit code 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 50
-        await testRunner.AndAsync("the output should contain \"Dependencies not installed\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 37
+        await testRunner.ThenAsync("a newline should be sent to the PTY", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -383,12 +345,12 @@ namespace McjCoderOrg.HookTests.Features
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
             {
-                await Pre_CommitHookValidationFeature.FeatureSetupAsync();
+                await Auto_ResumeFunctionalityFeature.FeatureSetupAsync();
             }
             
             async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.DisposeAsync()
             {
-                await Pre_CommitHookValidationFeature.FeatureTearDownAsync();
+                await Auto_ResumeFunctionalityFeature.FeatureTearDownAsync();
             }
         }
     }

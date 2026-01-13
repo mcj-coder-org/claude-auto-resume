@@ -164,7 +164,7 @@ Brief 2–3 sentence summary of what this feature does and why it's necessary.
 
 - Test project: `tests/Unit/{Namespace}.Tests`
 - Test naming: `Method_Scenario_Expected`
-- Use xUnit and FluentAssertions
+- Use xUnit and AwesomeAssertions
 
 ### Integration Tests
 

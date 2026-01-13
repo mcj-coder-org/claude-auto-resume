@@ -19,7 +19,8 @@
     "package-lock.json",
     ".husky/_",
     "**/*.snupkg",
-    "**/*.nupkg"
+    "**/*.nupkg",
+    "**/*.feature.cs"
   ],
   "words": [
     "Mcj",
