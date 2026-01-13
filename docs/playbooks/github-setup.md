@@ -140,7 +140,9 @@ If using external services:
 
 ## Labels
 
-Ensure these labels exist for issue/PR management:
+Required labels for issue/PR management per [ticket-lifecycle.md](../practices/ticket-lifecycle.md):
+
+### Type Labels (GitHub Defaults)
 
 | Label              | Color     | Description                                 |
 | ------------------ | --------- | ------------------------------------------- |
@@ -151,6 +153,55 @@ Ensure these labels exist for issue/PR management:
 | `help wanted`      | `#008672` | Extra attention is needed                   |
 | `breaking-change`  | `#b60205` | Breaking change                             |
 | `dependencies`     | `#0366d6` | Pull requests that update a dependency file |
+
+### Workflow Labels
+
+| Label           | Color     | Description                          |
+| --------------- | --------- | ------------------------------------ |
+| `status:triage` | `#fbca04` | Issue needs refinement               |
+| `blocked`       | `#b60205` | Cannot proceed - see comments        |
+| `epic`          | `#5319e7` | Parent issue coordinating sub-issues |
+
+### Priority Labels
+
+| Label               | Color     | Description                         |
+| ------------------- | --------- | ----------------------------------- |
+| `priority:critical` | `#b60205` | Must fix immediately                |
+| `priority:high`     | `#d93f0b` | Important, address soon             |
+| `priority:medium`   | `#fbca04` | Normal priority                     |
+| `priority:low`      | `#0e8a16` | Nice to have, address when possible |
+
+### Skill Labels
+
+| Label                  | Color     | Description                     |
+| ---------------------- | --------- | ------------------------------- |
+| `skill:dotnet`         | `#512BD4` | Requires .NET/C# expertise      |
+| `skill:security`       | `#d73a4a` | Requires security expertise     |
+| `skill:infrastructure` | `#0366d6` | Requires CI/CD/DevOps expertise |
+| `skill:documentation`  | `#0075ca` | Requires documentation skills   |
+| `skill:testing`        | `#1d76db` | Requires testing expertise      |
+
+### Creating Labels via CLI
+
+```bash
+# Workflow labels
+gh label create "status:triage" --color "fbca04" --description "Issue needs refinement"
+gh label create "blocked" --color "b60205" --description "Cannot proceed - see comments"
+gh label create "epic" --color "5319e7" --description "Parent issue coordinating sub-issues"
+
+# Priority labels
+gh label create "priority:critical" --color "b60205" --description "Must fix immediately"
+gh label create "priority:high" --color "d93f0b" --description "Important, address soon"
+gh label create "priority:medium" --color "fbca04" --description "Normal priority"
+gh label create "priority:low" --color "0e8a16" --description "Nice to have"
+
+# Skill labels
+gh label create "skill:dotnet" --color "512BD4" --description "Requires .NET/C# expertise"
+gh label create "skill:security" --color "d73a4a" --description "Requires security expertise"
+gh label create "skill:infrastructure" --color "0366d6" --description "Requires CI/CD/DevOps expertise"
+gh label create "skill:documentation" --color "0075ca" --description "Requires documentation skills"
+gh label create "skill:testing" --color "1d76db" --description "Requires testing expertise"
+```
 
 ## Verification Checklist
 
@@ -163,6 +214,7 @@ After setup, verify:
 - [ ] MACHINE_USER_PAT can create commits that trigger workflows
 - [ ] Branch protection prevents direct push to main
 - [ ] Dependabot creates security PRs
+- [ ] Required labels exist (run `gh label list` to verify)
 
 ## Troubleshooting
 
