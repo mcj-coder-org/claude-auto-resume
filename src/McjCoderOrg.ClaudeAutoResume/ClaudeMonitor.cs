@@ -16,6 +16,7 @@ namespace McjCoderOrg.ClaudeAutoResume;
 internal sealed class ClaudeMonitor : IDisposable
 {
     private readonly WrapperConfig _config;
+    private readonly ILogger _logger;
     private readonly StringBuilder _outputBuffer = new();
     private readonly Lock _bufferLock = new();
     private readonly Stopwatch _timeSinceLastOutput = new();
@@ -31,9 +32,14 @@ internal sealed class ClaudeMonitor : IDisposable
     /// Initializes a new instance of the <see cref="ClaudeMonitor"/> class.
     /// </summary>
     /// <param name="config">The wrapper configuration.</param>
-    public ClaudeMonitor(WrapperConfig config)
+    /// <param name="logger">
+    /// Optional logger instance. If not provided, falls back to the global Serilog logger.
+    /// Inject a logger for testability.
+    /// </param>
+    public ClaudeMonitor(WrapperConfig config, ILogger? logger = null)
     {
         _config = config;
+        _logger = logger ?? Log.Logger;
     }
 
     /// <summary>
@@ -49,7 +55,7 @@ internal sealed class ClaudeMonitor : IDisposable
         var claudePath = _config.ClaudePath ?? FindClaudeInPath();
         if (claudePath == null)
         {
-            Log.Error("Could not find 'claude' in PATH");
+            _logger.Error("Could not find 'claude' in PATH");
             WriteErrorLine("[claude-auto-resume] Error: Could not find 'claude' in PATH");
             return;
         }
@@ -99,7 +105,7 @@ internal sealed class ClaudeMonitor : IDisposable
         if (_config.Headless)
         {
             var cmdLine = string.Join(" ", commandLine);
-            Log.Information("Headless mode - Command: claude {CommandLine}", cmdLine);
+            _logger.Information("Headless mode - Command: claude {CommandLine}", cmdLine);
             WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Command: claude {cmdLine}"));
         }
     }
@@ -142,13 +148,13 @@ internal sealed class ClaudeMonitor : IDisposable
 #pragma warning disable S6667 // Intentional: Logging without exception is correct for expected cancellation
         catch (OperationCanceledException)
         {
-            Log.Debug("Operation cancelled - normal shutdown");
+            _logger.Debug("Operation cancelled - normal shutdown");
         }
 #pragma warning restore S6667
 #pragma warning disable CA1031 // Intentional: Top-level handler for PTY errors
         catch (Exception ex)
         {
-            Log.Error(ex, "Error during PTY operation");
+            _logger.Error(ex, "Error during PTY operation");
             WriteErrorLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Error: {ex.Message}"));
         }
 #pragma warning restore CA1031
@@ -170,14 +176,14 @@ internal sealed class ClaudeMonitor : IDisposable
 
             if (!_cts.Token.IsCancellationRequested)
             {
-                Log.Information("Claude exited with code {ExitCode}", _pty!.ExitCode);
+                _logger.Information("Claude exited with code {ExitCode}", _pty!.ExitCode);
                 WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Claude exited with code: {_pty.ExitCode}"));
             }
         }
 #pragma warning disable S6667 // Intentional: Logging without exception is correct for expected cancellation
         catch (OperationCanceledException)
         {
-            Log.Information("Shutdown requested by user");
+            _logger.Information("Shutdown requested by user");
             WriteLine("\n[claude-auto-resume] Shutdown requested");
         }
 #pragma warning restore S6667
@@ -298,7 +304,7 @@ internal sealed class ClaudeMonitor : IDisposable
     private async Task HandleHangingPromptAsync(CancellationToken ct)
     {
         var escapedResponse = EscapeForDisplay(_config.DefaultPromptResponse);
-        Log.Information("Detected prompt, auto-responding: {Response}", escapedResponse);
+        _logger.Information("Detected prompt, auto-responding: {Response}", escapedResponse);
 
         Console.ForegroundColor = ConsoleColor.Cyan;
         WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Detected prompt, auto-responding: {escapedResponse}"));
@@ -429,7 +435,7 @@ internal sealed class ClaudeMonitor : IDisposable
             _outputBuffer.Clear();
         }
 
-        Log.Warning("Rate limit detected (matched: {Pattern}), waiting {WaitMinutes} minutes", matchedPattern, _config.WaitMinutes);
+        _logger.Warning("Rate limit detected (matched: {Pattern}), waiting {WaitMinutes} minutes", matchedPattern, _config.WaitMinutes);
 
         WriteRateLimitDetectedMessage(matchedPattern);
         await WaitWithCountdownAsync(ct).ConfigureAwait(false);
@@ -460,7 +466,7 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private async Task SendContinueCommandAsync(CancellationToken ct)
     {
-        Log.Information("Sending continue command after rate limit wait");
+        _logger.Information("Sending continue command after rate limit wait");
 
         WriteLine(string.Empty);
         Console.ForegroundColor = ConsoleColor.Green;
