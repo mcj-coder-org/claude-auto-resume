@@ -165,7 +165,8 @@
     "mklink",
     "msbuild",
     "msdata",
-    "unlist"
+    "unlist",
+    "linters"
   ],
   "flagWords": [],
   "allowCompoundWords": true,
