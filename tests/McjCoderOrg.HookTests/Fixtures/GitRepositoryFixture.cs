@@ -97,13 +97,13 @@ public sealed class GitRepositoryFixture : IAsyncDisposable
     {
         await RunGitAsync("config", "commit.gpgsign", enabled ? "true" : "false").ConfigureAwait(false);
 
-        // When enabling GPG signing for tests, set an empty signing key to prevent
-        // inheriting the global config (which would fail email validation)
+        // When enabling GPG signing for tests, ensure no signing key is set to prevent
+        // the hook from validating email match (which would fail in test environment)
         if (enabled)
         {
-            // Set empty signing key in this repo to skip email validation in the hook
-            // The hook only validates email match if SIGNING_KEY is non-empty
-            await RunGitAsync("config", "user.signingkey", "").ConfigureAwait(false);
+            // Unset any inherited signing key - the hook only validates email match if
+            // SIGNING_KEY is non-empty, so unsetting skips that check
+            await RunGitSafeAsync("config", "--unset", "user.signingkey").ConfigureAwait(false);
         }
 
         GpgSigningConfigured = enabled;
@@ -318,6 +318,32 @@ public sealed class GitRepositoryFixture : IAsyncDisposable
             var error = await process.StandardError.ReadToEndAsync().ConfigureAwait(false);
             throw new InvalidOperationException($"Git command failed: git {string.Join(" ", args)}\n{error}");
         }
+    }
+
+    /// <summary>
+    /// Runs a git command, ignoring non-zero exit codes.
+    /// Useful for commands like --unset that fail if the value doesn't exist.
+    /// </summary>
+    private async Task RunGitSafeAsync(params string[] args)
+    {
+        using var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "git",
+                Arguments = string.Join(" ", args.Select(a => a.Contains(' ', StringComparison.Ordinal) ? $"\"{a}\"" : a)),
+                WorkingDirectory = _tempDir,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            },
+        };
+
+        process.Start();
+        await process.WaitForExitAsync().ConfigureAwait(false);
+
+        // Intentionally ignore exit code - some commands like --unset fail if value doesn't exist
     }
 
     public async ValueTask DisposeAsync()
