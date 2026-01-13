@@ -2,5 +2,76 @@
 # Add words here that are specific to this project
 # One word per line
 
-# NuGet terminology
-unlist
+# British spellings (en-GB variants)
+# These are added because cspell may not recognize all forms
+Localisation
+localised
+behaviour
+behaviours
+colour
+colours
+favour
+favours
+honour
+honours
+labour
+labours
+licence
+licences
+neighbour
+neighbours
+organisation
+organisations
+practise
+practises
+programme
+programmes
+recognised
+recognises
+analyse
+analysed
+analyser
+analysers
+serialised
+serialise
+deserialised
+deserialise
+initialised
+initialise
+initialisation
+customised
+customise
+customisation
+optimised
+optimise
+optimisation
+standardised
+standardise
+standardisation
+normalised
+normalise
+normalisation
+minimised
+minimise
+minimisation
+maximised
+maximise
+maximisation
+prioritised
+prioritise
+prioritisation
+categorised
+categorise
+categorisation
+characterised
+characterise
+characterisation
+parameterised
+parameterise
+parameterisation
+
+# American spellings (for cross-reference compatibility)
+defense
+analyzes
+behavioral
+labeled
