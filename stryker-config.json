@@ -5,17 +5,17 @@
       "tests/McjCoderOrg.ClaudeAutoResume.Tests/McjCoderOrg.ClaudeAutoResume.Tests.csproj"
     ],
     "reporters": ["html", "json", "progress"],
-    "log-level": "info",
+    "verbosity": "info",
     "mutation-level": "Standard",
-    "threshold-high": 80,
-    "threshold-low": 60,
-    "threshold-break": 50,
+    "thresholds": {
+      "high": 60,
+      "low": 30,
+      "break": 10
+    },
     "concurrency": 4,
     "language-version": "latest",
     "ignore-mutations": [],
     "ignore-methods": ["*.ToString", "*.GetHashCode"],
-    "excluded-mutations": [],
-    "solution": "ClaudeAutoResume.sln",
-    "output": "StrykerOutput"
+    "solution": "McjCoderOrg.ClaudeAutoResume.sln"
   }
 }

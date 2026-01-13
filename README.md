@@ -1,5 +1,9 @@
 # Claude Auto Resume
 
+[![CI](https://github.com/mcj-coder-org/claude-auto-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/mcj-coder-org/claude-auto-resume/actions/workflows/ci.yml)
+[![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)](https://dotnet.microsoft.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A cross-platform .NET tool that wraps the Claude CLI to provide automatic session
 resumption when rate limits are hit.
 
@@ -14,67 +18,87 @@ limit resets.
 
 - **Automatic rate limit detection** - Monitors Claude CLI output for rate limit messages
 - **Seamless resumption** - Waits for the reset time and automatically resumes your session
+- **Headless mode** - Run unattended with auto-response to prompts
 - **Transparent operation** - Acts as a passthrough until rate limits are detected
 - **Cross-platform** - Runs on Windows, macOS, and Linux
 - **Privacy-first** - No telemetry or data collection (see [Privacy Policy](docs/standards/privacy.md))
 
 ## Installation
 
+### Prerequisites
+
+- [Claude CLI](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) installed and in PATH
+- .NET 10 Runtime (for .NET tool installation)
+
 ### .NET Tool (Recommended)
 
-````bash
+```bash
 dotnet tool install -g McjCoderOrg.ClaudeAutoResume
-```text
+```
 
 ### Standalone Executable
 
-Download the latest release for your platform from the [Releases](https://github.com/mcj-coder-org/claude-auto-resume/releases) page.
+Download the latest release for your platform from the
+[Releases](https://github.com/mcj-coder-org/claude-auto-resume/releases) page.
+
+## Quick Start
+
+```bash
+# Interactive mode (default) - use like normal claude
+claude-auto-resume
+
+# With an initial prompt
+claude-auto-resume -p "implement the login feature"
+
+# Continue previous session
+claude-auto-resume -c -p "continue where we left off"
+
+# Headless mode for CI/automation
+claude-auto-resume --headless --dangerous -p "implement feature"
+
+# Pass additional args to claude
+claude-auto-resume -- --model claude-3-opus
+```
 
 ## Usage
 
-Use `claude-auto-resume` as a drop-in replacement for `claude`:
-
-```bash
-# Basic usage
-claude-auto-resume
-
-# With verbose logging
-claude-auto-resume --verbose
-
-# Run diagnostics
-claude-auto-resume --diagnose
-
-# Pass arguments to Claude CLI
-claude-auto-resume -- --help
 ```text
+USAGE:
+    claude-auto-resume [OPTIONS] [-- CLAUDE_ARGS...]
 
-## Configuration
+OPTIONS:
+    -h, --help                      Show help
+    -v, --version                   Show version information
+    -p, --prompt <PROMPT>           Initial prompt to send to Claude
+    -c, --continue                  Continue previous conversation
+    -w, --wait <MINUTES>            Minutes to wait on rate limit (default: 15)
+    -V, --verbose                   Enable verbose logging to file
+    --headless                      Run without user input (auto-respond to prompts)
+    --dangerously-skip-permissions  Pass dangerous flag to Claude (required for headless)
+    --dangerous                     Alias for --dangerously-skip-permissions
+    --diagnose                      Run environment diagnostics
 
-Configuration can be provided via CLI arguments, environment variables, project config, or user config.
+ENVIRONMENT:
+    CLAUDE_WAIT_MINUTES             Override default wait time
+```
 
-### CLI Arguments
+## Modes
 
-```bash
-claude-auto-resume --retry-delay 10000 --max-retries 5
-```text
+### Interactive (Default)
 
-### Environment Variables
+- Full PTY pass-through with colors
+- You type, Claude responds
+- Auto-waits and continues on rate limit
 
-```bash
-export CLAUDE_AUTO_RESUME_RETRY_DELAY=10000
-export CLAUDE_AUTO_RESUME_MAX_RETRIES=5
-```text
+### Headless (`--headless --dangerous`)
 
-### Configuration File
+- No user input required
+- Auto-responds 'y' to permission prompts
+- Detects when Claude hangs waiting for input
+- Ideal for CI/CD pipelines
 
-Create `.claude-auto-resume.json` in your project directory or `~/.config/claude-auto-resume/config.json` for user-level config:
-
-```json
-{
-  "retryDelayMs": 10000,
-  "maxRetries": 5
-}
-```text
+> **Warning:** `--dangerously-skip-permissions` allows Claude to execute commands
+> without confirmation. Use only in trusted environments.
 
 ## Development
 
@@ -99,11 +123,12 @@ dotnet build
 
 # Run tests
 dotnet test
-```text
+```
 
 ### For AI Agents
 
-If you're an AI agent working on this codebase, start by reading [AGENTS.md](AGENTS.md) for orientation and documentation routing guidance.
+If you're an AI agent working on this codebase, start by reading [AGENTS.md](AGENTS.md)
+for orientation and documentation routing guidance.
 
 ### Documentation
 
@@ -130,30 +155,33 @@ If you're an AI agent working on this codebase, start by reading [AGENTS.md](AGE
                          │
 ┌────────────────────────▼────────────────────────────┐
 │            claude-auto-resume (this tool)           │
-│  • Wraps Claude CLI process                         │
+│  • Wraps Claude CLI in pseudo-terminal              │
 │  • Monitors output for rate limits                  │
 │  • Auto-resumes when limit resets                   │
+│  • Handles prompts in headless mode                 │
 └────────────────────────┬────────────────────────────┘
                          │
 ┌────────────────────────▼────────────────────────────┐
 │               Claude CLI (Anthropic)                 │
 └─────────────────────────────────────────────────────┘
-```text
+```
 
 ## Exit Codes
 
-| Code | Meaning                                      |
-| ---- | -------------------------------------------- |
-| 0    | Success                                      |
-| 1    | General error                                |
-| 2    | Configuration error                          |
-| 3    | Claude CLI not found                         |
-| 4    | Rate limit detected (when not auto-resuming) |
-| 5    | User cancelled (Ctrl+C)                      |
+| Code | Meaning                 |
+| ---- | ----------------------- |
+| 0    | Success                 |
+| 1    | General error           |
+| 2    | Invalid arguments       |
+| 3    | Configuration error     |
+| 4    | Claude CLI not found    |
+| 5    | Rate limit detected     |
+| 6    | User cancelled (Ctrl+C) |
 
 ## Privacy
 
-This tool collects **no telemetry, analytics, or usage data**. All data remains on your machine. See our [Privacy Policy](docs/standards/privacy.md) for details.
+This tool collects **no telemetry, analytics, or usage data**. All data remains on your
+machine. See our [Privacy Policy](docs/standards/privacy.md) for details.
 
 ## License
 
@@ -163,4 +191,3 @@ This tool collects **no telemetry, analytics, or usage data**. All data remains 
 
 - [Anthropic](https://www.anthropic.com/) for the Claude CLI
 - All contributors to this project
-````

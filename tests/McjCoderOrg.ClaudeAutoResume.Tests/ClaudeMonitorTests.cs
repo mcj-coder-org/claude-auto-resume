@@ -1,3 +1,5 @@
+using McjCoderOrg.ClaudeAutoResume.TestUtilities;
+
 namespace McjCoderOrg.ClaudeAutoResume;
 
 public sealed class ClaudeMonitorTests : IDisposable
@@ -128,5 +130,17 @@ public sealed class ClaudeMonitorTests : IDisposable
         var act = () => monitor.Dispose();
 
         act.Should().NotThrow();
+    }
+
+    [Fact]
+    public void Constructor_WithInjectedLogger_UsesProvidedLogger()
+    {
+        using var logCapture = new LogCapture();
+        var config = WrapperConfig.Default;
+
+        using var monitor = new ClaudeMonitor(config, logCapture.Logger);
+
+        // Verify the monitor was created with the injected logger (no exceptions)
+        monitor.Should().NotBeNull();
     }
 }

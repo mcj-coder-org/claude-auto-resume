@@ -13,7 +13,8 @@ updates:
       timezone: 'UTC'
     open-pull-requests-limit: 10
     commit-message:
-      prefix: 'deps'
+      prefix: 'build'
+      prefix-development: 'build'
       include: 'scope'
     groups:
       # Group all patch updates together
@@ -60,7 +61,8 @@ updates:
       timezone: 'UTC'
     open-pull-requests-limit: 5
     commit-message:
-      prefix: 'deps'
+      prefix: 'build'
+      prefix-development: 'build'
       include: 'scope'
     groups:
       # Group all npm patch updates
