@@ -16,7 +16,7 @@ jobs:
       - name: Validate PR title
         # Skip subject case validation for dependabot PRs (they use "Bump" with uppercase)
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: amannn/action-semantic-pull-request@v5
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -44,7 +44,7 @@ jobs:
       - name: Validate dependabot PR title (relaxed)
         # For dependabot PRs, only validate the type prefix, not subject case
         if: ${{ github.actor == 'dependabot[bot]' }}
-        uses: amannn/action-semantic-pull-request@v5
+        uses: amannn/action-semantic-pull-request@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
