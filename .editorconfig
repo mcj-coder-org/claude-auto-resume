@@ -245,6 +245,10 @@ dotnet_diagnostic.S2092.severity = error      # Cookies should be secure
 dotnet_diagnostic.S3011.severity = error      # Reflection should not bypass access
 dotnet_diagnostic.S5773.severity = error      # Types should not be deserialized
 
+# Step definitions use method names matching step text, not Async suffix
+[*Steps.cs]
+dotnet_naming_rule.async_methods_async_suffix.severity = none
+
 [Makefile]
 indent_style = tab
 
