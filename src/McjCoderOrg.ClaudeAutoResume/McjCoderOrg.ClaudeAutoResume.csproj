@@ -59,12 +59,6 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
-  <!-- Public API Tracking Files -->
-  <ItemGroup>
-    <AdditionalFiles Include="PublicAPI.Shipped.txt" />
-    <AdditionalFiles Include="PublicAPI.Unshipped.txt" />
-  </ItemGroup>
-
   <!-- Resource Files -->
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings.resx">
