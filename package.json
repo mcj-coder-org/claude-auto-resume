@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky",
-    "lint": "npm run lint:format && npm run lint:markdown && npm run lint:spelling && npm run lint:secrets",
+    "lint": "npm run lint:format && npm run lint:markdown && npm run lint:spelling && npm run lint:secrets && npm run lint:adr",
     "lint:format": "prettier --check \"**/*.md\" \"**/*.json\" \"**/*.yml\" --ignore-path .gitignore",
     "lint:format:fix": "prettier --write \"**/*.md\" \"**/*.json\" \"**/*.yml\" --ignore-path .gitignore",
     "lint:markdown": "markdownlint \"**/*.md\" --ignore node_modules --ignore .git",
@@ -14,7 +14,8 @@
     "lint:spelling": "cspell \"**/*.md\" \"**/*.cs\" \"**/*.json\" --no-progress",
     "lint:secrets": "secretlint \"**/*\"",
     "secretlint": "secretlint \"**/*\"",
-    "secretlint:fix": "secretlint \"**/*\" --fix"
+    "secretlint:fix": "secretlint \"**/*\" --fix",
+    "lint:adr": "node scripts/validate-adr.js docs/adr/"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
