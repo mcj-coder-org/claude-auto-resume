@@ -1,0 +1,32 @@
+name: ADR Validation
+
+on:
+  pull_request:
+    paths:
+      - 'docs/adr/**/*.md'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/adr/**/*.md'
+
+jobs:
+  validate:
+    name: Validate ADR Frontmatter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate ADR files
+        run: npm run lint:adr
