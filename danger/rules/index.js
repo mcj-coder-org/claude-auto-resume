@@ -11,6 +11,7 @@ import { validatePRBody } from './pr-body.js';
 import { validatePlanFiles } from './plan-file.js';
 import { validateAllAmendments } from './amendment.js';
 import { validateAutoMergeSettings } from './auto-merge.js';
+import { validateLinkedIssue } from './linked-issue.js';
 
 /**
  * Provide helpful messages
@@ -49,6 +50,9 @@ export async function runAllValidations() {
 
   // Phase 4: Auto-merge validations
   await validateAutoMergeSettings();
+
+  // Phase 5: Linked issue validations
+  await validateLinkedIssue();
 
   // Helpful messages
   await provideMessages();
