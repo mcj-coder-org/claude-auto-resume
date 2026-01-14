@@ -402,15 +402,15 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private async Task MonitorWindowSizeAsync(CancellationToken ct)
     {
-        var lastWidth = Console.WindowWidth;
-        var lastHeight = Console.WindowHeight;
+        var lastWidth = GetConsoleWidth();
+        var lastHeight = GetConsoleHeight();
 
         while (!ct.IsCancellationRequested)
         {
             await Task.Delay(500, ct).ConfigureAwait(false);
 
-            var width = Console.WindowWidth;
-            var height = Console.WindowHeight;
+            var width = GetConsoleWidth();
+            var height = GetConsoleHeight();
 
             if (width != lastWidth || height != lastHeight)
             {
