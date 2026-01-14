@@ -1,5 +1,5 @@
 ---
-status: Draft
+status: Approved v1
 version: v1
 issue: '#93'
 created: 2026-01-14
@@ -10,17 +10,17 @@ last_updated: 2026-01-14
 
 ## Version History
 
-| Version | Date       | Changes        | Discussion | Approved By | Follow-up Issues |
-| ------- | ---------- | -------------- | ---------- | ----------- | ---------------- |
-| v1      | 2026-01-14 | Initial design | #93        | -           | #94              |
+| Version | Date       | Changes        | Discussion | Approved By    | Follow-up Issues |
+| ------- | ---------- | -------------- | ---------- | -------------- | ---------------- |
+| v1      | 2026-01-14 | Initial design | #93        | @martincjarvis | #94              |
 
 ## Approval
 
 **Design Approved By:**
 
-- [ ] Tech Lead: @martincjarvis (YYYY-MM-DD)
+- [x] Tech Lead: @martincjarvis (2026-01-14) [Approval](https://github.com/mcj-coder-org/claude-auto-resume/pull/96#pullrequestreview-2708420428)
 
-**Status:** `Draft`
+**Status:** `Approved v1`
 
 ---
 
