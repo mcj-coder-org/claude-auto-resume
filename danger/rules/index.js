@@ -9,6 +9,7 @@
 import { danger, message } from 'danger';
 import { validatePRBody } from './pr-body.js';
 import { validatePlanFiles } from './plan-file.js';
+import { validateAllAmendments } from './amendment.js';
 
 /**
  * Provide helpful messages
@@ -41,6 +42,9 @@ export async function runAllValidations() {
 
   // Phase 2: Plan file validations
   await validatePlanFiles();
+
+  // Phase 3: Amendment validations
+  await validateAllAmendments();
 
   // Helpful messages
   await provideMessages();
