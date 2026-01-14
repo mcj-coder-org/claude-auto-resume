@@ -102,10 +102,37 @@ public sealed class ApplicationStartupTests
     }
 
     [SkippableFact]
-    public async Task ApplicationWithNoArgsStartsOrReportsMissingClaudeAsync()
+    public async Task ApplicationWithNoArgsReportsMissingClaudeAsync()
     {
         // Skip if executable doesn't exist (build not run)
         Skip.If(!File.Exists(_executablePath), $"Executable not found at {_executablePath}");
+
+        // Skip if claude IS available - this test is for when it's missing
+        Skip.If(IsClaudeAvailable(), "Claude CLI is available - this test is for missing claude");
+
+        // Arrange
+        using var process = CreateProcess(string.Empty);
+
+        // Act
+        process.Start();
+        var errorOutput = await process.StandardError.ReadToEndAsync();
+        await process.WaitForExitAsync();
+
+        // Assert
+        process.ExitCode.Should().Be(4,
+            "exit code should be DependencyMissing (4) when claude is not found");
+        errorOutput.Should().Contain("Could not find 'claude' in PATH",
+            "error output should indicate claude was not found");
+    }
+
+    [SkippableFact]
+    public async Task ApplicationStartsSuccessfullyWhenClaudeIsAvailableAsync()
+    {
+        // Skip if executable doesn't exist (build not run)
+        Skip.If(!File.Exists(_executablePath), $"Executable not found at {_executablePath}");
+
+        // Skip if claude is NOT available - this test requires claude
+        Skip.If(!IsClaudeAvailable(), "Claude CLI is not available - skipping happy path test");
 
         // Arrange
         using var process = CreateProcess(string.Empty);
@@ -113,28 +140,59 @@ public sealed class ApplicationStartupTests
         // Act
         process.Start();
 
-        // Wait with timeout - the app might hang waiting for input if claude exists
-        var timeoutTask = Task.Delay(TimeSpan.FromSeconds(5));
+        // Wait briefly - if claude is available, the app should start the PTY
+        // and keep running (not exit immediately)
+        var timeoutTask = Task.Delay(TimeSpan.FromSeconds(3));
         var processTask = process.WaitForExitAsync();
 
         var completedTask = await Task.WhenAny(timeoutTask, processTask);
 
         if (completedTask == timeoutTask)
         {
-            // Process is still running (claude exists and app started PTY)
+            // Process is still running after 3 seconds - this is the expected happy path
+            // The app successfully started and spawned claude in a PTY
             process.Kill();
-            // This is actually success - app started correctly
-            Assert.True(true, "Application started successfully (killed after timeout)");
+            Assert.True(true, "Application started successfully with claude CLI");
         }
         else
         {
-            // Process exited quickly - claude CLI was not found
+            // Process exited - this is unexpected when claude is available
+            var output = await process.StandardOutput.ReadToEndAsync();
             var errorOutput = await process.StandardError.ReadToEndAsync();
-            process.ExitCode.Should().Be(4,
-                "exit code should be DependencyMissing (4) when claude is not found");
-            errorOutput.Should().Contain("Could not find 'claude' in PATH",
-                "error output should indicate claude was not found");
+            Assert.Fail(string.Create(
+                System.Globalization.CultureInfo.InvariantCulture,
+                $"Application exited unexpectedly with code {process.ExitCode}. Output: {output} Error: {errorOutput}"));
         }
+    }
+
+    private static bool IsClaudeAvailable()
+    {
+        try
+        {
+            using var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "claude",
+                    Arguments = "-v",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                },
+            };
+
+            process.Start();
+            var completed = process.WaitForExit(5000);
+
+            return completed && process.ExitCode == 0;
+        }
+#pragma warning disable CA1031 // Intentional: Any failure means claude is not available
+        catch
+        {
+            return false;
+        }
+#pragma warning restore CA1031
     }
 
     private static Process CreateProcess(string arguments)
