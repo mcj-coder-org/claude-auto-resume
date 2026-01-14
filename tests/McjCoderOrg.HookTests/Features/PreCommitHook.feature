@@ -1,4 +1,4 @@
-@pre-commit
+@pre-commit @Integration
 Feature: Pre-commit hook validation
     As a developer
     I want the pre-commit hook to enforce quality standards

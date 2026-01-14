@@ -1,4 +1,4 @@
-@pre-push
+@pre-push @Integration
 Feature: Pre-push hook validation
     As a developer
     I want branch naming and tests validated before push
