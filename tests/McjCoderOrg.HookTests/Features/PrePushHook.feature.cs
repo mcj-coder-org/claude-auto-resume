@@ -18,13 +18,15 @@ namespace McjCoderOrg.HookTests.Features
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::Xunit.TraitAttribute("Category", "pre-push")]
+    [global::Xunit.TraitAttribute("Category", "Integration")]
     public partial class Pre_PushHookValidationFeature : object, global::Xunit.IClassFixture<Pre_PushHookValidationFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "pre-push"};
+                "pre-push",
+                "Integration"};
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Pre-push hook validation", "    As a developer\r\n    I want branch naming and tests validated before push\r\n   " +
                 " So that the remote repository maintains quality standards", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());

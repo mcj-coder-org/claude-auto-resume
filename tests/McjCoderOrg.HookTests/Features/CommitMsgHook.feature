@@ -1,4 +1,4 @@
-@commit-msg
+@commit-msg @Integration
 Feature: Commit message validation
     As a developer
     I want commit messages validated against conventions

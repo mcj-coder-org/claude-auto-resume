@@ -18,13 +18,15 @@ namespace McjCoderOrg.HookTests.Features
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "3.0.0.0")]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::Xunit.TraitAttribute("Category", "commit-msg")]
+    [global::Xunit.TraitAttribute("Category", "Integration")]
     public partial class CommitMessageValidationFeature : object, global::Xunit.IClassFixture<CommitMessageValidationFeature.FixtureData>, global::Xunit.IAsyncLifetime
     {
         
         private global::Reqnroll.ITestRunner testRunner;
         
         private static string[] featureTags = new string[] {
-                "commit-msg"};
+                "commit-msg",
+                "Integration"};
         
         private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Commit message validation", "    As a developer\r\n    I want commit messages validated against conventions\r\n   " +
                 " So that changelog generation and traceability work correctly", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());

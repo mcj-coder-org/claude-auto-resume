@@ -6,6 +6,7 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests;
 /// End-to-end tests verifying the application starts correctly.
 /// These tests run the actual executable as a black-box test.
 /// </summary>
+[Trait("Category", "E2E")]
 public sealed class ApplicationStartupTests
 {
     private static readonly string _executablePath = Get_executablePath();
