@@ -5,6 +5,7 @@ description: |
   Applies when structuring epics, sub-issues, or linking work to branches and PRs.
 decision: Use GitHub Issues with sub-issues and task lists for hierarchical work tracking.
 status: accepted
+type: process
 ---
 
 # ADR-0003: Work Item Management
