@@ -5,6 +5,8 @@ description: |
   to prevent circular dependencies, cross-slice references, or layer violations.
 decision: Use NetArchTest with slice support for automated architecture enforcement.
 status: accepted
+type: implementation
+implementation_issue: '#38'
 ---
 
 # ADR-0016: Architecture Testing

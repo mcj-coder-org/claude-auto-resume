@@ -4,6 +4,8 @@ description: |
   When implementing performance benchmarks, detecting regressions, or tracking performance over time. Apply when setting up benchmark projects or CI performance checks.
 decision: Use BenchmarkDotNet with CI baseline comparisons and nightly full benchmark suites.
 status: accepted
+type: implementation
+implementation_issue: '#38'
 ---
 
 # ADR-0025: Performance Testing

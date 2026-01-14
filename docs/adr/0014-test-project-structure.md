@@ -5,6 +5,8 @@ description: |
   E2E tests, feature files, or step definitions using Gherkin syntax.
 decision: Use Reqnroll for BDD with three test projects for unit, system, and E2E tests.
 status: accepted
+type: implementation
+implementation_issue: '#38'
 ---
 
 # ADR-0014: Test Project Structure and BDD Framework

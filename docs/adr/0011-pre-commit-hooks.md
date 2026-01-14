@@ -5,6 +5,8 @@ description: |
   commit-msg, or pre-push hooks, or when enforcing conventional commits and work item references.
 decision: Use Husky + commitlint + lint-staged for pre-commit hooks with CI enforcement as backup.
 status: accepted
+type: implementation
+implementation_issue: '#24'
 ---
 
 # ADR-0011: Pre-commit Hooks

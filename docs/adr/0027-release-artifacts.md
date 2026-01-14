@@ -4,6 +4,8 @@ description: |
   When defining release outputs, configuring NuGet packages, or building standalone executables. Apply for Source Link, SBOM generation, or cross-platform build decisions.
 decision: Publish NuGet packages with Source Link, cross-platform standalone builds, SBOM, and checksums.
 status: accepted
+type: implementation
+implementation_issue: '#49'
 ---
 
 # ADR-0027: Release Artifacts

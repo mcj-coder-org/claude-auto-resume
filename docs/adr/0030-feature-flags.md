@@ -4,6 +4,8 @@ description: |
   When implementing progressive feature delivery, runtime toggling, or deploying incomplete features safely. Apply for epic sub-issue deployment or feature rollout strategies.
 decision: Use Microsoft.FeatureManagement with Azure App Configuration for production and appsettings for local development.
 status: accepted
+type: implementation
+implementation_issue: '#39'
 ---
 
 # ADR-0030: Feature Flags

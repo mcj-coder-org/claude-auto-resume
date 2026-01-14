@@ -5,6 +5,8 @@ description: |
   Applies when evaluating privacy implications or user data collection.
 decision: Implement no telemetry for privacy-first approach; use GitHub Issues for feedback.
 status: accepted
+type: implementation
+implementation_issue: '#39'
 ---
 
 # ADR-0007: Telemetry

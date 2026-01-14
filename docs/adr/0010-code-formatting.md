@@ -5,6 +5,8 @@ description: |
   Applies when setting up .editorconfig, Prettier, or pre-commit hooks for code style.
 decision: Use dotnet format for C# with .editorconfig and Prettier for Markdown/JSON/YAML files.
 status: accepted
+type: implementation
+implementation_issue: '#24'
 ---
 
 # ADR-0010: Code Formatting
