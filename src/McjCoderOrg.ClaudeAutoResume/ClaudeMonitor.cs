@@ -116,13 +116,41 @@ internal sealed class ClaudeMonitor : IDisposable
         return new PtyOptions
         {
             Name = "claude-auto-resume",
-            Cols = Console.WindowWidth > 0 ? Console.WindowWidth : 120,
-            Rows = Console.WindowHeight > 0 ? Console.WindowHeight : 30,
+            Cols = GetConsoleWidth(),
+            Rows = GetConsoleHeight(),
             Cwd = Environment.CurrentDirectory,
             App = claudePath,
             CommandLine = [.. commandLine],
             Environment = GetEnvironment(),
         };
+    }
+
+    private static int GetConsoleWidth()
+    {
+        try
+        {
+            var width = Console.WindowWidth;
+            return width > 0 ? width : 120;
+        }
+        catch (IOException)
+        {
+            // No console attached (e.g., running with redirected streams)
+            return 120;
+        }
+    }
+
+    private static int GetConsoleHeight()
+    {
+        try
+        {
+            var height = Console.WindowHeight;
+            return height > 0 ? height : 30;
+        }
+        catch (IOException)
+        {
+            // No console attached (e.g., running with redirected streams)
+            return 30;
+        }
     }
 
     private async Task RunMonitoringTasksAsync()
@@ -374,15 +402,15 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private async Task MonitorWindowSizeAsync(CancellationToken ct)
     {
-        var lastWidth = Console.WindowWidth;
-        var lastHeight = Console.WindowHeight;
+        var lastWidth = GetConsoleWidth();
+        var lastHeight = GetConsoleHeight();
 
         while (!ct.IsCancellationRequested)
         {
             await Task.Delay(500, ct).ConfigureAwait(false);
 
-            var width = Console.WindowWidth;
-            var height = Console.WindowHeight;
+            var width = GetConsoleWidth();
+            var height = GetConsoleHeight();
 
             if (width != lastWidth || height != lastHeight)
             {
@@ -483,27 +511,52 @@ internal sealed class ClaudeMonitor : IDisposable
     {
         var pathVar = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
         var separator = OperatingSystem.IsWindows() ? ';' : ':';
-        var executable = OperatingSystem.IsWindows() ? "claude.exe" : "claude";
 
-        var pathResult = pathVar.Split(separator)
-            .Select(dir => Path.Combine(dir, executable))
-            .FirstOrDefault(File.Exists);
+        // On Windows, npm installs claude.cmd (not claude.exe)
+        // Check for .cmd, .exe, and extensionless in order of likelihood
+        string[] executableNames = OperatingSystem.IsWindows()
+            ? ["claude.cmd", "claude.exe", "claude"]
+            : ["claude"];
 
-        if (pathResult != null)
+        var pathDirs = pathVar.Split(separator);
+        foreach (var executable in executableNames)
         {
-            return pathResult;
+            var pathResult = pathDirs
+                .Select(dir => Path.Combine(dir, executable))
+                .FirstOrDefault(File.Exists);
+
+            if (pathResult != null)
+            {
+                return pathResult;
+            }
         }
 
         var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        string[] npmPaths =
-        [
-            Path.Combine(home, ".npm-global", "bin", executable),
-            Path.Combine(home, "AppData", "Roaming", "npm", executable),
-            "/usr/local/bin/claude",
-            "/usr/bin/claude",
-        ];
 
-        return npmPaths.FirstOrDefault(File.Exists);
+        // Check common npm installation paths
+        foreach (var executable in executableNames)
+        {
+            string[] npmPaths =
+            [
+                Path.Combine(home, ".npm-global", "bin", executable),
+                Path.Combine(home, "AppData", "Roaming", "npm", executable),
+            ];
+
+            var npmResult = npmPaths.FirstOrDefault(File.Exists);
+            if (npmResult != null)
+            {
+                return npmResult;
+            }
+        }
+
+        // Unix-specific paths
+        if (!OperatingSystem.IsWindows())
+        {
+            string[] unixPaths = ["/usr/local/bin/claude", "/usr/bin/claude"];
+            return unixPaths.FirstOrDefault(File.Exists);
+        }
+
+        return null;
     }
 
     private static Dictionary<string, string> GetEnvironment()
