@@ -109,9 +109,9 @@ internal static class Program
         PrintStartupInfo(config, parseResult.Headless, parseResult.Dangerous);
 
         using var monitor = new ClaudeMonitor(config);
-        await monitor.RunAsync(parseResult.ClaudeArgs).ConfigureAwait(false);
+        var claudeFound = await monitor.RunAsync(parseResult.ClaudeArgs).ConfigureAwait(false);
 
-        return ExitCodes.Success;
+        return claudeFound ? ExitCodes.Success : ExitCodes.DependencyMissing;
     }
 
     private sealed record ParseResult
