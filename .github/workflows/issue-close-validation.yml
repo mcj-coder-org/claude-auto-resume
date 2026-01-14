@@ -1,0 +1,149 @@
+name: Issue Close Validation
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate:
+    name: Validate Issue Completion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate and reopen if incomplete
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const issueBody = issue.body || '';
+            const issueNumber = issue.number;
+
+            const errors = [];
+
+            // Regex patterns
+            const CHECKBOX_CHECKED = /^[\s]*-\s*\[x\]\s*(.+)$/gim;
+            const CHECKBOX_UNCHECKED = /^[\s]*-\s*\[\s\]\s*(.+)$/gim;
+            const EVIDENCE_LINK = /\[[^\]]+\]\([^)]+\)/;
+
+            // Parse checkboxes
+            function parseCheckboxes(text, pattern) {
+              const matches = [];
+              let match;
+              pattern.lastIndex = 0;
+              while ((match = pattern.exec(text)) !== null) {
+                matches.push({
+                  text: match[1].trim(),
+                  hasEvidenceLink: EVIDENCE_LINK.test(match[0])
+                });
+              }
+              return matches;
+            }
+
+            // Extract sub-issue references
+            function extractSubIssues(body) {
+              const subIssues = new Set();
+
+              // Match markdown links with issue numbers [#123](url)
+              const linkMatches = body.matchAll(/\[#(\d+)\]\([^)]+\)/g);
+              for (const match of linkMatches) {
+                subIssues.add(match[1]);
+              }
+
+              // Match inline issue references #123
+              const inlineMatches = body.matchAll(/(?<!\[)#(\d+)(?!\])/g);
+              for (const match of inlineMatches) {
+                subIssues.add(match[1]);
+              }
+
+              return Array.from(subIssues);
+            }
+
+            // Check for unchecked items
+            const uncheckedItems = parseCheckboxes(issueBody, CHECKBOX_UNCHECKED);
+            if (uncheckedItems.length > 0) {
+              const itemList = uncheckedItems.map(item => `- [ ] ${item.text}`).join('\n');
+              errors.push({
+                title: 'Incomplete Task List Items',
+                items: itemList
+              });
+            }
+
+            // Check for checked items without evidence
+            const checkedItems = parseCheckboxes(issueBody, CHECKBOX_CHECKED);
+            const itemsWithoutEvidence = checkedItems.filter(item => !item.hasEvidenceLink);
+            if (itemsWithoutEvidence.length > 0) {
+              const itemList = itemsWithoutEvidence.map(item => `- [x] ${item.text}`).join('\n');
+              errors.push({
+                title: 'Task List Items Missing Evidence',
+                items: itemList
+              });
+            }
+
+            // Check sub-issues
+            const subIssues = extractSubIssues(issueBody);
+            const openSubIssues = [];
+
+            for (const subIssueNum of subIssues) {
+              if (subIssueNum === String(issueNumber)) continue;
+
+              try {
+                const { data: subIssue } = await github.rest.issues.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: parseInt(subIssueNum, 10)
+                });
+
+                if (subIssue.state !== 'closed') {
+                  openSubIssues.push(`- [ ] #${subIssueNum} - ${subIssue.title}`);
+                }
+              } catch (e) {
+                // Issue doesn't exist or can't be accessed, skip
+              }
+            }
+
+            if (openSubIssues.length > 0) {
+              errors.push({
+                title: 'Incomplete Sub-issues',
+                items: openSubIssues.join('\n')
+              });
+            }
+
+            // If there are errors, reopen and comment
+            if (errors.length > 0) {
+              // Build comment
+              let comment = '## Issue Close Validation Failed\n\n';
+              comment += 'This issue was reopened because:\n\n';
+
+              for (const error of errors) {
+                comment += `### ${error.title}\n\n`;
+                comment += error.items + '\n\n';
+              }
+
+              comment += '---\n\n';
+              comment += 'Please complete all items with evidence links before closing.\n\n';
+              comment += '_This validation runs automatically when issues are closed._';
+
+              // Reopen the issue
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                state: 'open'
+              });
+
+              // Add comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: comment
+              });
+
+              core.setFailed(`Issue #${issueNumber} failed validation and was reopened.`);
+            } else {
+              console.log(`Issue #${issueNumber} passed all validation checks.`);
+            }

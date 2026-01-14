@@ -282,14 +282,14 @@ danger/
 
 **Definition of Done for this feature:**
 
-- [ ] All PR body validations implemented and tested
-- [ ] Plan file detection working (modified files + frontmatter lookup)
-- [ ] Plan file validations implemented (DoD, approvals, amendments)
-- [ ] Evidence validation strict (markdown links only)
-- [ ] Auto-merge validation implemented
-- [ ] Linked issue validation implemented in DangerJS
-- [ ] Issue close workflow implemented as safety net
-- [ ] Existing Phase 1 DangerJS updated/replaced
+- [x] All PR body validations implemented and tested ([PR #97](https://github.com/mcj-coder-org/claude-auto-resume/pull/97), [PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Plan file detection working (modified files + frontmatter lookup) ([PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Plan file validations implemented (DoD, approvals, amendments) ([PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Evidence validation strict (markdown links only) ([PR #97](https://github.com/mcj-coder-org/claude-auto-resume/pull/97))
+- [x] Auto-merge validation implemented ([PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Linked issue validation implemented in DangerJS ([PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Issue close workflow implemented as safety net ([PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
+- [x] Existing Phase 1 DangerJS updated/replaced ([PR #97](https://github.com/mcj-coder-org/claude-auto-resume/pull/97), [PR #98](https://github.com/mcj-coder-org/claude-auto-resume/pull/98))
 - [ ] Integration tests covering all scenarios
 - [ ] Documentation updated
 
