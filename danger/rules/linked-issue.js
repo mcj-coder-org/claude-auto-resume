@@ -83,17 +83,18 @@ export function createLinkedIssueValidator(dangerContext) {
    * @param {string} parentIssueNumber - Parent issue number for error messages
    */
   async function validateSubIssuesClosed(subIssueNumbers, parentIssueNumber) {
-    const openSubIssues = [];
+    // Fetch all sub-issues in parallel for better performance
+    const issuePromises = subIssueNumbers.map((issueNumber) =>
+      fetchIssue(issueNumber).then((issue) => ({ issueNumber, issue }))
+    );
+    const results = await Promise.all(issuePromises);
 
-    for (const issueNumber of subIssueNumbers) {
-      const issue = await fetchIssue(issueNumber);
-      if (issue && issue.state !== 'closed') {
-        openSubIssues.push({
-          number: issueNumber,
-          title: issue.title,
-        });
-      }
-    }
+    const openSubIssues = results
+      .filter(({ issue }) => issue && issue.state !== 'closed')
+      .map(({ issueNumber, issue }) => ({
+        number: issueNumber,
+        title: issue.title,
+      }));
 
     if (openSubIssues.length > 0) {
       const issueList = openSubIssues

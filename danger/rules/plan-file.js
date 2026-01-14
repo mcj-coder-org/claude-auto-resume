@@ -11,7 +11,7 @@
  * @see docs/plans/2026-01-14-dangerjs-validation-design.md
  */
 
-import { parseFrontmatter, getIssueNumber, getPlanStatus } from '../lib/frontmatter.js';
+import { parseFrontmatter, getPlanStatus } from '../lib/frontmatter.js';
 import { parseCheckboxes } from '../lib/checklist.js';
 import { extractSuccessCriteria, extractApproval } from '../lib/sections.js';
 import { PLANS_DIR, PLANS_ARCHIVE_DIR, PLAN_FILE_PATTERN, PLAN_STATUS } from '../constants.js';

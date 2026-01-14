@@ -8,6 +8,11 @@
  * issue: '#93'
  * ---
  *
+ * Limitations:
+ * - Only handles flat key-value pairs (no nested objects or arrays)
+ * - Values must be on same line as key
+ * - Multi-line values not supported
+ *
  * @see docs/plans/2026-01-14-dangerjs-validation-design.md
  */
 
@@ -56,21 +61,6 @@ export function parseFrontmatter(content) {
   }
 
   return result;
-}
-
-/**
- * Extract issue number from frontmatter
- * @param {Object} frontmatter - Parsed frontmatter object
- * @returns {string|null} Issue number (e.g., '93') or null
- */
-export function getIssueNumber(frontmatter) {
-  if (!frontmatter || !frontmatter.issue) {
-    return null;
-  }
-
-  // Handle formats: '#93', '93', 93
-  const issue = String(frontmatter.issue);
-  return issue.replace(/^#/, '');
 }
 
 /**
