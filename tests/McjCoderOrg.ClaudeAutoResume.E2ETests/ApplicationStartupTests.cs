@@ -169,12 +169,15 @@ public sealed class ApplicationStartupTests
     {
         try
         {
+            // On Windows, need to use cmd.exe to resolve claude.cmd
+            // On Unix, can call claude directly
+            var isWindows = OperatingSystem.IsWindows();
             using var process = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "claude",
-                    Arguments = "-v",
+                    FileName = isWindows ? "cmd.exe" : "claude",
+                    Arguments = isWindows ? "/c claude -v" : "-v",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
