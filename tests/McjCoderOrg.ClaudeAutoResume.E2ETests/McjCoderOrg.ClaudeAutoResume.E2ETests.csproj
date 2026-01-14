@@ -8,7 +8,8 @@
 
     <!-- Suppress XML doc warnings for tests -->
     <!-- CA1515: E2E test classes must be public for xUnit discovery -->
-    <NoWarn>$(NoWarn);CS1591;CA1515</NoWarn>
+    <!-- CA1812: Step definitions instantiated by Reqnroll via reflection -->
+    <NoWarn>$(NoWarn);CS1591;CA1515;CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
