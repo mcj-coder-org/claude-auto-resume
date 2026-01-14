@@ -1,11 +1,14 @@
 /**
  * DangerJS PR Validation Rules
  *
- * Phase 1: Basic checklist validation
- * - Validates checked items in PR body have evidence links
- * - Warns on unchecked items in Test Plan section
+ * Phase 1: Strict checklist validation
+ * - Validates checked items in PR body have markdown link evidence
+ * - Fails on unchecked items in Test Plan section
+ * - Fails on missing evidence links
+ * - Fails on missing PR description
  *
  * @see docs/adr/0031-pr-validation-automation.md
+ * @see docs/plans/2026-01-14-dangerjs-validation-design.md
  */
 
 import { danger, fail, warn, message } from 'danger';
@@ -13,8 +16,10 @@ import { danger, fail, warn, message } from 'danger';
 // Regex patterns for validation
 const CHECKBOX_CHECKED = /^[\s]*-\s*\[x\]\s*(.+)$/gim;
 const CHECKBOX_UNCHECKED = /^[\s]*-\s*\[\s\]\s*(.+)$/gim;
-const EVIDENCE_LINK =
-  /\[.+?\]\(.+?\)|https?:\/\/[^\s)]+|#\d+|[a-f0-9]{7,40}/i;
+
+// Strict evidence pattern: markdown links only [text](url)
+const EVIDENCE_LINK = /\[[^\]]+\]\([^)]+\)/;
+
 const TEST_PLAN_SECTION = /##\s*Test\s*[Pp]lan([\s\S]*?)(?=##|$)/;
 const ACCEPTANCE_CRITERIA_SECTION =
   /##\s*Acceptance\s*[Cc]riteria([\s\S]*?)(?=##|$)/;
@@ -49,6 +54,39 @@ function extractSection(body, sectionPattern) {
 }
 
 /**
+ * Validate checklist items in a section
+ * @param {string} sectionName - Name for error messages
+ * @param {string} content - Section content to validate
+ */
+function validateSectionChecklist(sectionName, content) {
+  if (!content) return;
+
+  // Find unchecked items
+  const uncheckedItems = parseCheckboxes(content, false);
+  if (uncheckedItems.length > 0) {
+    const itemList = uncheckedItems.map((item) => `- ${item.text}`).join('\n');
+    fail(
+      `${sectionName} has unchecked items. Complete all items before merging:\n\n${itemList}`
+    );
+  }
+
+  // Find checked items without evidence links (markdown format required)
+  const checkedItems = parseCheckboxes(content, true);
+  const itemsWithoutEvidence = checkedItems.filter(
+    (item) => !item.hasEvidenceLink
+  );
+
+  if (itemsWithoutEvidence.length > 0) {
+    const itemList = itemsWithoutEvidence
+      .map((item) => `- ${item.text}`)
+      .join('\n');
+    fail(
+      `${sectionName} items are checked but lack evidence links:\n\n${itemList}\n\nAdd markdown links [description](url) as evidence.`
+    );
+  }
+}
+
+/**
  * Validate PR checklist items
  */
 async function validateChecklist() {
@@ -56,50 +94,14 @@ async function validateChecklist() {
 
   // Check for Test Plan section
   const testPlanContent = extractSection(prBody, TEST_PLAN_SECTION);
-
-  if (testPlanContent) {
-    // Find unchecked items in Test Plan
-    const uncheckedItems = parseCheckboxes(testPlanContent, false);
-    if (uncheckedItems.length > 0) {
-      const itemList = uncheckedItems.map((item) => `- ${item.text}`).join('\n');
-      fail(
-        `Test Plan has unchecked items. Complete all items before merging:\n\n${itemList}`
-      );
-    }
-
-    // Find checked items without evidence links
-    const checkedItems = parseCheckboxes(testPlanContent, true);
-    const itemsWithoutEvidence = checkedItems.filter(
-      (item) => !item.hasEvidenceLink
-    );
-
-    if (itemsWithoutEvidence.length > 0) {
-      const itemList = itemsWithoutEvidence
-        .map((item) => `- ${item.text}`)
-        .join('\n');
-      warn(
-        `Test Plan items are checked but lack evidence links:\n\n${itemList}\n\nAdd links to CI runs, commits, or PR comments as evidence.`
-      );
-    }
-  }
+  validateSectionChecklist('Test Plan', testPlanContent);
 
   // Check for Acceptance Criteria section (if present)
   const acceptanceCriteriaContent = extractSection(
     prBody,
     ACCEPTANCE_CRITERIA_SECTION
   );
-
-  if (acceptanceCriteriaContent) {
-    const uncheckedCriteria = parseCheckboxes(acceptanceCriteriaContent, false);
-    if (uncheckedCriteria.length > 0) {
-      const itemList = uncheckedCriteria
-        .map((item) => `- ${item.text}`)
-        .join('\n');
-      fail(
-        `Acceptance Criteria has unchecked items:\n\n${itemList}\n\nComplete all criteria or document why they're out of scope.`
-      );
-    }
-  }
+  validateSectionChecklist('Acceptance Criteria', acceptanceCriteriaContent);
 }
 
 /**
@@ -109,13 +111,13 @@ async function validateDescription() {
   const prBody = danger.github.pr.body || '';
 
   if (prBody.trim().length < 50) {
-    warn(
-      'PR description is very short. Please provide more context about the changes.'
+    fail(
+      'PR description is too short. Please provide context about the changes (minimum 50 characters).'
     );
   }
 
   if (!prBody.includes('## Summary') && !prBody.includes('## Description')) {
-    warn('PR is missing a Summary or Description section.');
+    fail('PR must have a Summary or Description section.');
   }
 }
 
