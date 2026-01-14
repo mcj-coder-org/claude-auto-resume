@@ -5,6 +5,7 @@ description: |
   Applies when adding new dependencies or considering license compatibility.
 decision: Use MIT License for maximum permissiveness and broad adoption.
 status: accepted
+type: process
 ---
 
 # ADR-0001: License

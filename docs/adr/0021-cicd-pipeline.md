@@ -4,6 +4,8 @@ description: |
   When configuring CI/CD workflows, setting up build automation, or implementing release pipelines. Apply when deciding on pipeline tools, branching strategies, or quality gates.
 decision: Use GitHub Actions with GitHub Flow branching for CI/CD with automated releases to NuGet.
 status: accepted
+type: implementation
+implementation_issue: '#40'
 ---
 
 # ADR-0021: CI/CD Pipeline

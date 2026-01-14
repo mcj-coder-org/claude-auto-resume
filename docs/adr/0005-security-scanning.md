@@ -5,6 +5,8 @@ description: |
   Applies when setting up secret detection, SAST, or dependency vulnerability scanning.
 decision: Use multi-layered security with secretlint pre-commit, GitHub CodeQL, and Dependabot.
 status: accepted
+type: implementation
+implementation_issue: '#17'
 ---
 
 # ADR-0005: Security Scanning

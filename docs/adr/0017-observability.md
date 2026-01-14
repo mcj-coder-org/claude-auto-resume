@@ -5,6 +5,8 @@ description: |
   platform context, or implementing test-capturable log behavior.
 decision: Use Serilog with file and debug sinks, disabled by default, with bootstrap logger pattern.
 status: accepted
+type: implementation
+implementation_issue: '#39'
 ---
 
 # ADR-0017: Observability

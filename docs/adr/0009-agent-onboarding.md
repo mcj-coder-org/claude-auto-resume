@@ -5,6 +5,7 @@ description: |
   Applies when configuring AGENTS.md, usage patterns, or multi-agent collaboration.
 decision: Use AGENTS.md for routing with docs/agents/ for detailed guidance and sub-agent patterns.
 status: accepted
+type: process
 ---
 
 # ADR-0009: Agent Onboarding

@@ -5,6 +5,7 @@ description: |
   or questioning why ADRs are used in this repository.
 decision: Use MADR format ADRs in docs/adr/ for significant architectural and process decisions.
 status: accepted
+type: process
 ---
 
 # 0. Use Architecture Decision Records

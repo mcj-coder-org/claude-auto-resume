@@ -4,6 +4,8 @@ description: |
   When implementing version numbering, generating changelogs, or configuring semantic versioning. Apply for feature branch prerelease versions or monorepo versioning decisions.
 decision: Use GitVersion for semantic versioning and git-cliff for changelog generation with commitlint enforcement.
 status: accepted
+type: implementation
+implementation_issue: '#49'
 ---
 
 # ADR-0022: Versioning and Changelog Strategy

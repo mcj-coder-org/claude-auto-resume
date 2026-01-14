@@ -5,6 +5,8 @@ description: |
   formatting messages with named parameters, or structuring for future translations.
 decision: Use i18n-ready structure with resource files and named parameters, English only initially.
 status: accepted
+type: implementation
+implementation_issue: '#39'
 ---
 
 # ADR-0019: Internationalization

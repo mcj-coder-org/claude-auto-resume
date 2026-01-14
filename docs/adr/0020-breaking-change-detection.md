@@ -5,6 +5,8 @@ description: |
   or changing public members, or when syncing API changes with conventional commits.
 decision: Use Microsoft.CodeAnalysis.PublicApiAnalyzers with PublicAPI.Shipped/Unshipped.txt files.
 status: accepted
+type: implementation
+implementation_issue: '#49'
 ---
 
 # ADR-0020: Breaking Change Detection

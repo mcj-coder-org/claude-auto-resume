@@ -5,6 +5,7 @@ description: |
   configuring RootNamespace, setting up InternalsVisibleTo, or structuring test projects.
 decision: Use McjCoderOrg prefix with folder-parallel namespaces and test projects sharing production namespace.
 status: accepted
+type: process
 ---
 
 # ADR-0012: Namespace and Project Naming Conventions

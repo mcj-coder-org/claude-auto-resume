@@ -5,6 +5,8 @@ description: |
   writing assertions, or setting up code coverage collection.
 decision: Use xUnit with AwesomeAssertions for fluent assertions and xunit.analyzers for best practices.
 status: accepted
+type: implementation
+implementation_issue: '#38'
 ---
 
 # ADR-0013: Testing Framework

@@ -5,6 +5,7 @@ description: |
   Applies when structuring docs, adding front-matter, or setting up the documentation site.
 decision: Use Docusaurus on GitHub Pages with structured front-matter for agent-friendly documentation.
 status: accepted
+type: process
 ---
 
 # ADR-0008: Documentation Strategy
