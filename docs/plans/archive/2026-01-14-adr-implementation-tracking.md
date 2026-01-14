@@ -1,3 +1,9 @@
+---
+status: Implemented
+version: v1
+issue: '#94'
+---
+
 # ADR Implementation Tracking - Implementation Plan
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
