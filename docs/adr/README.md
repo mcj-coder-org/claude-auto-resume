@@ -22,12 +22,14 @@ status: accepted
 
 ### Required Fields
 
-| Field         | Description                                                            |
-| ------------- | ---------------------------------------------------------------------- |
-| `name`        | Kebab-case identifier matching filename without number prefix          |
-| `description` | When to load/apply this ADR; trigger conditions for agents (1-3 lines) |
-| `decision`    | One-line actionable outcome; imperative verb format                    |
-| `status`      | One of: `accepted`, `superseded`, `deprecated`                         |
+| Field                  | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `name`                 | Kebab-case identifier matching filename without number prefix          |
+| `description`          | When to load/apply this ADR; trigger conditions for agents (1-3 lines) |
+| `decision`             | One-line actionable outcome; imperative verb format                    |
+| `status`               | One of: `accepted`, `superseded`, `deprecated`                         |
+| `type`                 | One of: `process`, `implementation` (default: `process`)               |
+| `implementation_issue` | Issue reference like `#123` (required when type=implementation)        |
 
 ### Field Specifications
 
@@ -60,6 +62,36 @@ One of:
 | `accepted`   | Decision is current     | SHOULD apply when description matches        |
 | `superseded` | Replaced by another ADR | MUST NOT apply; load superseding ADR instead |
 | `deprecated` | No longer applicable    | MUST NOT apply; decision is obsolete         |
+
+## Implementation Tracking
+
+ADRs that require code, tooling, or infrastructure changes must track their implementation:
+
+1. Set `type: implementation` in frontmatter
+2. Create a GitHub issue for the implementation work
+3. Add `implementation_issue: '#123'` to frontmatter
+4. CI validation fails if implementation ADRs lack issue links
+
+### Type Classification
+
+| Type             | Use For                               | Example ADRs                    |
+| ---------------- | ------------------------------------- | ------------------------------- |
+| `process`        | Governance, standards, conventions    | Use ADRs, License, Contribution |
+| `implementation` | Code, tooling, infrastructure changes | Pre-commit Hooks, CI/CD, CLI    |
+
+### Example Implementation ADR
+
+```yaml
+---
+name: pr-validation-automation
+description: |
+  Automated PR validation using DangerJS.
+decision: Use DangerJS for automated PR validation
+status: accepted
+type: implementation
+implementation_issue: '#93'
+---
+```
 
 ### Examples
 
