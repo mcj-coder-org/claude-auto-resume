@@ -128,9 +128,12 @@ public sealed class ApplicationStartupTests
         }
         else
         {
-            // Process exited - either success or dependency missing
-            process.ExitCode.Should().BeOneOf([0, 4],
-                "exit code should be Success (0) or DependencyMissing (4)");
+            // Process exited quickly - claude CLI was not found
+            var errorOutput = await process.StandardError.ReadToEndAsync();
+            process.ExitCode.Should().Be(4,
+                "exit code should be DependencyMissing (4) when claude is not found");
+            errorOutput.Should().Contain("Could not find 'claude' in PATH",
+                "error output should indicate claude was not found");
         }
     }
 

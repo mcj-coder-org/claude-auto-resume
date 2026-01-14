@@ -46,8 +46,8 @@ internal sealed class ClaudeMonitor : IDisposable
     /// Runs the Claude monitor with the specified additional arguments.
     /// </summary>
     /// <param name="additionalArgs">Additional arguments to pass to Claude.</param>
-    /// <returns>A task representing the async operation.</returns>
-    public async Task RunAsync(IReadOnlyList<string> additionalArgs)
+    /// <returns>True if claude was found and executed; false if claude was not found.</returns>
+    public async Task<bool> RunAsync(IReadOnlyList<string> additionalArgs)
     {
         _cts = new CancellationTokenSource();
         SetupCancellationHandler();
@@ -57,10 +57,11 @@ internal sealed class ClaudeMonitor : IDisposable
         {
             _logger.Error("Could not find 'claude' in PATH");
             WriteErrorLine("[claude-auto-resume] Error: Could not find 'claude' in PATH");
-            return;
+            return false;
         }
 
         await SpawnAndMonitorAsync(claudePath, additionalArgs).ConfigureAwait(false);
+        return true;
     }
 
     /// <inheritdoc/>
