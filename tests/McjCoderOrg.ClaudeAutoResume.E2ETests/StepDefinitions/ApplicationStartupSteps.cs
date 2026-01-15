@@ -119,6 +119,20 @@ public sealed class ApplicationStartupSteps : IDisposable
     {
         _process = ProcessHelper.CreateProcess(string.Empty);
         _process.Start();
+
+        // Start reading stderr in background to prevent buffer from filling up
+        _ = Task.Run(async () =>
+        {
+            var buffer = new char[4096];
+            while (_process is not null && !_process.HasExited)
+            {
+                var bytesRead = await _process.StandardError.ReadAsync(buffer.AsMemory()).ConfigureAwait(false);
+                if (bytesRead == 0)
+                {
+                    break;
+                }
+            }
+        });
     }
 
     [When("I wait for the application to be ready")]
@@ -144,6 +158,9 @@ public sealed class ApplicationStartupSteps : IDisposable
             // Give Claude time to fully initialize its input handling
             // Claude takes a few seconds after showing the banner to be ready for input
             await Task.Delay(3000).ConfigureAwait(false);
+
+            // Start background stdout reader to prevent buffer from filling up
+            StartBackgroundStdoutReader(_process);
         }
         catch (OperationCanceledException)
         {
@@ -152,6 +169,31 @@ public sealed class ApplicationStartupSteps : IDisposable
                 "Timeout waiting for application to be ready. Output so far: {0}",
                 output.ToString()));
         }
+    }
+
+    private static void StartBackgroundStdoutReader(Process process)
+    {
+        // Claude writes a lot of output and will block if no one is reading
+        // This background reader ensures the stdout buffer doesn't fill up
+        _ = Task.Run(async () =>
+        {
+            var buffer = new char[8192];
+            while (!process.HasExited)
+            {
+                try
+                {
+                    var bytesRead = await process.StandardOutput.ReadAsync(buffer.AsMemory()).ConfigureAwait(false);
+                    if (bytesRead == 0)
+                    {
+                        break;
+                    }
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
+                }
+            }
+        });
     }
 
     private static async Task ReadOutputUntilReadyAsync(Process process, System.Text.StringBuilder output, CancellationToken ct)
@@ -201,12 +243,25 @@ public sealed class ApplicationStartupSteps : IDisposable
         await _process.StandardInput.WriteLineAsync(input).ConfigureAwait(false);
         await _process.StandardInput.FlushAsync().ConfigureAwait(false);
 
-        // Give the command time to be processed before closing stdin
-        await Task.Delay(1000).ConfigureAwait(false);
+        // Don't close stdin - let the wrapper keep waiting for input
+        // Claude should process the command and exit on its own
+    }
 
-        // Close stdin after sending command - this signals EOF which may help
-        // the application detect input completion
-        _process.StandardInput.Close();
+    [Given("bash is available")]
+    public void GivenBashIsAvailable()
+    {
+        Skip.IfNot(
+            ProcessHelper.GetBashPath() is not null,
+            "Bash not found - Git Bash is required on Windows");
+    }
+
+    [When("I run the application via shell with {string} piped after {int} seconds")]
+    public async Task WhenIRunTheApplicationViaShellWithPipedInput(string input, int delaySeconds)
+    {
+        // Use a generous timeout: delay + time for claude to start + time to process exit
+        var timeoutSeconds = delaySeconds + 60;
+        _result = await ProcessHelper.RunViaShellWithPipedInputAsync(input, delaySeconds, timeoutSeconds)
+            .ConfigureAwait(false);
     }
 
     [Then("the application should exit within {int} seconds")]
