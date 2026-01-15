@@ -376,19 +376,17 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Features
         [global::Xunit.TraitAttribute("Description", "Exit cleanly via /exit command")]
         [global::Xunit.TraitAttribute("Category", "happy-path")]
         [global::Xunit.TraitAttribute("Category", "skip-if-claude-missing")]
-        [global::Xunit.TraitAttribute("Category", "manual")]
         public async global::System.Threading.Tasks.Task ExitCleanlyViaExitCommand()
         {
             string[] tagsOfScenario = new string[] {
                     "happy-path",
-                    "skip-if-claude-missing",
-                    "manual"};
+                    "skip-if-claude-missing"};
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "6";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Exit cleanly via /exit command", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 53
+#line 49
     this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -398,26 +396,20 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Features
             else
             {
                 await this.ScenarioStartAsync();
-#line 54
+#line 50
         await testRunner.GivenAsync("the executable exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 55
+#line 51
         await testRunner.AndAsync("claude CLI is available", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 56
-        await testRunner.WhenAsync("I start the application interactively", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 52
+        await testRunner.AndAsync("bash is available", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 57
-        await testRunner.AndAsync("I wait for the application to be ready", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 53
+        await testRunner.WhenAsync("I run the application via shell with \"/exit\" piped after 5 seconds", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 58
-        await testRunner.AndAsync("I send \"/exit\" to the application", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 59
-        await testRunner.ThenAsync("the application should exit within 30 seconds", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 60
-        await testRunner.AndAsync("the exit code should be 0", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 54
+        await testRunner.ThenAsync("the exit code should be 0", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

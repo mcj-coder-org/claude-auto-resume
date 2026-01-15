@@ -378,15 +378,28 @@ internal sealed class ClaudeMonitor : IDisposable
         while (!ct.IsCancellationRequested)
         {
             var line = await reader.ReadLineAsync(ct).ConfigureAwait(false);
+
             if (line == null)
             {
                 // EOF reached
                 break;
             }
 
-            // Send line followed by carriage return to simulate Enter keypress
-            var bytes = Encoding.UTF8.GetBytes(line + "\r\n");
-            await stream.WriteAsync(bytes, ct).ConfigureAwait(false);
+            // Simulate typing by sending characters one at a time with delays
+            // This helps Claude's terminal UI (Ink) process each character properly
+            foreach (var c in line)
+            {
+                var charBytes = Encoding.UTF8.GetBytes(c.ToString());
+                await stream.WriteAsync(charBytes, ct).ConfigureAwait(false);
+                await stream.FlushAsync(ct).ConfigureAwait(false);
+                await Task.Delay(50, ct).ConfigureAwait(false);
+            }
+
+            // Wait for Claude to process the input before sending Enter
+            await Task.Delay(200, ct).ConfigureAwait(false);
+
+            // Send Enter key (carriage return)
+            await stream.WriteAsync("\r"u8.ToArray(), ct).ConfigureAwait(false);
             await stream.FlushAsync(ct).ConfigureAwait(false);
         }
     }

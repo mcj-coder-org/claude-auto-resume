@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 
 namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Helpers;
 
@@ -7,7 +8,7 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Helpers;
 /// </summary>
 public static class ProcessHelper
 {
-    private static readonly string ExecutablePath = GetExecutablePath();
+    private static readonly string _executablePath = GetExecutablePath();
 
     /// <summary>
     /// Gets the path to the application executable.
@@ -34,7 +35,7 @@ public static class ProcessHelper
     /// <summary>
     /// Checks if the executable exists.
     /// </summary>
-    public static bool ExecutableExists() => File.Exists(ExecutablePath);
+    public static bool ExecutableExists() => File.Exists(_executablePath);
 
     /// <summary>
     /// Creates a process configured to run the application.
@@ -45,7 +46,7 @@ public static class ProcessHelper
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = ExecutablePath,
+                FileName = _executablePath,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -54,6 +55,84 @@ public static class ProcessHelper
                 CreateNoWindow = true,
             },
         };
+    }
+
+    /// <summary>
+    /// Runs the application via shell with piped input after a delay.
+    /// Uses bash to handle piping natively, which works correctly with PTY input.
+    /// </summary>
+    public static async Task<ProcessResult> RunViaShellWithPipedInputAsync(
+        string input,
+        int delaySeconds,
+        int timeoutSeconds)
+    {
+        var exePath = GetExecutablePath();
+        var bashPath = GetBashPath()
+            ?? throw new InvalidOperationException("Bash not found. Git Bash is required on Windows.");
+
+        // Escape the input and path for bash
+        var escapedInput = input.Replace("'", "'\\''", StringComparison.Ordinal);
+        var escapedPath = exePath.Replace("\\", "/", StringComparison.Ordinal);
+
+        // Build the bash command: (sleep N && echo 'input') | ./app.exe
+        var bashCommand = string.Create(
+            CultureInfo.InvariantCulture,
+            $"(sleep {delaySeconds} && echo '{escapedInput}') | \"{escapedPath}\"");
+
+        using var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = bashPath,
+                Arguments = $"-c \"{bashCommand.Replace("\"", "\\\"", StringComparison.Ordinal)}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true,
+            },
+        };
+
+        process.Start();
+
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
+        var stdoutTask = process.StandardOutput.ReadToEndAsync(cts.Token);
+        var stderrTask = process.StandardError.ReadToEndAsync(cts.Token);
+
+        try
+        {
+            await process.WaitForExitAsync(cts.Token).ConfigureAwait(false);
+            var stdout = await stdoutTask.ConfigureAwait(false);
+            var stderr = await stderrTask.ConfigureAwait(false);
+            return new ProcessResult(process.ExitCode, stdout, stderr);
+        }
+        catch (OperationCanceledException)
+        {
+            process.Kill();
+            throw new TimeoutException(string.Create(
+                CultureInfo.InvariantCulture,
+                $"Shell command timed out after {timeoutSeconds} seconds"));
+        }
+    }
+
+    /// <summary>
+    /// Gets the path to bash (Git Bash on Windows, /bin/bash on Unix).
+    /// </summary>
+    public static string? GetBashPath()
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            return File.Exists("/bin/bash") ? "/bin/bash" : "/bin/sh";
+        }
+
+        // Try common Git Bash locations on Windows
+        string[] bashPaths =
+        [
+            @"C:\Program Files\Git\bin\bash.exe",
+            @"C:\Program Files (x86)\Git\bin\bash.exe",
+            Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\Programs\Git\bin\bash.exe"),
+        ];
+
+        return bashPaths.FirstOrDefault(File.Exists);
     }
 
     /// <summary>
