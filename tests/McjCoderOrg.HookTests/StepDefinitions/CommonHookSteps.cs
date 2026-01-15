@@ -7,13 +7,15 @@ namespace McjCoderOrg.HookTests.StepDefinitions;
 public sealed class CommonHookSteps : IAsyncDisposable
 {
     private readonly ScenarioContext _scenarioContext;
+    private readonly IReqnrollOutputHelper _output;
     private GitRepositoryFixture? _fixture;
     private HookRunner? _hookRunner;
     private HookResult? _lastResult;
 
-    public CommonHookSteps(ScenarioContext scenarioContext)
+    public CommonHookSteps(ScenarioContext scenarioContext, IReqnrollOutputHelper output)
     {
         _scenarioContext = scenarioContext;
+        _output = output;
     }
 
     internal GitRepositoryFixture Fixture => _fixture ?? throw new InvalidOperationException("Fixture not initialized");
@@ -28,6 +30,7 @@ public sealed class CommonHookSteps : IAsyncDisposable
     [Given("I have a git repository with hooks configured")]
     public async Task GivenIHaveAGitRepositoryWithHooksConfigured()
     {
+        _output.WriteLine("Setting up git repository with hooks");
         ToolAvailability.SkipIfGitBashMissing();
 
         _fixture = new GitRepositoryFixture();
@@ -35,7 +38,11 @@ public sealed class CommonHookSteps : IAsyncDisposable
         // Get the source paths from the solution root
         var sourceProjectPath = FindSourceProjectPath();
         var sourceHuskyPath = Path.Combine(sourceProjectPath, ".husky");
+        _output.WriteLine("Source project path: {0}", sourceProjectPath);
+        _output.WriteLine("Husky path: {0}", sourceHuskyPath);
+
         await _fixture.InitializeAsync(sourceHuskyPath).ConfigureAwait(false);
+        _output.WriteLine("Repository initialized at: {0}", _fixture.RepoPath);
 
         _hookRunner = new HookRunner(_fixture.RepoPath, _fixture.HuskyPath);
 
@@ -50,30 +57,31 @@ public sealed class CommonHookSteps : IAsyncDisposable
     [Given("I am on the {string} branch")]
     public async Task GivenIAmOnTheBranch(string branchName)
     {
+        _output.WriteLine("Switching to branch: {0}", branchName);
         await Fixture.SwitchToBranchAsync(branchName).ConfigureAwait(false);
     }
 
     [Given("I am on a {string} branch")]
-    public async Task GivenIAmOnABranch(string branchName)
-    {
-        await Fixture.SwitchToBranchAsync(branchName).ConfigureAwait(false);
-    }
+    public Task GivenIAmOnABranch(string branchName) => GivenIAmOnTheBranch(branchName);
 
     [Given("I am in detached HEAD state")]
     public async Task GivenIAmInDetachedHeadState()
     {
+        _output.WriteLine("Detaching HEAD");
         await Fixture.DetachHeadAsync().ConfigureAwait(false);
     }
 
     [Given("GPG signing is configured")]
     public async Task GivenGpgSigningIsConfigured()
     {
+        _output.WriteLine("Configuring GPG signing");
         await Fixture.ConfigureGpgSigningAsync(enabled: true).ConfigureAwait(false);
     }
 
     [Given("GPG signing is not configured")]
     public async Task GivenGpgSigningIsNotConfigured()
     {
+        _output.WriteLine("Disabling GPG signing");
         await Fixture.ConfigureGpgSigningAsync(enabled: false).ConfigureAwait(false);
     }
 
@@ -100,24 +108,33 @@ public sealed class CommonHookSteps : IAsyncDisposable
     [Then("the hook should fail with exit code {int}")]
     public void ThenTheHookShouldFailWithExitCode(int expectedExitCode)
     {
+        _output.WriteLine("Verifying exit code: expected={0}, actual={1}", expectedExitCode, LastResult.ExitCode);
         LastResult.ExitCode.Should().Be(expectedExitCode, "Expected hook to fail with exit code {0}", expectedExitCode);
     }
 
     [Then("the hook should fail")]
     public void ThenTheHookShouldFail()
     {
+        _output.WriteLine("Verifying hook failed: exit code={0}", LastResult.ExitCode);
         LastResult.ExitCode.Should().NotBe(0, "Expected hook to fail (exit code != 0)");
     }
 
     [Then("the hook should succeed")]
     public void ThenTheHookShouldSucceed()
     {
+        _output.WriteLine("Verifying hook succeeded: exit code={0}", LastResult.ExitCode);
+        if (LastResult.ExitCode != 0)
+        {
+            _output.WriteLine("Hook output: {0}", LastResult.CombinedOutput);
+        }
+
         LastResult.ExitCode.Should().Be(0, "Expected hook to succeed but got exit code {0}.\nOutput: {1}", LastResult.ExitCode, LastResult.CombinedOutput);
     }
 
     [Then("the output should contain {string}")]
     public void ThenTheOutputShouldContain(string expected)
     {
+        _output.WriteLine("Verifying output contains: {0}", expected);
         LastResult.CombinedOutput.Should().Contain(expected);
     }
 

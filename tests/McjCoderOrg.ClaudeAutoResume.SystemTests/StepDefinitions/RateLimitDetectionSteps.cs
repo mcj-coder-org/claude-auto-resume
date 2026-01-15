@@ -3,21 +3,29 @@ namespace McjCoderOrg.ClaudeAutoResume.StepDefinitions;
 [Binding]
 public sealed class RateLimitDetectionSteps
 {
+    private readonly IReqnrollOutputHelper _output;
     private WrapperConfig _config = WrapperConfig.Default;
     private string _bufferContent = string.Empty;
     private bool _rateLimitDetected;
     private bool _recentRateLimitDetected;
     private bool _cooldownActive;
 
+    public RateLimitDetectionSteps(IReqnrollOutputHelper output)
+    {
+        _output = output;
+    }
+
     [Given("the default wrapper configuration")]
     public void GivenTheDefaultWrapperConfiguration()
     {
+        _output.WriteLine("Using default wrapper configuration");
         _config = WrapperConfig.Default;
     }
 
     [Given("the output buffer contains {string}")]
     public void GivenTheOutputBufferContains(string content)
     {
+        _output.WriteLine("Setting buffer content: '{0}'", content);
         _bufferContent = content;
     }
 
@@ -53,9 +61,12 @@ public sealed class RateLimitDetectionSteps
     [When("the rate limit check runs")]
     public void WhenTheRateLimitCheckRuns()
     {
+        _output.WriteLine("Running rate limit check on buffer: '{0}'", _bufferContent);
+
         // Simulate rate limit detection logic
         if (_cooldownActive && _recentRateLimitDetected)
         {
+            _output.WriteLine("Skipping detection due to cooldown");
             _rateLimitDetected = false;
             return;
         }
@@ -86,17 +97,20 @@ public sealed class RateLimitDetectionSteps
         }
 
         _rateLimitDetected = matchedPattern != null;
+        _output.WriteLine("Rate limit detected: {0}, matched pattern: {1}", _rateLimitDetected, matchedPattern ?? "(none)");
     }
 
     [Then("a rate limit should be detected")]
     public void ThenARateLimitShouldBeDetected()
     {
+        _output.WriteLine("Verifying rate limit detected: {0}", _rateLimitDetected);
         _rateLimitDetected.Should().BeTrue("a rate limit pattern should have been matched");
     }
 
     [Then("no rate limit should be detected")]
     public void ThenNoRateLimitShouldBeDetected()
     {
+        _output.WriteLine("Verifying no rate limit detected: {0}", _rateLimitDetected);
         _rateLimitDetected.Should().BeFalse("no rate limit pattern should have been matched");
     }
 }

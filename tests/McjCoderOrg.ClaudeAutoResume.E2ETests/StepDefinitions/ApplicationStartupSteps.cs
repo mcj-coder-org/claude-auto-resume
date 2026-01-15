@@ -8,36 +8,52 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.StepDefinitions;
 #pragma warning disable CA1822 // SpecFlow step definition methods cannot be static
 public sealed class ApplicationStartupSteps : IDisposable
 {
+    private readonly IReqnrollOutputHelper _output;
     private Process? _process;
     private ProcessResult? _result;
+
+    public ApplicationStartupSteps(IReqnrollOutputHelper output)
+    {
+        _output = output;
+    }
 
     [Given("the executable exists")]
     public void GivenTheExecutableExists()
     {
+        var execPath = ProcessHelper.GetExecutablePath();
+        _output.WriteLine("Checking executable at: {0}", execPath);
         Skip.IfNot(
             ProcessHelper.ExecutableExists(),
-            $"Executable not found at {ProcessHelper.GetExecutablePath()}");
+            $"Executable not found at {execPath}");
+        _output.WriteLine("Executable found");
     }
 
     [Given("claude CLI is available")]
     public void GivenClaudeCliIsAvailable()
     {
+        _output.WriteLine("Checking Claude CLI availability");
+        var isAvailable = ProcessHelper.IsClaudeAvailable();
+        _output.WriteLine("Claude CLI available: {0}", isAvailable);
         Skip.IfNot(
-            ProcessHelper.IsClaudeAvailable(),
+            isAvailable,
             "Claude CLI is not available - skipping test");
     }
 
     [Given("claude CLI is not available")]
     public void GivenClaudeCliIsNotAvailable()
     {
+        _output.WriteLine("Checking Claude CLI is NOT available");
+        var isAvailable = ProcessHelper.IsClaudeAvailable();
+        _output.WriteLine("Claude CLI available: {0}", isAvailable);
         Skip.If(
-            ProcessHelper.IsClaudeAvailable(),
+            isAvailable,
             "Claude CLI is available - this test is for missing claude");
     }
 
     [When("I run the application with {string}")]
     public async Task WhenIRunTheApplicationWith(string arguments)
     {
+        _output.WriteLine("Running application with arguments: {0}", arguments);
         _process = ProcessHelper.CreateProcess(arguments);
         _process.Start();
 
@@ -46,6 +62,16 @@ public sealed class ApplicationStartupSteps : IDisposable
         await _process.WaitForExitAsync().ConfigureAwait(false);
 
         _result = new ProcessResult(_process.ExitCode, stdout, stderr);
+        _output.WriteLine("Exit code: {0}", _result.ExitCode);
+        if (!string.IsNullOrEmpty(_result.StandardOutput))
+        {
+            _output.WriteLine("Stdout: {0}", _result.StandardOutput);
+        }
+
+        if (!string.IsNullOrEmpty(_result.StandardError))
+        {
+            _output.WriteLine("Stderr: {0}", _result.StandardError);
+        }
     }
 
     [When("I run the application with no arguments")]
@@ -57,24 +83,28 @@ public sealed class ApplicationStartupSteps : IDisposable
     [Then("the exit code should be {int}")]
     public void ThenTheExitCodeShouldBe(int expectedExitCode)
     {
+        _output.WriteLine("Verifying exit code: expected={0}, actual={1}", expectedExitCode, Result.ExitCode);
         Result.ExitCode.Should().Be(expectedExitCode);
     }
 
     [Then("the output should contain {string}")]
     public void ThenTheOutputShouldContain(string expected)
     {
+        _output.WriteLine("Verifying stdout contains: {0}", expected);
         Result.StandardOutput.Should().Contain(expected);
     }
 
     [Then("the error output should contain {string}")]
     public void ThenTheErrorOutputShouldContain(string expected)
     {
+        _output.WriteLine("Verifying stderr contains: {0}", expected);
         Result.StandardError.Should().Contain(expected);
     }
 
     [Then("the combined output should contain {string}")]
     public void ThenTheCombinedOutputShouldContain(string expected)
     {
+        _output.WriteLine("Verifying combined output contains: {0}", expected);
         Result.CombinedOutput.Should().Contain(expected);
     }
 
@@ -250,18 +280,22 @@ public sealed class ApplicationStartupSteps : IDisposable
     [Given("bash is available")]
     public void GivenBashIsAvailable()
     {
+        var bashPath = ProcessHelper.GetBashPath();
+        _output.WriteLine("Checking bash availability: {0}", bashPath ?? "(not found)");
         Skip.IfNot(
-            ProcessHelper.GetBashPath() is not null,
+            bashPath is not null,
             "Bash not found - Git Bash is required on Windows");
     }
 
     [When("I run the application via shell with {string} piped after {int} seconds")]
     public async Task WhenIRunTheApplicationViaShellWithPipedInput(string input, int delaySeconds)
     {
+        _output.WriteLine("Running application via shell with input '{0}' piped after {1} seconds", input, delaySeconds);
         // Use a generous timeout: delay + time for claude to start + time to process exit
         var timeoutSeconds = delaySeconds + 60;
         _result = await ProcessHelper.RunViaShellWithPipedInputAsync(input, delaySeconds, timeoutSeconds)
             .ConfigureAwait(false);
+        _output.WriteLine("Shell execution completed with exit code: {0}", _result.ExitCode);
     }
 
     [Then("the application should exit within {int} seconds")]
