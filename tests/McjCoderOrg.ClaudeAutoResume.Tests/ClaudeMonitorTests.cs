@@ -4,11 +4,14 @@ namespace McjCoderOrg.ClaudeAutoResume;
 
 public sealed class ClaudeMonitorTests : IDisposable
 {
+    private readonly ITestOutputHelper _output;
     private readonly ClaudeMonitor _monitor;
 
-    public ClaudeMonitorTests()
+    public ClaudeMonitorTests(ITestOutputHelper output)
     {
+        _output = output;
         _monitor = new ClaudeMonitor(WrapperConfig.Default);
+        _output.WriteLine("ClaudeMonitorTests initialized with default config");
     }
 
     public void Dispose()
@@ -78,6 +81,8 @@ public sealed class ClaudeMonitorTests : IDisposable
         using var monitor = new ClaudeMonitor(config);
 
         var result = monitor.BuildCommandLine(["--extra"]);
+
+        _output.WriteLine("Built command line: [{0}]", string.Join(", ", result));
 
         // Verify order: dangerous, continue, prompt, additional args
         result.Should().HaveCount(5);

@@ -7,10 +7,12 @@ namespace McjCoderOrg.HookTests.StepDefinitions;
 public sealed class CommitMsgHookSteps
 {
     private readonly ScenarioContext _scenarioContext;
+    private readonly IReqnrollOutputHelper _output;
 
-    public CommitMsgHookSteps(ScenarioContext scenarioContext)
+    public CommitMsgHookSteps(ScenarioContext scenarioContext, IReqnrollOutputHelper output)
     {
         _scenarioContext = scenarioContext;
+        _output = output;
     }
 
     private GitRepositoryFixture Fixture => (GitRepositoryFixture)_scenarioContext["Fixture"];
@@ -20,6 +22,7 @@ public sealed class CommitMsgHookSteps
     [When("I create a commit message {string}")]
     public async Task WhenICreateACommitMessage(string message)
     {
+        _output.WriteLine("Creating commit message: {0}", message);
         await Fixture.CreateCommitMessageFileAsync(message).ConfigureAwait(false);
     }
 
@@ -27,16 +30,24 @@ public sealed class CommitMsgHookSteps
     public async Task WhenICreateACommitMessageWithBody(string header, string body)
     {
         var fullMessage = $"{header}\n\n{body}";
+        _output.WriteLine("Creating commit message with body: {0}", fullMessage);
         await Fixture.CreateCommitMessageFileAsync(fullMessage).ConfigureAwait(false);
     }
 
     [When("I run the commit-msg hook")]
     public async Task WhenIRunTheCommitMsgHook()
     {
+        _output.WriteLine("Running commit-msg hook");
         ToolAvailability.SkipIfNodeMissing();
 
         var commitMsgPath = Fixture.GetCommitMessageFilePath();
         var result = await HookRunner.RunHookAsync("commit-msg", commitMsgPath).ConfigureAwait(false);
+        _output.WriteLine("Commit-msg exit code: {0}", result.ExitCode);
+        if (!string.IsNullOrEmpty(result.CombinedOutput))
+        {
+            _output.WriteLine("Commit-msg output: {0}", result.CombinedOutput);
+        }
+
         CommonSteps.SetLastResult(result);
     }
 

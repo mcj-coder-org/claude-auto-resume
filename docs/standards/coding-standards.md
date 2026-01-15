@@ -151,6 +151,46 @@ See [logging-examples.md](coding-standards/logging-examples.md) for patterns.
 - Test project root namespaces should omit the `*.Tests` or `.Benchmarks` suffix
 - Project internals should be exposed to the Arch, Unit and System Test Projects
 
+**Test output:** All test classes must use appropriate output helpers for diagnostic logging:
+
+| Test Type   | Output Helper           | Namespace                 |
+| ----------- | ----------------------- | ------------------------- |
+| xUnit tests | `ITestOutputHelper`     | `Xunit.Abstractions`      |
+| Reqnroll    | `IReqnrollOutputHelper` | `Reqnroll.Infrastructure` |
+
+Inject via constructor and use `WriteLine` for diagnostic output visible in test runners:
+
+```csharp
+// xUnit unit test
+public sealed class MyTests
+{
+    private readonly ITestOutputHelper _output;
+
+    public MyTests(ITestOutputHelper output) => _output = output;
+
+    [Fact]
+    public void MyTest()
+    {
+        _output.WriteLine("Running test with value: {0}", value);
+    }
+}
+
+// Reqnroll step definitions
+[Binding]
+public sealed class MySteps
+{
+    private readonly IReqnrollOutputHelper _output;
+
+    public MySteps(IReqnrollOutputHelper output) => _output = output;
+
+    [When("I do something")]
+    public void WhenIDoSomething()
+    {
+        _output.WriteLine("Executing step with context: {0}", context);
+    }
+}
+```
+
 **Coverage target:** 80% line, 70% branch on changed code
 
 See [testing-examples.md](coding-standards/testing-examples.md) for patterns and BDD guidance.
@@ -197,6 +237,7 @@ See [security-examples.md](coding-standards/security-examples.md) for examples.
 - [ ] `CancellationToken` passed through
 - [ ] Uses structured logging
 - [ ] Has appropriate tests
+- [ ] Tests use `ITestOutputHelper`/`IReqnrollOutputHelper`
 - [ ] XML docs on public members
 - [ ] No analyzer warnings
 - [ ] No hardcoded secrets
