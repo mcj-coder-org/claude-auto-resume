@@ -44,3 +44,17 @@ Feature: Application startup
         And claude CLI is available
         When I run the application with no arguments
         Then the application should keep running for at least 3 seconds
+
+    # NOTE: This test requires manual execution - Claude Code's input handler
+    # doesn't execute commands from piped stdin the same way as interactive input.
+    # The piped stdin support is implemented but Claude Code's PTY input handling
+    # requires further investigation to fully support automated /exit testing.
+    @happy-path @skip-if-claude-missing @manual
+    Scenario: Exit cleanly via /exit command
+        Given the executable exists
+        And claude CLI is available
+        When I start the application interactively
+        And I wait for the application to be ready
+        And I send "/exit" to the application
+        Then the application should exit within 30 seconds
+        And the exit code should be 0

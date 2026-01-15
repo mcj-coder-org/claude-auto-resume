@@ -359,6 +359,40 @@ internal sealed class ClaudeMonitor : IDisposable
     {
         var stream = _pty!.WriterStream;
 
+        if (Console.IsInputRedirected)
+        {
+            await ForwardPipedInputAsync(stream, ct).ConfigureAwait(false);
+        }
+        else
+        {
+            await ForwardInteractiveInputAsync(stream, ct).ConfigureAwait(false);
+        }
+    }
+
+    private static async Task ForwardPipedInputAsync(Stream stream, CancellationToken ct)
+    {
+        // Read lines from piped stdin and forward to PTY
+        // Use Console.In which is already configured as the stdin TextReader
+        var reader = Console.In;
+
+        while (!ct.IsCancellationRequested)
+        {
+            var line = await reader.ReadLineAsync(ct).ConfigureAwait(false);
+            if (line == null)
+            {
+                // EOF reached
+                break;
+            }
+
+            // Send line followed by carriage return to simulate Enter keypress
+            var bytes = Encoding.UTF8.GetBytes(line + "\r\n");
+            await stream.WriteAsync(bytes, ct).ConfigureAwait(false);
+            await stream.FlushAsync(ct).ConfigureAwait(false);
+        }
+    }
+
+    private static async Task ForwardInteractiveInputAsync(Stream stream, CancellationToken ct)
+    {
         while (!ct.IsCancellationRequested)
         {
             var key = await Task.Run(
