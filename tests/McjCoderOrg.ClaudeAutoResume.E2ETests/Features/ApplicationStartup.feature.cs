@@ -108,7 +108,7 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/ApplicationStartup.feature.ndjson", 8);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/ApplicationStartup.feature.ndjson", 9);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -366,6 +366,58 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Features
 #line hidden
 #line 46
         await testRunner.ThenAsync("the application should keep running for at least 3 seconds", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Exit cleanly via /exit command")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Application startup")]
+        [global::Xunit.TraitAttribute("Description", "Exit cleanly via /exit command")]
+        [global::Xunit.TraitAttribute("Category", "happy-path")]
+        [global::Xunit.TraitAttribute("Category", "skip-if-claude-missing")]
+        [global::Xunit.TraitAttribute("Category", "manual")]
+        public async global::System.Threading.Tasks.Task ExitCleanlyViaExitCommand()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "happy-path",
+                    "skip-if-claude-missing",
+                    "manual"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "6";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Exit cleanly via /exit command", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 53
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 54
+        await testRunner.GivenAsync("the executable exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 55
+        await testRunner.AndAsync("claude CLI is available", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 56
+        await testRunner.WhenAsync("I start the application interactively", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 57
+        await testRunner.AndAsync("I wait for the application to be ready", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 58
+        await testRunner.AndAsync("I send \"/exit\" to the application", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 59
+        await testRunner.ThenAsync("the application should exit within 30 seconds", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 60
+        await testRunner.AndAsync("the exit code should be 0", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

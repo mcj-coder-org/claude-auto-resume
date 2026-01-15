@@ -114,6 +114,128 @@ public sealed class ApplicationStartupSteps : IDisposable
         }
     }
 
+    [When("I start the application interactively")]
+    public void WhenIStartTheApplicationInteractively()
+    {
+        _process = ProcessHelper.CreateProcess(string.Empty);
+        _process.Start();
+    }
+
+    [When("I wait for the application to be ready")]
+    public async Task WhenIWaitForTheApplicationToBeReady()
+    {
+        if (_process is null)
+        {
+            throw new InvalidOperationException("Process not started");
+        }
+
+        // Wait for Claude to initialize - look for the prompt indicator
+        // Claude Code shows a prompt like "❯" when ready
+        var output = new System.Text.StringBuilder();
+        var timeout = TimeSpan.FromSeconds(60);
+        using var cts = new CancellationTokenSource(timeout);
+
+        try
+        {
+            // Start reading output in background
+            var readTask = ReadOutputUntilReadyAsync(_process, output, cts.Token);
+            await readTask.ConfigureAwait(false);
+
+            // Give Claude time to fully initialize its input handling
+            // Claude takes a few seconds after showing the banner to be ready for input
+            await Task.Delay(3000).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            Assert.Fail(string.Format(
+                CultureInfo.InvariantCulture,
+                "Timeout waiting for application to be ready. Output so far: {0}",
+                output.ToString()));
+        }
+    }
+
+    private static async Task ReadOutputUntilReadyAsync(Process process, System.Text.StringBuilder output, CancellationToken ct)
+    {
+        var buffer = new char[4096];
+
+        while (!ct.IsCancellationRequested)
+        {
+            var bytesRead = await process.StandardOutput.ReadAsync(buffer.AsMemory(), ct).ConfigureAwait(false);
+
+            if (bytesRead > 0)
+            {
+                output.Append(buffer, 0, bytesRead);
+                var outputStr = output.ToString();
+
+                // Check for Claude prompt indicator (❯) or other ready signals
+                // Also check for "Claude Code" banner which indicates Claude started
+                if (outputStr.Contains('❯', StringComparison.Ordinal) ||
+                    outputStr.Contains("Claude Code", StringComparison.Ordinal))
+                {
+                    return;
+                }
+            }
+
+            // Check if process exited unexpectedly
+            if (process.HasExited)
+            {
+                var stderr = await process.StandardError.ReadToEndAsync(ct).ConfigureAwait(false);
+                Assert.Fail(string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Application exited unexpectedly during startup with code {0}. Output: {1} Error: {2}",
+                    process.ExitCode,
+                    output.ToString(),
+                    stderr));
+            }
+        }
+    }
+
+    [When("I send {string} to the application")]
+    public async Task WhenISendToTheApplication(string input)
+    {
+        if (_process is null)
+        {
+            throw new InvalidOperationException("Process not started");
+        }
+
+        await _process.StandardInput.WriteLineAsync(input).ConfigureAwait(false);
+        await _process.StandardInput.FlushAsync().ConfigureAwait(false);
+
+        // Give the command time to be processed before closing stdin
+        await Task.Delay(1000).ConfigureAwait(false);
+
+        // Close stdin after sending command - this signals EOF which may help
+        // the application detect input completion
+        _process.StandardInput.Close();
+    }
+
+    [Then("the application should exit within {int} seconds")]
+    public async Task ThenTheApplicationShouldExitWithinSeconds(int seconds)
+    {
+        if (_process is null)
+        {
+            throw new InvalidOperationException("Process not started");
+        }
+
+        var exitTask = _process.WaitForExitAsync();
+        var timeoutTask = Task.Delay(TimeSpan.FromSeconds(seconds));
+
+        var completedTask = await Task.WhenAny(exitTask, timeoutTask).ConfigureAwait(false);
+
+        if (completedTask == timeoutTask)
+        {
+            _process.Kill();
+            Assert.Fail(string.Format(
+                CultureInfo.InvariantCulture,
+                "Application did not exit within {0} seconds",
+                seconds));
+        }
+
+        var stdout = await _process.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
+        var stderr = await _process.StandardError.ReadToEndAsync().ConfigureAwait(false);
+        _result = new ProcessResult(_process.ExitCode, stdout, stderr);
+    }
+
     private ProcessResult Result => _result ?? throw new InvalidOperationException("No process result available");
 
     public void Dispose()
