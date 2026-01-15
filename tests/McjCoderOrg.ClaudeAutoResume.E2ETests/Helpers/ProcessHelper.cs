@@ -8,7 +8,7 @@ namespace McjCoderOrg.ClaudeAutoResume.E2ETests.Helpers;
 /// </summary>
 public static class ProcessHelper
 {
-    private static readonly string ExecutablePath = GetExecutablePath();
+    private static readonly string _executablePath = GetExecutablePath();
 
     /// <summary>
     /// Gets the path to the application executable.
@@ -35,7 +35,7 @@ public static class ProcessHelper
     /// <summary>
     /// Checks if the executable exists.
     /// </summary>
-    public static bool ExecutableExists() => File.Exists(ExecutablePath);
+    public static bool ExecutableExists() => File.Exists(_executablePath);
 
     /// <summary>
     /// Creates a process configured to run the application.
@@ -46,7 +46,7 @@ public static class ProcessHelper
         {
             StartInfo = new ProcessStartInfo
             {
-                FileName = ExecutablePath,
+                FileName = _executablePath,
                 Arguments = arguments,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
