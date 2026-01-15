@@ -143,4 +143,9 @@ public sealed class ClaudeMonitorTests : IDisposable
         // Verify the monitor was created with the injected logger (no exceptions)
         monitor.Should().NotBeNull();
     }
+
+    // NOTE: The "RunAsync returns false when claude not found" scenario cannot be
+    // properly unit tested because FindClaudeInPath uses Environment.GetFolderPath
+    // which is cached by .NET and cannot be mocked without refactoring.
+    // This scenario is tested in E2E tests: "Report missing claude CLI" scenario.
 }

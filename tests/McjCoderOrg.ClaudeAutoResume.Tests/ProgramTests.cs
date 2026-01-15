@@ -27,20 +27,6 @@ public sealed class ProgramTests
     }
 
     [Fact]
-    [Trait("Category", "Integration")]
-    public async Task Main_WithNoArgs_ShouldReturnDependencyMissingAsync()
-    {
-        // Without claude installed, it should return DependencyMissing
-        // NOTE: If claude IS installed, this test will hang indefinitely because
-        // it starts the real application. Use Category=Integration to exclude
-        // from pre-push hook filtering.
-        var result = await Program.Main([]);
-
-        // Either Success (if claude is installed) or DependencyMissing (if not)
-        result.Should().BeOneOf(ExitCodes.Success, ExitCodes.DependencyMissing);
-    }
-
-    [Fact]
     public async Task Main_WithHeadlessWithoutDangerous_ShouldReturnInvalidArgumentsAsync()
     {
         var result = await Program.Main(["--headless"]);
