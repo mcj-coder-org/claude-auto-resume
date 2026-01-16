@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace McjCoderOrg.ClaudeAutoResume.Services;
 
 /// <summary>
 /// Production implementation of <see cref="IEnvironmentService"/> wrapping System.Environment and System.IO.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Thin wrapper around System.Environment and System.IO with no testable logic")]
 internal sealed class EnvironmentService : IEnvironmentService
 {
     /// <inheritdoc/>
