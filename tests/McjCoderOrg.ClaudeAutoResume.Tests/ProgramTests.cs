@@ -1,5 +1,7 @@
 using McjCoderOrg.ClaudeAutoResume.Services;
 
+using Serilog;
+
 namespace McjCoderOrg.ClaudeAutoResume;
 
 /// <summary>
@@ -11,6 +13,7 @@ public sealed class ProgramTests
     private readonly ITestOutputHelper _output;
     private readonly Mock<IConsoleService> _mockConsole;
     private readonly Mock<IEnvironmentService> _mockEnvironment;
+    private readonly Mock<ILogger> _mockLogger;
     private Application _app = null!;
 
     public ProgramTests(ITestOutputHelper output)
@@ -18,6 +21,7 @@ public sealed class ProgramTests
         _output = output;
         _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
         _mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
+        _mockLogger = new Mock<ILogger>(MockBehavior.Loose);
 
         // Setup console mock
         _mockConsole.Setup(c => c.WindowWidth).Returns(120);
@@ -32,7 +36,7 @@ public sealed class ProgramTests
     {
         var parser = parserMock?.Object ?? new ArgumentParser(_mockEnvironment.Object);
 
-        return new Application(parser, _mockConsole.Object, _mockEnvironment.Object);
+        return new Application(parser, _mockConsole.Object, _mockEnvironment.Object, _mockLogger.Object);
     }
 
     [Fact]

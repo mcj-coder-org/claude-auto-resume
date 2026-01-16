@@ -34,12 +34,12 @@ internal sealed class Application : IApplication
         IArgumentParser argumentParser,
         IConsoleService console,
         IEnvironmentService environment,
-        ILogger? logger = null)
+        ILogger logger)
     {
         _argumentParser = argumentParser;
         _console = console;
         _environment = environment;
-        _logger = logger ?? Log.Logger;
+        _logger = logger;
     }
 
     /// <inheritdoc/>
@@ -79,11 +79,6 @@ internal sealed class Application : IApplication
         }
 
         var config = BuildConfig(parseResult);
-
-        if (parseResult.Verbose)
-        {
-            ConfigureVerboseLogging();
-        }
 
         LogStartup();
         PrintStartupInfo(config, parseResult.Headless, parseResult.Dangerous);
@@ -171,21 +166,6 @@ internal sealed class Application : IApplication
 
         _console.WriteLine("[claude-auto-resume] Press Ctrl+C to exit");
         _console.WriteLine(string.Empty);
-    }
-
-    private static void ConfigureVerboseLogging()
-    {
-        var logPath = LoggingConfiguration.GetLogFilePath();
-
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .WriteTo.File(
-                logPath,
-                rollingInterval: RollingInterval.Day,
-                retainedFileCountLimit: 7,
-                formatProvider: CultureInfo.InvariantCulture)
-            .WriteTo.Debug(formatProvider: CultureInfo.InvariantCulture)
-            .CreateLogger();
     }
 
     private void PrintVersion()
