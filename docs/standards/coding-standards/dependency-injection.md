@@ -264,4 +264,4 @@ Log.Logger = new LoggerConfiguration()
 ## Related
 
 - [Microsoft DI Documentation](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
-- [ADR-0022: Dependency Injection Foundation](../adr/0022-dependency-injection-foundation.md)
+- [ADR-0032: Dependency Injection Foundation](../../adr/0032-dependency-injection-foundation.md)
