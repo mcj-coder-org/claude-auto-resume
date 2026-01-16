@@ -33,6 +33,20 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
     private bool _potentialPromptDetected;
 
     /// <summary>
+    /// Gets the current output buffer contents for testing.
+    /// </summary>
+    internal string OutputBufferContents
+    {
+        get
+        {
+            lock (_bufferLock)
+            {
+                return _outputBuffer.ToString();
+            }
+        }
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ClaudeMonitor"/> class.
     /// </summary>
     /// <param name="config">The wrapper configuration.</param>
@@ -333,7 +347,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         await _pty.WriterStream.FlushAsync(ct).ConfigureAwait(false);
     }
 
-    private static string EscapeForDisplay(string s)
+    internal static string EscapeForDisplay(string s)
     {
         return s.Replace("\n", "\\n", StringComparison.Ordinal)
                 .Replace("\r", "\\r", StringComparison.Ordinal);
@@ -408,7 +422,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         }
     }
 
-    private static byte[] ConvertKeyToBytes(ConsoleKeyInfo k)
+    internal static byte[] ConvertKeyToBytes(ConsoleKeyInfo k)
     {
         return k.Key switch
         {
@@ -452,7 +466,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         }
     }
 
-    private void AppendToBuffer(string text)
+    internal void AppendToBuffer(string text)
     {
         lock (_bufferLock)
         {
@@ -538,7 +552,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         await _pty.WriterStream.FlushAsync(ct).ConfigureAwait(false);
     }
 
-    private string? FindClaudeInPath()
+    internal string? FindClaudeInPath()
     {
         var pathVar = _environment.GetEnvironmentVariable("PATH") ?? string.Empty;
         var separator = _environment.IsWindows ? ';' : ':';
@@ -590,7 +604,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         return null;
     }
 
-    private Dictionary<string, string> GetEnvironment()
+    internal Dictionary<string, string> GetEnvironment()
     {
         var env = new Dictionary<string, string>(_environment.GetEnvironmentVariables(), StringComparer.Ordinal);
 

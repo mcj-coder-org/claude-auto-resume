@@ -48,3 +48,26 @@ Feature: Rate Limit Detection
             | too many requests, please wait       |
             | rate limit exceeded                  |
             | quota exceeded, limit reached        |
+
+    @unit
+    Scenario: Rate limit pattern split across buffer chunks
+        Given the output buffer contains "Your usage li"
+        And additional output arrives "mit has been reached"
+        When the rate limit check runs
+        Then a rate limit should be detected
+
+    @unit
+    Scenario: Buffer rotation preserves recent rate limit message
+        Given the output buffer is at capacity
+        And new output contains "usage limit reached"
+        When the buffer rotates old content
+        And the rate limit check runs
+        Then the rate limit message is preserved
+        And a rate limit should be detected
+
+    @unit
+    Scenario: Partial rate limit pattern not detected
+        Given the output buffer contains "limit"
+        But does not contain "reached" or "reset"
+        When the rate limit check runs
+        Then no rate limit should be detected
