@@ -1,3 +1,4 @@
+using McjCoderOrg.ClaudeAutoResume.Services;
 using McjCoderOrg.ClaudeAutoResume.TestUtilities;
 
 namespace McjCoderOrg.ClaudeAutoResume;
@@ -5,18 +6,34 @@ namespace McjCoderOrg.ClaudeAutoResume;
 public sealed class ClaudeMonitorTests : IDisposable
 {
     private readonly ITestOutputHelper _output;
+    private readonly Mock<IConsoleService> _mockConsole;
+    private readonly Mock<IEnvironmentService> _mockEnvironment;
     private readonly ClaudeMonitor _monitor;
 
     public ClaudeMonitorTests(ITestOutputHelper output)
     {
         _output = output;
-        _monitor = new ClaudeMonitor(WrapperConfig.Default);
-        _output.WriteLine("ClaudeMonitorTests initialized with default config");
+        _mockConsole = new Mock<IConsoleService>();
+        _mockEnvironment = new Mock<IEnvironmentService>();
+
+        // Setup default mock behavior
+        _mockConsole.Setup(c => c.WindowWidth).Returns(120);
+        _mockConsole.Setup(c => c.WindowHeight).Returns(30);
+        _mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
+        _mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>());
+
+        _monitor = new ClaudeMonitor(WrapperConfig.Default, _mockConsole.Object, _mockEnvironment.Object);
+        _output.WriteLine("ClaudeMonitorTests initialized with default config and mock services");
     }
 
     public void Dispose()
     {
         _monitor.Dispose();
+    }
+
+    private ClaudeMonitor CreateMonitor(WrapperConfig config)
+    {
+        return new ClaudeMonitor(config, _mockConsole.Object, _mockEnvironment.Object);
     }
 
     [Fact]
@@ -40,7 +57,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void BuildCommandLine_WithDangerouslySkipPermissions_IncludesFlag()
     {
         var config = WrapperConfig.Default with { DangerouslySkipPermissions = true };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine([]);
 
@@ -51,7 +68,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void BuildCommandLine_WithContinueConversation_IncludesFlag()
     {
         var config = WrapperConfig.Default with { ContinueConversation = true };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine([]);
 
@@ -62,7 +79,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void BuildCommandLine_WithInitialPrompt_IncludesPromptAndValue()
     {
         var config = WrapperConfig.Default with { InitialPrompt = "test prompt" };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine([]);
 
@@ -78,7 +95,7 @@ public sealed class ClaudeMonitorTests : IDisposable
             ContinueConversation = true,
             InitialPrompt = "my prompt",
         };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine(["--extra"]);
 
@@ -97,7 +114,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void BuildCommandLine_WithEmptyInitialPrompt_DoesNotIncludePrompt()
     {
         var config = WrapperConfig.Default with { InitialPrompt = "" };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine([]);
 
@@ -108,7 +125,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void BuildCommandLine_WithNullInitialPrompt_DoesNotIncludePrompt()
     {
         var config = WrapperConfig.Default with { InitialPrompt = null };
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         var result = monitor.BuildCommandLine([]);
 
@@ -120,7 +137,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     {
         var config = WrapperConfig.Default;
 
-        var act = () => new ClaudeMonitor(config);
+        var act = () => CreateMonitor(config);
 
         act.Should().NotThrow();
     }
@@ -129,7 +146,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     public void Dispose_CanBeCalledMultipleTimes()
     {
         var config = WrapperConfig.Default;
-        using var monitor = new ClaudeMonitor(config);
+        using var monitor = CreateMonitor(config);
 
         // First explicit dispose, second via using - should not throw
         var act = () => monitor.Dispose();
@@ -143,7 +160,7 @@ public sealed class ClaudeMonitorTests : IDisposable
         using var logCapture = new LogCapture();
         var config = WrapperConfig.Default;
 
-        using var monitor = new ClaudeMonitor(config, logCapture.Logger);
+        using var monitor = new ClaudeMonitor(config, _mockConsole.Object, _mockEnvironment.Object, logCapture.Logger);
 
         // Verify the monitor was created with the injected logger (no exceptions)
         monitor.Should().NotBeNull();

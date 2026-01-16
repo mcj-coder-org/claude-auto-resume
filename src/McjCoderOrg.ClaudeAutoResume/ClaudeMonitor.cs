@@ -2,6 +2,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
+using McjCoderOrg.ClaudeAutoResume.Services;
+
 using Pty.Net;
 
 using Serilog;
@@ -13,9 +15,11 @@ namespace McjCoderOrg.ClaudeAutoResume;
 /// and automatically continues after the limit resets.
 /// Supports headless mode with auto-response to prompts.
 /// </summary>
-internal sealed class ClaudeMonitor : IDisposable
+internal sealed class ClaudeMonitor : IClaudeMonitor
 {
     private readonly WrapperConfig _config;
+    private readonly IConsoleService _console;
+    private readonly IEnvironmentService _environment;
     private readonly ILogger _logger;
     private readonly StringBuilder _outputBuffer = new();
     private readonly Lock _bufferLock = new();
@@ -32,13 +36,21 @@ internal sealed class ClaudeMonitor : IDisposable
     /// Initializes a new instance of the <see cref="ClaudeMonitor"/> class.
     /// </summary>
     /// <param name="config">The wrapper configuration.</param>
+    /// <param name="console">The console service.</param>
+    /// <param name="environment">The environment service.</param>
     /// <param name="logger">
     /// Optional logger instance. If not provided, falls back to the global Serilog logger.
     /// Inject a logger for testability.
     /// </param>
-    public ClaudeMonitor(WrapperConfig config, ILogger? logger = null)
+    public ClaudeMonitor(
+        WrapperConfig config,
+        IConsoleService console,
+        IEnvironmentService environment,
+        ILogger? logger = null)
     {
         _config = config;
+        _console = console;
+        _environment = environment;
         _logger = logger ?? Log.Logger;
     }
 
@@ -56,7 +68,7 @@ internal sealed class ClaudeMonitor : IDisposable
         if (claudePath == null)
         {
             _logger.Error("Could not find 'claude' in PATH");
-            WriteErrorLine("[claude-auto-resume] Error: Could not find 'claude' in PATH");
+            _console.WriteErrorLine("[claude-auto-resume] Error: Could not find 'claude' in PATH");
             return false;
         }
 
@@ -80,11 +92,11 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private void SetupCancellationHandler()
     {
-        Console.CancelKeyPress += (_, e) =>
+        _console.SetCancelKeyPressHandler((_, e) =>
         {
             e.Cancel = true;
             _cts?.Cancel();
-        };
+        });
     }
 
     private async Task SpawnAndMonitorAsync(string claudePath, IReadOnlyList<string> additionalArgs)
@@ -107,50 +119,22 @@ internal sealed class ClaudeMonitor : IDisposable
         {
             var cmdLine = string.Join(" ", commandLine);
             _logger.Information("Headless mode - Command: claude {CommandLine}", cmdLine);
-            WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Command: claude {cmdLine}"));
+            _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Command: claude {cmdLine}"));
         }
     }
 
-    private static PtyOptions CreatePtyOptions(string claudePath, List<string> commandLine)
+    private PtyOptions CreatePtyOptions(string claudePath, List<string> commandLine)
     {
         return new PtyOptions
         {
             Name = "claude-auto-resume",
-            Cols = GetConsoleWidth(),
-            Rows = GetConsoleHeight(),
-            Cwd = Environment.CurrentDirectory,
+            Cols = _console.WindowWidth,
+            Rows = _console.WindowHeight,
+            Cwd = _environment.CurrentDirectory,
             App = claudePath,
             CommandLine = [.. commandLine],
             Environment = GetEnvironment(),
         };
-    }
-
-    private static int GetConsoleWidth()
-    {
-        try
-        {
-            var width = Console.WindowWidth;
-            return width > 0 ? width : 120;
-        }
-        catch (IOException)
-        {
-            // No console attached (e.g., running with redirected streams)
-            return 120;
-        }
-    }
-
-    private static int GetConsoleHeight()
-    {
-        try
-        {
-            var height = Console.WindowHeight;
-            return height > 0 ? height : 30;
-        }
-        catch (IOException)
-        {
-            // No console attached (e.g., running with redirected streams)
-            return 30;
-        }
     }
 
     private async Task RunMonitoringTasksAsync()
@@ -184,7 +168,7 @@ internal sealed class ClaudeMonitor : IDisposable
         catch (Exception ex)
         {
             _logger.Error(ex, "Error during PTY operation");
-            WriteErrorLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Error: {ex.Message}"));
+            _console.WriteErrorLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Error: {ex.Message}"));
         }
 #pragma warning restore CA1031
     }
@@ -206,14 +190,14 @@ internal sealed class ClaudeMonitor : IDisposable
             if (!_cts.Token.IsCancellationRequested)
             {
                 _logger.Information("Claude exited with code {ExitCode}", _pty!.ExitCode);
-                WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Claude exited with code: {_pty.ExitCode}"));
+                _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Claude exited with code: {_pty.ExitCode}"));
             }
         }
 #pragma warning disable S6667 // Intentional: Logging without exception is correct for expected cancellation
         catch (OperationCanceledException)
         {
             _logger.Information("Shutdown requested by user");
-            WriteLine("\n[claude-auto-resume] Shutdown requested");
+            _console.WriteLine("\n[claude-auto-resume] Shutdown requested");
         }
 #pragma warning restore S6667
     }
@@ -267,7 +251,7 @@ internal sealed class ClaudeMonitor : IDisposable
             var text = Encoding.UTF8.GetString(buffer, 0, bytesRead);
             _timeSinceLastOutput.Restart();
 
-            Console.Write(text);
+            _console.Write(text);
             AppendToBuffer(text);
 
             if (_timeSinceLastContinue.Elapsed.TotalSeconds > _config.CooldownSeconds)
@@ -335,9 +319,9 @@ internal sealed class ClaudeMonitor : IDisposable
         var escapedResponse = EscapeForDisplay(_config.DefaultPromptResponse);
         _logger.Information("Detected prompt, auto-responding: {Response}", escapedResponse);
 
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Detected prompt, auto-responding: {escapedResponse}"));
-        Console.ResetColor();
+        _console.ForegroundColor = ConsoleColor.Cyan;
+        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Detected prompt, auto-responding: {escapedResponse}"));
+        _console.ResetColor();
 
         lock (_bufferLock)
         {
@@ -359,7 +343,7 @@ internal sealed class ClaudeMonitor : IDisposable
     {
         var stream = _pty!.WriterStream;
 
-        if (Console.IsInputRedirected)
+        if (_console.IsInputRedirected)
         {
             await ForwardPipedInputAsync(stream, ct).ConfigureAwait(false);
         }
@@ -369,11 +353,11 @@ internal sealed class ClaudeMonitor : IDisposable
         }
     }
 
-    private static async Task ForwardPipedInputAsync(Stream stream, CancellationToken ct)
+    private async Task ForwardPipedInputAsync(Stream stream, CancellationToken ct)
     {
         // Read lines from piped stdin and forward to PTY
-        // Use Console.In which is already configured as the stdin TextReader
-        var reader = Console.In;
+        // Use the console service's In reader which wraps stdin
+        var reader = _console.In;
 
         while (!ct.IsCancellationRequested)
         {
@@ -404,12 +388,12 @@ internal sealed class ClaudeMonitor : IDisposable
         }
     }
 
-    private static async Task ForwardInteractiveInputAsync(Stream stream, CancellationToken ct)
+    private async Task ForwardInteractiveInputAsync(Stream stream, CancellationToken ct)
     {
         while (!ct.IsCancellationRequested)
         {
             var key = await Task.Run(
-                () => Console.KeyAvailable ? Console.ReadKey(intercept: true) : (ConsoleKeyInfo?)null,
+                () => _console.KeyAvailable ? _console.ReadKey(intercept: true) : (ConsoleKeyInfo?)null,
                 ct).ConfigureAwait(false);
 
             if (key == null)
@@ -449,15 +433,15 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private async Task MonitorWindowSizeAsync(CancellationToken ct)
     {
-        var lastWidth = GetConsoleWidth();
-        var lastHeight = GetConsoleHeight();
+        var lastWidth = _console.WindowWidth;
+        var lastHeight = _console.WindowHeight;
 
         while (!ct.IsCancellationRequested)
         {
             await Task.Delay(500, ct).ConfigureAwait(false);
 
-            var width = GetConsoleWidth();
-            var height = GetConsoleHeight();
+            var width = _console.WindowWidth;
+            var height = _console.WindowHeight;
 
             if (width != lastWidth || height != lastHeight)
             {
@@ -520,11 +504,11 @@ internal sealed class ClaudeMonitor : IDisposable
 
     private void WriteRateLimitDetectedMessage(string matchedPattern)
     {
-        WriteLine(string.Empty);
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Rate limit detected (matched: \"{matchedPattern}\")"));
-        WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Waiting {_config.WaitMinutes} minutes before continuing..."));
-        Console.ResetColor();
+        _console.WriteLine(string.Empty);
+        _console.ForegroundColor = ConsoleColor.Yellow;
+        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Rate limit detected (matched: \"{matchedPattern}\")"));
+        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Waiting {_config.WaitMinutes} minutes before continuing..."));
+        _console.ResetColor();
     }
 
     private async Task WaitWithCountdownAsync(CancellationToken ct)
@@ -535,7 +519,7 @@ internal sealed class ClaudeMonitor : IDisposable
         while (stopwatch.Elapsed < waitTime && !ct.IsCancellationRequested)
         {
             var remaining = waitTime - stopwatch.Elapsed;
-            Console.Write(string.Create(CultureInfo.InvariantCulture, $"\r[claude-auto-resume] Resuming in: {remaining:mm\\:ss}   "));
+            _console.Write(string.Create(CultureInfo.InvariantCulture, $"\r[claude-auto-resume] Resuming in: {remaining:mm\\:ss}   "));
             await Task.Delay(1000, ct).ConfigureAwait(false);
         }
     }
@@ -544,24 +528,24 @@ internal sealed class ClaudeMonitor : IDisposable
     {
         _logger.Information("Sending continue command after rate limit wait");
 
-        WriteLine(string.Empty);
-        Console.ForegroundColor = ConsoleColor.Green;
-        WriteLine("[claude-auto-resume] Sending continue command...");
-        Console.ResetColor();
+        _console.WriteLine(string.Empty);
+        _console.ForegroundColor = ConsoleColor.Green;
+        _console.WriteLine("[claude-auto-resume] Sending continue command...");
+        _console.ResetColor();
 
         var bytes = Encoding.UTF8.GetBytes(_config.ContinueCommand);
         await _pty!.WriterStream.WriteAsync(bytes, ct).ConfigureAwait(false);
         await _pty.WriterStream.FlushAsync(ct).ConfigureAwait(false);
     }
 
-    private static string? FindClaudeInPath()
+    private string? FindClaudeInPath()
     {
-        var pathVar = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
-        var separator = OperatingSystem.IsWindows() ? ';' : ':';
+        var pathVar = _environment.GetEnvironmentVariable("PATH") ?? string.Empty;
+        var separator = _environment.IsWindows ? ';' : ':';
 
         // On Windows, npm installs claude.cmd (not claude.exe)
         // Check for .cmd, .exe, and extensionless in order of likelihood
-        string[] executableNames = OperatingSystem.IsWindows()
+        string[] executableNames = _environment.IsWindows
             ? ["claude.cmd", "claude.exe", "claude"]
             : ["claude"];
 
@@ -570,7 +554,7 @@ internal sealed class ClaudeMonitor : IDisposable
         {
             var pathResult = pathDirs
                 .Select(dir => Path.Combine(dir, executable))
-                .FirstOrDefault(File.Exists);
+                .FirstOrDefault(_environment.FileExists);
 
             if (pathResult != null)
             {
@@ -578,7 +562,7 @@ internal sealed class ClaudeMonitor : IDisposable
             }
         }
 
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        var home = _environment.UserProfile;
 
         // Check common npm installation paths
         foreach (var executable in executableNames)
@@ -589,7 +573,7 @@ internal sealed class ClaudeMonitor : IDisposable
                 Path.Combine(home, "AppData", "Roaming", "npm", executable),
             ];
 
-            var npmResult = npmPaths.FirstOrDefault(File.Exists);
+            var npmResult = npmPaths.FirstOrDefault(_environment.FileExists);
             if (npmResult != null)
             {
                 return npmResult;
@@ -597,23 +581,18 @@ internal sealed class ClaudeMonitor : IDisposable
         }
 
         // Unix-specific paths
-        if (!OperatingSystem.IsWindows())
+        if (!_environment.IsWindows)
         {
             string[] unixPaths = ["/usr/local/bin/claude", "/usr/bin/claude"];
-            return unixPaths.FirstOrDefault(File.Exists);
+            return unixPaths.FirstOrDefault(_environment.FileExists);
         }
 
         return null;
     }
 
-    private static Dictionary<string, string> GetEnvironment()
+    private Dictionary<string, string> GetEnvironment()
     {
-        var env = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var key in Environment.GetEnvironmentVariables().Keys)
-        {
-            var k = key.ToString()!;
-            env[k] = Environment.GetEnvironmentVariable(k) ?? string.Empty;
-        }
+        var env = new Dictionary<string, string>(_environment.GetEnvironmentVariables(), StringComparer.Ordinal);
 
         if (!env.TryGetValue("TERM", out var term) || string.IsNullOrEmpty(term))
         {
@@ -622,11 +601,4 @@ internal sealed class ClaudeMonitor : IDisposable
 
         return env;
     }
-
-    // Console output helpers - sync calls are intentional for PTY user-facing output
-#pragma warning disable CA1849 // Console output is intentionally synchronous for terminal UI
-    private static void WriteLine(string message) => Console.WriteLine(message);
-
-    private static void WriteErrorLine(string message) => Console.Error.WriteLine(message);
-#pragma warning restore CA1849
 }
