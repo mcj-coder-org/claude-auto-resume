@@ -16,8 +16,8 @@ public sealed class ProgramTests
     public ProgramTests(ITestOutputHelper output)
     {
         _output = output;
-        _mockConsole = new Mock<IConsoleService>();
-        _mockServiceProvider = new Mock<IServiceProvider>();
+        _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
+        _mockServiceProvider = new Mock<IServiceProvider>(MockBehavior.Loose);
 
         // Setup console mock
         _mockConsole.Setup(c => c.WindowWidth).Returns(120);
@@ -26,9 +26,9 @@ public sealed class ProgramTests
 
     private Application CreateApplication(Mock<IArgumentParser>? parserMock = null)
     {
-        var mockEnvironment = new Mock<IEnvironmentService>();
+        var mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
         mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
-        mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>());
+        mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>(StringComparer.Ordinal));
 
         var parser = parserMock?.Object ?? new ArgumentParser(mockEnvironment.Object);
 
@@ -91,7 +91,7 @@ public sealed class ProgramTests
 
         _output.WriteLine("Exit code: {0} (expected: {1})", result, ExitCodes.InvalidArguments);
         result.Should().Be(ExitCodes.InvalidArguments);
-        _mockConsole.Verify(c => c.ForegroundColor = ConsoleColor.Red, Times.AtLeastOnce);
+        _mockConsole.VerifySet(c => c.ForegroundColor = ConsoleColor.Red, Times.AtLeastOnce);
     }
 
     [Fact]

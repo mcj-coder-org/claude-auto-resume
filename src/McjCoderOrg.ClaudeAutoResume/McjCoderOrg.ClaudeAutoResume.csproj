@@ -29,6 +29,7 @@
     <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.Tests" />
     <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.SystemTests" />
     <InternalsVisibleTo Include="McjCoderOrg.ClaudeAutoResume.ArchTests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <!-- Public API Analyzer -->

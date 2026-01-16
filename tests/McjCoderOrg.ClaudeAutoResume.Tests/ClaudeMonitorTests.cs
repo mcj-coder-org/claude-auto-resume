@@ -13,14 +13,14 @@ public sealed class ClaudeMonitorTests : IDisposable
     public ClaudeMonitorTests(ITestOutputHelper output)
     {
         _output = output;
-        _mockConsole = new Mock<IConsoleService>();
-        _mockEnvironment = new Mock<IEnvironmentService>();
+        _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
+        _mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
 
         // Setup default mock behavior
         _mockConsole.Setup(c => c.WindowWidth).Returns(120);
         _mockConsole.Setup(c => c.WindowHeight).Returns(30);
         _mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
-        _mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>());
+        _mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>(StringComparer.Ordinal));
 
         _monitor = new ClaudeMonitor(WrapperConfig.Default, _mockConsole.Object, _mockEnvironment.Object);
         _output.WriteLine("ClaudeMonitorTests initialized with default config and mock services");
