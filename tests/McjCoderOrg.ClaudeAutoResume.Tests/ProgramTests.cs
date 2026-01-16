@@ -10,36 +10,29 @@ public sealed class ProgramTests
 {
     private readonly ITestOutputHelper _output;
     private readonly Mock<IConsoleService> _mockConsole;
-    private readonly Mock<IServiceProvider> _mockServiceProvider;
+    private readonly Mock<IEnvironmentService> _mockEnvironment;
     private Application _app = null!;
 
     public ProgramTests(ITestOutputHelper output)
     {
         _output = output;
         _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
-        _mockServiceProvider = new Mock<IServiceProvider>(MockBehavior.Loose);
+        _mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
 
         // Setup console mock
         _mockConsole.Setup(c => c.WindowWidth).Returns(120);
         _mockConsole.Setup(c => c.WindowHeight).Returns(30);
+
+        // Setup environment mock
+        _mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
+        _mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>(StringComparer.Ordinal));
     }
 
     private Application CreateApplication(Mock<IArgumentParser>? parserMock = null)
     {
-        var mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
-        mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
-        mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>(StringComparer.Ordinal));
+        var parser = parserMock?.Object ?? new ArgumentParser(_mockEnvironment.Object);
 
-        var parser = parserMock?.Object ?? new ArgumentParser(mockEnvironment.Object);
-
-        _mockServiceProvider
-            .Setup(sp => sp.GetService(typeof(IConsoleService)))
-            .Returns(_mockConsole.Object);
-        _mockServiceProvider
-            .Setup(sp => sp.GetService(typeof(IEnvironmentService)))
-            .Returns(mockEnvironment.Object);
-
-        return new Application(parser, _mockConsole.Object, _mockServiceProvider.Object);
+        return new Application(parser, _mockConsole.Object, _mockEnvironment.Object);
     }
 
     [Fact]
