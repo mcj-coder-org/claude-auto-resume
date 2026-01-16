@@ -6,7 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <Exclude>[*Tests*]*,[*Benchmarks*]*,[*ArchTests*]*</Exclude>
-          <ExcludeByFile>**/obj/**,**/Program.cs</ExcludeByFile>
+          <ExcludeByFile>**/obj/**,**/Program.cs,**/*.Designer.cs</ExcludeByFile>
           <ExcludeByAttribute>GeneratedCodeAttribute,ExcludeFromCodeCoverageAttribute</ExcludeByAttribute>
         </Configuration>
       </DataCollector>
