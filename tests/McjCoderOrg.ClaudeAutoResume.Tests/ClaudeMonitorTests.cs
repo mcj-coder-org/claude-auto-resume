@@ -1,6 +1,8 @@
 using McjCoderOrg.ClaudeAutoResume.Services;
 using McjCoderOrg.ClaudeAutoResume.TestUtilities;
 
+using Serilog;
+
 namespace McjCoderOrg.ClaudeAutoResume;
 
 public sealed class ClaudeMonitorTests : IDisposable
@@ -8,6 +10,7 @@ public sealed class ClaudeMonitorTests : IDisposable
     private readonly ITestOutputHelper _output;
     private readonly Mock<IConsoleService> _mockConsole;
     private readonly Mock<IEnvironmentService> _mockEnvironment;
+    private readonly Mock<ILogger> _mockLogger;
     private readonly ClaudeMonitor _monitor;
 
     public ClaudeMonitorTests(ITestOutputHelper output)
@@ -15,6 +18,7 @@ public sealed class ClaudeMonitorTests : IDisposable
         _output = output;
         _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
         _mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
+        _mockLogger = new Mock<ILogger>(MockBehavior.Loose);
 
         // Setup default mock behavior
         _mockConsole.Setup(c => c.WindowWidth).Returns(120);
@@ -22,7 +26,7 @@ public sealed class ClaudeMonitorTests : IDisposable
         _mockEnvironment.Setup(e => e.CurrentDirectory).Returns(Environment.CurrentDirectory);
         _mockEnvironment.Setup(e => e.GetEnvironmentVariables()).Returns(new Dictionary<string, string>(StringComparer.Ordinal));
 
-        _monitor = new ClaudeMonitor(WrapperConfig.Default, _mockConsole.Object, _mockEnvironment.Object);
+        _monitor = new ClaudeMonitor(WrapperConfig.Default, _mockConsole.Object, _mockEnvironment.Object, _mockLogger.Object);
         _output.WriteLine("ClaudeMonitorTests initialized with default config and mock services");
     }
 
@@ -33,7 +37,7 @@ public sealed class ClaudeMonitorTests : IDisposable
 
     private ClaudeMonitor CreateMonitor(WrapperConfig config)
     {
-        return new ClaudeMonitor(config, _mockConsole.Object, _mockEnvironment.Object);
+        return new ClaudeMonitor(config, _mockConsole.Object, _mockEnvironment.Object, _mockLogger.Object);
     }
 
     [Fact]

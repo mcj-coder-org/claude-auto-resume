@@ -20,15 +20,18 @@ if (!string.IsNullOrEmpty(logDir))
     Directory.CreateDirectory(logDir);
 }
 
+// Check for verbose flag early to configure logging before DI setup
+var isVerbose = args.Contains("-V") || args.Contains("--verbose");
+
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Warning()
+    .MinimumLevel.Is(isVerbose ? Serilog.Events.LogEventLevel.Debug : Serilog.Events.LogEventLevel.Warning)
     .WriteTo.File(
         logPath,
         rollingInterval: RollingInterval.Day,
         retainedFileCountLimit: 7,
         formatProvider: CultureInfo.InvariantCulture)
     .WriteTo.Debug(formatProvider: CultureInfo.InvariantCulture)
-    .CreateBootstrapLogger();
+    .CreateLogger();
 
 try
 {
@@ -42,6 +45,7 @@ try
             services.AddSingleton<IEnvironmentService, EnvironmentService>();
             services.AddSingleton<IArgumentParser, ArgumentParser>();
             services.AddSingleton<IApplication, Application>();
+            services.AddSingleton<ILogger>(_ => Log.Logger);
         })
         .UseSerilog()
         .Build();

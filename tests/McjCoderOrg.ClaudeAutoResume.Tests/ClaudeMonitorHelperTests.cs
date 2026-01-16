@@ -1,5 +1,7 @@
 using McjCoderOrg.ClaudeAutoResume.Services;
 
+using Serilog;
+
 namespace McjCoderOrg.ClaudeAutoResume;
 
 /// <summary>
@@ -11,6 +13,7 @@ public sealed class ClaudeMonitorHelperTests : IDisposable
     private readonly ITestOutputHelper _output;
     private readonly Mock<IConsoleService> _mockConsole;
     private readonly Mock<IEnvironmentService> _mockEnvironment;
+    private readonly Mock<ILogger> _mockLogger;
     private ClaudeMonitor? _monitor;
 
     public ClaudeMonitorHelperTests(ITestOutputHelper output)
@@ -18,6 +21,7 @@ public sealed class ClaudeMonitorHelperTests : IDisposable
         _output = output;
         _mockConsole = new Mock<IConsoleService>(MockBehavior.Loose);
         _mockEnvironment = new Mock<IEnvironmentService>(MockBehavior.Loose);
+        _mockLogger = new Mock<ILogger>(MockBehavior.Loose);
 
         // Setup default mock behavior
         _mockConsole.Setup(c => c.WindowWidth).Returns(value: 120);
@@ -37,7 +41,8 @@ public sealed class ClaudeMonitorHelperTests : IDisposable
         _monitor = new ClaudeMonitor(
             config ?? WrapperConfig.Default,
             _mockConsole.Object,
-            _mockEnvironment.Object);
+            _mockEnvironment.Object,
+            _mockLogger.Object);
         return _monitor;
     }
 

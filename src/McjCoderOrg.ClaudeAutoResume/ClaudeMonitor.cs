@@ -52,20 +52,17 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
     /// <param name="config">The wrapper configuration.</param>
     /// <param name="console">The console service.</param>
     /// <param name="environment">The environment service.</param>
-    /// <param name="logger">
-    /// Optional logger instance. If not provided, falls back to the global Serilog logger.
-    /// Inject a logger for testability.
-    /// </param>
+    /// <param name="logger">The logger instance for diagnostics.</param>
     public ClaudeMonitor(
         WrapperConfig config,
         IConsoleService console,
         IEnvironmentService environment,
-        ILogger? logger = null)
+        ILogger logger)
     {
         _config = config;
         _console = console;
         _environment = environment;
-        _logger = logger ?? Log.Logger;
+        _logger = logger;
     }
 
     /// <summary>
