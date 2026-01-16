@@ -117,7 +117,7 @@ namespace McjCoderOrg.ClaudeAutoResume.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RateLimitDetection.feature.ndjson", 10);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RateLimitDetection.feature.ndjson", 13);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -360,6 +360,138 @@ namespace McjCoderOrg.ClaudeAutoResume.Features
 #line hidden
 #line 43
         await testRunner.ThenAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Rate limit pattern split across buffer chunks")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Rate limit pattern split across buffer chunks")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task RateLimitPatternSplitAcrossBufferChunks()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "unit"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "8";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Rate limit pattern split across buffer chunks", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 53
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 54
+        await testRunner.GivenAsync("the output buffer contains \"Your usage li\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 55
+        await testRunner.AndAsync("additional output arrives \"mit has been reached\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 56
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 57
+        await testRunner.ThenAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Buffer rotation preserves recent rate limit message")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Buffer rotation preserves recent rate limit message")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task BufferRotationPreservesRecentRateLimitMessage()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "unit"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "9";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Buffer rotation preserves recent rate limit message", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 60
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 61
+        await testRunner.GivenAsync("the output buffer is at capacity", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 62
+        await testRunner.AndAsync("new output contains \"usage limit reached\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 63
+        await testRunner.WhenAsync("the buffer rotates old content", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 64
+        await testRunner.AndAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 65
+        await testRunner.ThenAsync("the rate limit message is preserved", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 66
+        await testRunner.AndAsync("a rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Partial rate limit pattern not detected")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Rate Limit Detection")]
+        [global::Xunit.TraitAttribute("Description", "Partial rate limit pattern not detected")]
+        [global::Xunit.TraitAttribute("Category", "unit")]
+        public async global::System.Threading.Tasks.Task PartialRateLimitPatternNotDetected()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "unit"};
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "10";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Partial rate limit pattern not detected", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 69
+    this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 7
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 70
+        await testRunner.GivenAsync("the output buffer contains \"limit\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 71
+        await testRunner.ButAsync("does not contain \"reached\" or \"reset\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "But ");
+#line hidden
+#line 72
+        await testRunner.WhenAsync("the rate limit check runs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 73
+        await testRunner.ThenAsync("no rate limit should be detected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

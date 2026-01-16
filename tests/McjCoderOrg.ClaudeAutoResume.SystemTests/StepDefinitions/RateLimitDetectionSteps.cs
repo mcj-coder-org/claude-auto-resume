@@ -58,6 +58,64 @@ public sealed class RateLimitDetectionSteps
         _cooldownActive = true;
     }
 
+    [Given("additional output arrives {string}")]
+    public void GivenAdditionalOutputArrives(string content)
+    {
+        _output.WriteLine("Appending to buffer: '{0}'", content);
+        _bufferContent += content;
+    }
+
+    [Given("the output buffer is at capacity")]
+    public void GivenTheOutputBufferIsAtCapacity()
+    {
+        // Fill buffer with placeholder content (simulating capacity)
+        _output.WriteLine("Setting buffer to capacity with placeholder content");
+        _bufferContent = new string('X', 1000);
+    }
+
+    [Given("new output contains {string}")]
+    public void GivenNewOutputContains(string content)
+    {
+        _output.WriteLine("Adding new output: '{0}'", content);
+        _bufferContent += content;
+    }
+
+    [Given("does not contain {string} or {string}")]
+    public void GivenDoesNotContainEitherKeyword(string keyword1, string keyword2)
+    {
+        // Validation step - ensure buffer does not contain either keyword
+        var containsKeyword1 = _bufferContent.Contains(keyword1, StringComparison.OrdinalIgnoreCase);
+        var containsKeyword2 = _bufferContent.Contains(keyword2, StringComparison.OrdinalIgnoreCase);
+        (containsKeyword1 || containsKeyword2).Should().BeFalse(
+            "buffer should not contain '{0}' or '{1}'", keyword1, keyword2);
+    }
+
+    [When("the buffer rotates old content")]
+    public void WhenTheBufferRotatesOldContent()
+    {
+        // Simulate buffer rotation by keeping only recent content
+        _output.WriteLine("Simulating buffer rotation");
+        const int recentContentLength = 500;
+        if (_bufferContent.Length > recentContentLength)
+        {
+            _bufferContent = _bufferContent[^recentContentLength..];
+        }
+
+        _output.WriteLine("Buffer after rotation: '{0}'", _bufferContent);
+    }
+
+    [Then("the rate limit message is preserved")]
+    public void ThenTheRateLimitMessageIsPreserved()
+    {
+        _output.WriteLine("Verifying rate limit message preserved in buffer");
+        var hasRateLimitIndicator =
+            _bufferContent.Contains("limit", StringComparison.OrdinalIgnoreCase) &&
+            (_bufferContent.Contains("reached", StringComparison.OrdinalIgnoreCase) ||
+             _bufferContent.Contains("reset", StringComparison.OrdinalIgnoreCase) ||
+             _bufferContent.Contains("exceeded", StringComparison.OrdinalIgnoreCase));
+        hasRateLimitIndicator.Should().BeTrue("rate limit message should be preserved after rotation");
+    }
+
     [When("the rate limit check runs")]
     public void WhenTheRateLimitCheckRuns()
     {
