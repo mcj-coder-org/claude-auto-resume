@@ -228,6 +228,46 @@ See [performance-examples.md](coding-standards/performance-examples.md) for patt
 
 See [security-examples.md](coding-standards/security-examples.md) for examples.
 
+## Dependency Injection & Testability
+
+### DI Principles
+
+- **Constructor injection preferred** over property or method injection
+- **Interface-first design**: Define interface before implementation
+- **Single Responsibility**: One reason to change per class
+- **Explicit dependencies**: All dependencies via constructor, no hidden statics
+
+### Service Lifetimes
+
+| Lifetime  | Use For                           | Example           |
+| --------- | --------------------------------- | ----------------- |
+| Singleton | Stateless services, shared state  | `IConsoleService` |
+| Scoped    | Per-request/operation state       | Database contexts |
+| Transient | Lightweight, stateful, disposable | `ClaudeMonitor`   |
+
+### Avoid Static Classes For
+
+- Business logic
+- External resource access (file system, network, environment)
+- Anything that needs to be mocked in tests
+- Classes with state or dependencies
+
+### Static Classes Acceptable For
+
+- Pure extension methods
+- Mathematical/string utilities with no side effects
+- Constants-only classes
+- Bootstrap code (before DI container is available)
+
+### Testability Requirements
+
+- New classes MUST be unit-testable in isolation
+- External dependencies MUST be abstracted behind interfaces
+- No direct `new` of classes with external dependencies in business logic
+- Prefer constructor injection over service locator pattern
+
+See [dependency-injection.md](coding-standards/dependency-injection.md) for patterns.
+
 ## Code Review Checklist
 
 - [ ] Follows naming conventions
@@ -242,3 +282,7 @@ See [security-examples.md](coding-standards/security-examples.md) for examples.
 - [ ] No analyzer warnings
 - [ ] No hardcoded secrets
 - [ ] Input validation at boundaries
+- [ ] Dependencies injected via constructor (no hidden statics)
+- [ ] Interfaces defined for external dependencies
+- [ ] New classes are unit-testable in isolation
+- [ ] No static classes for business logic
