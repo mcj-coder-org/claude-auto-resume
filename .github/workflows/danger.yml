@@ -28,6 +28,6 @@ jobs:
         run: npm ci
 
       - name: Run Danger
-        run: npx danger ci
+        run: npx danger ci --fail-on-errors
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
