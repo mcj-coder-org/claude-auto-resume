@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace McjCoderOrg.ClaudeAutoResume.Services;
 
 /// <summary>
 /// Production implementation of <see cref="IConsoleService"/> wrapping System.Console.
 /// </summary>
+[ExcludeFromCodeCoverage(Justification = "Thin wrapper around System.Console with no testable logic")]
 internal sealed class ConsoleService : IConsoleService
 {
     /// <inheritdoc/>
