@@ -5,8 +5,6 @@ using System.Text;
 using McjCoderOrg.ClaudeAutoResume.Resources;
 using McjCoderOrg.ClaudeAutoResume.Services;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using Serilog;
 
 namespace McjCoderOrg.ClaudeAutoResume;
@@ -22,7 +20,7 @@ internal sealed class Application : IApplication
 
     private readonly IArgumentParser _argumentParser;
     private readonly IConsoleService _console;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IEnvironmentService _environment;
     private readonly ILogger _logger;
 
     /// <summary>
@@ -30,26 +28,23 @@ internal sealed class Application : IApplication
     /// </summary>
     /// <param name="argumentParser">The argument parser.</param>
     /// <param name="console">The console service.</param>
-    /// <param name="serviceProvider">The service provider for creating monitors.</param>
+    /// <param name="environment">The environment service.</param>
     /// <param name="logger">The logger.</param>
     public Application(
         IArgumentParser argumentParser,
         IConsoleService console,
-        IServiceProvider serviceProvider,
+        IEnvironmentService environment,
         ILogger? logger = null)
     {
         _argumentParser = argumentParser;
         _console = console;
-        _serviceProvider = serviceProvider;
+        _environment = environment;
         _logger = logger ?? Log.Logger;
     }
 
     /// <inheritdoc/>
     public async Task<int> RunAsync(string[] args)
     {
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.InputEncoding = Encoding.UTF8;
-
         var parseResult = _argumentParser.Parse(args);
 
         if (parseResult.ShowHelp)
@@ -101,10 +96,7 @@ internal sealed class Application : IApplication
 
     private ClaudeMonitor CreateMonitor(WrapperConfig config)
     {
-        // Create monitor with DI services
-        var console = _serviceProvider.GetRequiredService<IConsoleService>();
-        var environment = _serviceProvider.GetRequiredService<IEnvironmentService>();
-        return new ClaudeMonitor(config, console, environment, _logger);
+        return new ClaudeMonitor(config, _console, _environment, _logger);
     }
 
     private static string? ValidateArguments(ParseResult result)
