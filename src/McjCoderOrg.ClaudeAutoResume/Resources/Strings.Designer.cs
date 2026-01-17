@@ -78,6 +78,11 @@ internal class Strings
     internal static string DiagnoseRuntimeInfo => ResourceManager.GetString("DiagnoseRuntimeInfo", resourceCulture) ?? string.Empty;
 
     /// <summary>
+    ///   Looks up a localized string similar to Error: --headless mode requires --dangerously-skip-permissions.
+    /// </summary>
+    internal static string ErrorHeadlessRequiresDangerous => ResourceManager.GetString("ErrorHeadlessRequiresDangerous", resourceCulture) ?? string.Empty;
+
+    /// <summary>
     ///   Looks up a localized string similar to Log file: {LogPath}.
     /// </summary>
     internal static string ErrorLogLocation => ResourceManager.GetString("ErrorLogLocation", resourceCulture) ?? string.Empty;
@@ -88,14 +93,119 @@ internal class Strings
     internal static string ErrorUnhandledException => ResourceManager.GetString("ErrorUnhandledException", resourceCulture) ?? string.Empty;
 
     /// <summary>
+    ///   Looks up a localized string similar to ENVIRONMENT: section.
+    /// </summary>
+    internal static string HelpEnvironment => ResourceManager.GetString("HelpEnvironment", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to EXAMPLES: section.
+    /// </summary>
+    internal static string HelpExamples => ResourceManager.GetString("HelpExamples", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to MODES: section.
+    /// </summary>
+    internal static string HelpModes => ResourceManager.GetString("HelpModes", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to OPTIONS: section.
+    /// </summary>
+    internal static string HelpOptions => ResourceManager.GetString("HelpOptions", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to USAGE: section.
+    /// </summary>
+    internal static string HelpUsage => ResourceManager.GetString("HelpUsage", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to WARNING: section.
+    /// </summary>
+    internal static string HelpWarning => ResourceManager.GetString("HelpWarning", resourceCulture) ?? string.Empty;
+
+    /// <summary>
     ///   Looks up a localized string similar to Detected Session Limit Reached, resets at {ResetTime}.
     /// </summary>
     internal static string RateLimitDetected => ResourceManager.GetString("RateLimitDetected", resourceCulture) ?? string.Empty;
 
     /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Detected prompt, auto-responding: {0}.
+    /// </summary>
+    internal static string StatusAutoResponding => ResourceManager.GetString("StatusAutoResponding", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Command: claude {0}.
+    /// </summary>
+    internal static string StatusClaudeCommand => ResourceManager.GetString("StatusClaudeCommand", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Claude exited with code: {0}.
+    /// </summary>
+    internal static string StatusClaudeExited => ResourceManager.GetString("StatusClaudeExited", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Error: Could not find 'claude' in PATH.
+    /// </summary>
+    internal static string StatusClaudeNotFound => ResourceManager.GetString("StatusClaudeNotFound", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Error: {0}.
+    /// </summary>
+    internal static string StatusError => ResourceManager.GetString("StatusError", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Rate limit detected (matched: "{0}").
+    /// </summary>
+    internal static string StatusRateLimitMatch => ResourceManager.GetString("StatusRateLimitMatch", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Resuming in: {0}.
+    /// </summary>
+    internal static string StatusResumingIn => ResourceManager.GetString("StatusResumingIn", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Sending continue command....
+    /// </summary>
+    internal static string StatusSendingContinue => ResourceManager.GetString("StatusSendingContinue", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Shutdown requested.
+    /// </summary>
+    internal static string StatusShutdownRequested => ResourceManager.GetString("StatusShutdownRequested", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Waiting {0} minutes before continuing....
+    /// </summary>
+    internal static string StatusWaitingForResume => ResourceManager.GetString("StatusWaitingForResume", resourceCulture) ?? string.Empty;
+
+    /// <summary>
     ///   Looks up a localized string similar to Starting Claude Auto Resume v{AppVersion}.
     /// </summary>
     internal static string StartingApp => ResourceManager.GetString("StartingApp", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Auto-continue on rate limit: enabled (wait {0} min).
+    /// </summary>
+    internal static string StartupAutoResume => ResourceManager.GetString("StartupAutoResume", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] --dangerously-skip-permissions enabled.
+    /// </summary>
+    internal static string StartupDangerousMode => ResourceManager.GetString("StartupDangerousMode", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Press Ctrl+C to exit.
+    /// </summary>
+    internal static string StartupExitHint => ResourceManager.GetString("StartupExitHint", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] HEADLESS MODE - auto-responding to prompts.
+    /// </summary>
+    internal static string StartupHeadlessMode => ResourceManager.GetString("StartupHeadlessMode", resourceCulture) ?? string.Empty;
+
+    /// <summary>
+    ///   Looks up a localized string similar to [claude-auto-resume] Starting Claude Code....
+    /// </summary>
+    internal static string StartupMessage => ResourceManager.GetString("StartupMessage", resourceCulture) ?? string.Empty;
 
     /// <summary>
     ///   Looks up a localized string similar to Waiting {WaitMinutes} minutes for rate limit reset.

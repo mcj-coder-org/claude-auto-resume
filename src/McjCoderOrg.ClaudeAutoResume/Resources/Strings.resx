@@ -71,4 +71,134 @@
     <value>OS: {0} ({1})</value>
     <comment>{0} = OS description, {1} = CPU architecture</comment>
   </data>
+  <data name="ErrorHeadlessRequiresDangerous" xml:space="preserve">
+    <value>Error: --headless mode requires --dangerously-skip-permissions
+
+Headless mode auto-responds to prompts without user confirmation.
+This is equivalent to claude-auto-resume's behavior.
+
+To enable, run:
+  claude-auto-resume --headless --dangerously-skip-permissions</value>
+    <comment>Validation error when --headless is used without --dangerously-skip-permissions</comment>
+  </data>
+  <data name="StartupMessage" xml:space="preserve">
+    <value>[claude-auto-resume] Starting Claude Code...</value>
+    <comment>Startup banner message</comment>
+  </data>
+  <data name="StartupAutoResume" xml:space="preserve">
+    <value>[claude-auto-resume] Auto-continue on rate limit: enabled (wait {0} min)</value>
+    <comment>{0} = wait minutes</comment>
+  </data>
+  <data name="StartupHeadlessMode" xml:space="preserve">
+    <value>[claude-auto-resume] HEADLESS MODE - auto-responding to prompts</value>
+    <comment>Shown when --headless mode is enabled</comment>
+  </data>
+  <data name="StartupDangerousMode" xml:space="preserve">
+    <value>[claude-auto-resume] --dangerously-skip-permissions enabled</value>
+    <comment>Shown when --dangerously-skip-permissions is enabled</comment>
+  </data>
+  <data name="StartupExitHint" xml:space="preserve">
+    <value>[claude-auto-resume] Press Ctrl+C to exit</value>
+    <comment>Hint for exiting the application</comment>
+  </data>
+  <data name="HelpUsage" xml:space="preserve">
+    <value>USAGE:
+    claude-auto-resume [OPTIONS] [-- CLAUDE_ARGS...]</value>
+    <comment>Usage section of help text</comment>
+  </data>
+  <data name="HelpOptions" xml:space="preserve">
+    <value>OPTIONS:
+    -h, --help                      Show this help
+    -v, --version                   Show version information
+    -p, --prompt &lt;PROMPT&gt;           Initial prompt to send to Claude
+    -c, --continue                  Continue previous conversation
+    -w, --wait &lt;MINUTES&gt;            Minutes to wait on rate limit (default: 15)
+    -V, --verbose                   Enable verbose logging to file
+    --headless                      Run without user input (auto-respond to prompts)
+    --dangerously-skip-permissions  Pass dangerous flag to Claude (required for headless)
+    --dangerous                     Alias for --dangerously-skip-permissions
+    --diagnose                      Run environment diagnostics</value>
+    <comment>Options section of help text</comment>
+  </data>
+  <data name="HelpEnvironment" xml:space="preserve">
+    <value>ENVIRONMENT:
+    CLAUDE_WAIT_MINUTES             Override default wait time</value>
+    <comment>Environment variables section of help text</comment>
+  </data>
+  <data name="HelpExamples" xml:space="preserve">
+    <value>EXAMPLES:
+    # Interactive mode (default)
+    claude-auto-resume
+
+    # With initial prompt
+    claude-auto-resume -p "implement the login feature"
+
+    # Continue previous session
+    claude-auto-resume -c -p "continue where we left off"
+
+    # Headless mode
+    claude-auto-resume --headless --dangerous -p "implement feature"
+
+    # Pass additional args to claude
+    claude-auto-resume -- --model claude-3-opus</value>
+    <comment>Examples section of help text</comment>
+  </data>
+  <data name="HelpModes" xml:space="preserve">
+    <value>MODES:
+    Interactive (default):
+        - Full PTY pass-through with colors
+        - You type, Claude responds
+        - Auto-waits and continues on rate limit
+
+    Headless (--headless --dangerous):
+        - No user input required
+        - Auto-responds 'y' to permission prompts
+        - Detects when Claude hangs waiting for input</value>
+    <comment>Modes section of help text</comment>
+  </data>
+  <data name="HelpWarning" xml:space="preserve">
+    <value>WARNING: --dangerously-skip-permissions allows Claude to execute
+    commands without confirmation. Use only in trusted environments.</value>
+    <comment>Warning section of help text</comment>
+  </data>
+  <data name="StatusClaudeNotFound" xml:space="preserve">
+    <value>[claude-auto-resume] Error: Could not find 'claude' in PATH</value>
+    <comment>Error when Claude CLI is not found in PATH</comment>
+  </data>
+  <data name="StatusClaudeCommand" xml:space="preserve">
+    <value>[claude-auto-resume] Command: claude {0}</value>
+    <comment>{0} = command line arguments</comment>
+  </data>
+  <data name="StatusError" xml:space="preserve">
+    <value>[claude-auto-resume] Error: {0}</value>
+    <comment>{0} = error message</comment>
+  </data>
+  <data name="StatusClaudeExited" xml:space="preserve">
+    <value>[claude-auto-resume] Claude exited with code: {0}</value>
+    <comment>{0} = exit code</comment>
+  </data>
+  <data name="StatusShutdownRequested" xml:space="preserve">
+    <value>[claude-auto-resume] Shutdown requested</value>
+    <comment>Shown when user requests shutdown via Ctrl+C</comment>
+  </data>
+  <data name="StatusAutoResponding" xml:space="preserve">
+    <value>[claude-auto-resume] Detected prompt, auto-responding: {0}</value>
+    <comment>{0} = escaped response being sent</comment>
+  </data>
+  <data name="StatusRateLimitMatch" xml:space="preserve">
+    <value>[claude-auto-resume] Rate limit detected (matched: "{0}")</value>
+    <comment>{0} = pattern that matched</comment>
+  </data>
+  <data name="StatusWaitingForResume" xml:space="preserve">
+    <value>[claude-auto-resume] Waiting {0} minutes before continuing...</value>
+    <comment>{0} = wait minutes</comment>
+  </data>
+  <data name="StatusResumingIn" xml:space="preserve">
+    <value>[claude-auto-resume] Resuming in: {0}</value>
+    <comment>{0} = time remaining (mm:ss format)</comment>
+  </data>
+  <data name="StatusSendingContinue" xml:space="preserve">
+    <value>[claude-auto-resume] Sending continue command...</value>
+    <comment>Shown when sending continue command after rate limit wait</comment>
+  </data>
 </root>
