@@ -16,7 +16,7 @@
     <!-- Testing -->
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
-    <PackageVersion Include="xunit.analyzers" Version="1.26.0" />
+    <PackageVersion Include="xunit.analyzers" Version="1.27.0" />
     <PackageVersion Include="Xunit.SkippableFact" Version="1.5.61" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
@@ -25,8 +25,8 @@
     <PackageVersion Include="Moq.Analyzers" Version="0.4.0" />
 
     <!-- BDD (Reqnroll) -->
-    <PackageVersion Include="Reqnroll" Version="3.3.1" />
-    <PackageVersion Include="Reqnroll.xUnit" Version="3.3.1" />
+    <PackageVersion Include="Reqnroll" Version="3.3.3" />
+    <PackageVersion Include="Reqnroll.xUnit" Version="3.3.3" />
 
     <!-- Architecture Testing -->
     <PackageVersion Include="NetArchTest.eNhancedEdition" Version="1.4.5" />
