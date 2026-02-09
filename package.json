@@ -20,15 +20,15 @@
   "devDependencies": {
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
-    "@secretlint/secretlint-rule-preset-recommend": "^11.3.0",
-    "cspell": "^9.6.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^11.3.1",
+    "cspell": "^9.6.4",
     "danger": "^12.3.3",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "markdownlint-cli": "^0.47.0",
     "prettier": "^3.4.2",
-    "secretlint": "^11.3.0"
+    "secretlint": "^11.3.1"
   },
   "lint-staged": {
     "*.cs": [
