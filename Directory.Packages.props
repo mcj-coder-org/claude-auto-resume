@@ -11,7 +11,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.4" />
 
     <!-- Source Link -->
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.103" />
 
     <!-- Testing -->
     <PackageVersion Include="xunit" Version="2.9.3" />
@@ -39,7 +39,7 @@
     <PackageVersion Include="Serilog.Sinks.InMemory" Version="2.0.0" />
 
     <!-- Hosting -->
-    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
 
     <!-- PTY (Pseudo-Terminal) -->
     <PackageVersion Include="PTY" Version="1.0.3" />
