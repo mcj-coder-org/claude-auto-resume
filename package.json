@@ -18,7 +18,7 @@
     "lint:adr": "node scripts/validate-adr.js docs/adr/"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.3.1",
+    "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.3.1",
     "@secretlint/secretlint-rule-preset-recommend": "^11.3.0",
     "cspell": "^9.6.0",
