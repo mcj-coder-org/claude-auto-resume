@@ -1,6 +1,32 @@
+<!-- PORTFOLIO-BANNER:START -->
+> **🗂️ Portfolio archive — .NET 10 global CLI tool (C#).** A cross-platform tool that wraps the Claude CLI to auto-resume sessions on rate limits. Part of a consolidated set of my personal repositories and **not actively maintained**.
+
+<details>
+<summary><b>📋 Self-review — 5 good practices &amp; 5 things I'd improve</b></summary>
+
+**✅ Good practices demonstrated**
+1. Mature CI/CD: multiple GitHub Actions workflows (build, release, docs, CodeQL) with automated semantic release via git-cliff.
+2. Serious quality tooling — mutation testing (Stryker), coverage (coverlet), architecture tests, and Danger-based PR review.
+3. Enforced conventions: Conventional Commits + commitlint, Husky hooks, EditorConfig, Prettier, markdownlint and cSpell.
+4. Central build & dependency management (`Directory.Build.props` / `Directory.Packages.props`) with GitVersion.
+5. Good repo hygiene: MIT LICENSE, CHANGELOG, ADRs, and a devcontainer for reproducible environments.
+
+**⚠️ Weaknesses / what I'd do differently today**
+1. Org-scale process ceremony on a small single-purpose tool — over-engineered for its scope (YAGNI).
+2. Solo project carrying team-oriented gates (PR-author checks, issue-close validation) that add friction with no team.
+3. Dependency automation outran maintenance — 14 stale Dependabot PRs accumulated (since cleaned up).
+4. Links/badges originally pointed at a former org account and broke when the repo was consolidated.
+5. Scheduled workflows were silently disabled by GitHub for inactivity rather than being pruned deliberately.
+
+</details>
+
+---
+<!-- PORTFOLIO-BANNER:END -->
+
+
 # Claude Auto Resume
 
-[![CI](https://github.com/mcj-coder-org/claude-auto-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/mcj-coder-org/claude-auto-resume/actions/workflows/ci.yml)
+[![CI](https://github.com/martincjarvis/claude-auto-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/martincjarvis/claude-auto-resume/actions/workflows/ci.yml)
 [![.NET 10](https://img.shields.io/badge/.NET-10-512BD4)](https://dotnet.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -39,7 +65,7 @@ dotnet tool install -g McjCoderOrg.ClaudeAutoResume
 ### Standalone Executable
 
 Download the latest release for your platform from the
-[Releases](https://github.com/mcj-coder-org/claude-auto-resume/releases) page.
+[Releases](https://github.com/martincjarvis/claude-auto-resume/releases) page.
 
 ## Quick Start
 
@@ -112,7 +138,7 @@ ENVIRONMENT:
 
 ```bash
 # Clone the repository
-git clone https://github.com/mcj-coder-org/claude-auto-resume.git
+git clone https://github.com/martincjarvis/claude-auto-resume.git
 cd claude-auto-resume
 
 # Install dependencies and configure hooks
