@@ -17,6 +17,7 @@ internal sealed class Application : IApplication
     private static readonly CompositeFormat _errorLogLocationFormat = CompositeFormat.Parse(Strings.ErrorLogLocation);
     private static readonly CompositeFormat _diagnoseRuntimeInfoFormat = CompositeFormat.Parse(Strings.DiagnoseRuntimeInfo);
     private static readonly CompositeFormat _diagnoseOsInfoFormat = CompositeFormat.Parse(Strings.DiagnoseOsInfo);
+    private static readonly CompositeFormat _startupAutoResumeFormat = CompositeFormat.Parse(Strings.StartupAutoResume);
 
     private readonly IArgumentParser _argumentParser;
     private readonly IConsoleService _console;
@@ -114,14 +115,8 @@ internal sealed class Application : IApplication
         if (string.Equals(errorCode, "headless-requires-dangerous", StringComparison.Ordinal))
         {
             _console.ForegroundColor = ConsoleColor.Red;
-            _console.WriteLine("Error: --headless mode requires --dangerously-skip-permissions");
+            _console.WriteLine(Strings.ErrorHeadlessRequiresDangerous);
             _console.ResetColor();
-            _console.WriteLine(string.Empty);
-            _console.WriteLine("Headless mode auto-responds to prompts without user confirmation.");
-            _console.WriteLine("This is equivalent to claude-auto-resume's behavior.");
-            _console.WriteLine(string.Empty);
-            _console.WriteLine("To enable, run:");
-            _console.WriteLine("  claude-auto-resume --headless --dangerously-skip-permissions");
         }
     }
 
@@ -145,26 +140,24 @@ internal sealed class Application : IApplication
 
     private void PrintStartupInfo(WrapperConfig config, bool headless, bool dangerous)
     {
-        _console.WriteLine("[claude-auto-resume] Starting Claude Code...");
-        _console.WriteLine(string.Create(
-            CultureInfo.InvariantCulture,
-            $"[claude-auto-resume] Auto-continue on rate limit: enabled (wait {config.WaitMinutes} min)"));
+        _console.WriteLine(Strings.StartupMessage);
+        _console.WriteLine(string.Format(CultureInfo.InvariantCulture, _startupAutoResumeFormat, config.WaitMinutes));
 
         if (headless)
         {
             _console.ForegroundColor = ConsoleColor.Yellow;
-            _console.WriteLine("[claude-auto-resume] HEADLESS MODE - auto-responding to prompts");
+            _console.WriteLine(Strings.StartupHeadlessMode);
             _console.ResetColor();
         }
 
         if (dangerous)
         {
             _console.ForegroundColor = ConsoleColor.Yellow;
-            _console.WriteLine("[claude-auto-resume] --dangerously-skip-permissions enabled");
+            _console.WriteLine(Strings.StartupDangerousMode);
             _console.ResetColor();
         }
 
-        _console.WriteLine("[claude-auto-resume] Press Ctrl+C to exit");
+        _console.WriteLine(Strings.StartupExitHint);
         _console.WriteLine(string.Empty);
     }
 
@@ -178,85 +171,19 @@ internal sealed class Application : IApplication
 
     private void PrintHelp()
     {
-        PrintHelpHeader();
-        PrintHelpOptions();
-        PrintHelpEnvironment();
-        PrintHelpExamples();
-        PrintHelpModes();
-        PrintHelpWarning();
-    }
-
-    private void PrintHelpHeader()
-    {
         _console.WriteLine(Strings.AppDescription);
         _console.WriteLine(string.Empty);
-        _console.WriteLine("USAGE:");
-        _console.WriteLine("    claude-auto-resume [OPTIONS] [-- CLAUDE_ARGS...]");
+        _console.WriteLine(Strings.HelpUsage);
         _console.WriteLine(string.Empty);
-    }
-
-    private void PrintHelpOptions()
-    {
-        _console.WriteLine("OPTIONS:");
-        _console.WriteLine("    -h, --help                      Show this help");
-        _console.WriteLine("    -v, --version                   Show version information");
-        _console.WriteLine("    -p, --prompt <PROMPT>           Initial prompt to send to Claude");
-        _console.WriteLine("    -c, --continue                  Continue previous conversation");
-        _console.WriteLine("    -w, --wait <MINUTES>            Minutes to wait on rate limit (default: 15)");
-        _console.WriteLine("    -V, --verbose                   Enable verbose logging to file");
-        _console.WriteLine("    --headless                      Run without user input (auto-respond to prompts)");
-        _console.WriteLine("    --dangerously-skip-permissions  Pass dangerous flag to Claude (required for headless)");
-        _console.WriteLine("    --dangerous                     Alias for --dangerously-skip-permissions");
-        _console.WriteLine("    --diagnose                      Run environment diagnostics");
+        _console.WriteLine(Strings.HelpOptions);
         _console.WriteLine(string.Empty);
-    }
-
-    private void PrintHelpEnvironment()
-    {
-        _console.WriteLine("ENVIRONMENT:");
-        _console.WriteLine("    CLAUDE_WAIT_MINUTES             Override default wait time");
+        _console.WriteLine(Strings.HelpEnvironment);
         _console.WriteLine(string.Empty);
-    }
-
-    private void PrintHelpExamples()
-    {
-        _console.WriteLine("EXAMPLES:");
-        _console.WriteLine("    # Interactive mode (default)");
-        _console.WriteLine("    claude-auto-resume");
+        _console.WriteLine(Strings.HelpExamples);
         _console.WriteLine(string.Empty);
-        _console.WriteLine("    # With initial prompt");
-        _console.WriteLine("    claude-auto-resume -p \"implement the login feature\"");
+        _console.WriteLine(Strings.HelpModes);
         _console.WriteLine(string.Empty);
-        _console.WriteLine("    # Continue previous session");
-        _console.WriteLine("    claude-auto-resume -c -p \"continue where we left off\"");
-        _console.WriteLine(string.Empty);
-        _console.WriteLine("    # Headless mode");
-        _console.WriteLine("    claude-auto-resume --headless --dangerous -p \"implement feature\"");
-        _console.WriteLine(string.Empty);
-        _console.WriteLine("    # Pass additional args to claude");
-        _console.WriteLine("    claude-auto-resume -- --model claude-3-opus");
-        _console.WriteLine(string.Empty);
-    }
-
-    private void PrintHelpModes()
-    {
-        _console.WriteLine("MODES:");
-        _console.WriteLine("    Interactive (default):");
-        _console.WriteLine("        - Full PTY pass-through with colors");
-        _console.WriteLine("        - You type, Claude responds");
-        _console.WriteLine("        - Auto-waits and continues on rate limit");
-        _console.WriteLine(string.Empty);
-        _console.WriteLine("    Headless (--headless --dangerous):");
-        _console.WriteLine("        - No user input required");
-        _console.WriteLine("        - Auto-responds 'y' to permission prompts");
-        _console.WriteLine("        - Detects when Claude hangs waiting for input");
-        _console.WriteLine(string.Empty);
-    }
-
-    private void PrintHelpWarning()
-    {
-        _console.WriteLine("WARNING: --dangerously-skip-permissions allows Claude to execute");
-        _console.WriteLine("    commands without confirmation. Use only in trusted environments.");
+        _console.WriteLine(Strings.HelpWarning);
     }
 
     private void PrintDiagnostics()

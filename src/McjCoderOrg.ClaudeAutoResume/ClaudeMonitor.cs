@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
+using McjCoderOrg.ClaudeAutoResume.Resources;
 using McjCoderOrg.ClaudeAutoResume.Services;
 
 using Pty.Net;
@@ -17,6 +18,14 @@ namespace McjCoderOrg.ClaudeAutoResume;
 /// </summary>
 internal sealed class ClaudeMonitor : IClaudeMonitor
 {
+    private static readonly CompositeFormat _statusClaudeCommandFormat = CompositeFormat.Parse(Strings.StatusClaudeCommand);
+    private static readonly CompositeFormat _statusErrorFormat = CompositeFormat.Parse(Strings.StatusError);
+    private static readonly CompositeFormat _statusClaudeExitedFormat = CompositeFormat.Parse(Strings.StatusClaudeExited);
+    private static readonly CompositeFormat _statusAutoRespondingFormat = CompositeFormat.Parse(Strings.StatusAutoResponding);
+    private static readonly CompositeFormat _statusRateLimitMatchFormat = CompositeFormat.Parse(Strings.StatusRateLimitMatch);
+    private static readonly CompositeFormat _statusWaitingForResumeFormat = CompositeFormat.Parse(Strings.StatusWaitingForResume);
+    private static readonly CompositeFormat _statusResumingInFormat = CompositeFormat.Parse(Strings.StatusResumingIn);
+
     private readonly WrapperConfig _config;
     private readonly IConsoleService _console;
     private readonly IEnvironmentService _environment;
@@ -79,7 +88,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         if (claudePath == null)
         {
             _logger.Error("Could not find 'claude' in PATH");
-            _console.WriteErrorLine("[claude-auto-resume] Error: Could not find 'claude' in PATH");
+            _console.WriteErrorLine(Strings.StatusClaudeNotFound);
             return false;
         }
 
@@ -130,7 +139,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         {
             var cmdLine = string.Join(" ", commandLine);
             _logger.Information("Headless mode - Command: claude {CommandLine}", cmdLine);
-            _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Command: claude {cmdLine}"));
+            _console.WriteLine(string.Format(CultureInfo.InvariantCulture, _statusClaudeCommandFormat, cmdLine));
         }
     }
 
@@ -179,7 +188,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         catch (Exception ex)
         {
             _logger.Error(ex, "Error during PTY operation");
-            _console.WriteErrorLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Error: {ex.Message}"));
+            _console.WriteErrorLine("\n" + string.Format(CultureInfo.InvariantCulture, _statusErrorFormat, ex.Message));
         }
 #pragma warning restore CA1031
     }
@@ -201,14 +210,14 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
             if (!_cts.Token.IsCancellationRequested)
             {
                 _logger.Information("Claude exited with code {ExitCode}", _pty!.ExitCode);
-                _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Claude exited with code: {_pty.ExitCode}"));
+                _console.WriteLine("\n" + string.Format(CultureInfo.InvariantCulture, _statusClaudeExitedFormat, _pty.ExitCode));
             }
         }
 #pragma warning disable S6667 // Intentional: Logging without exception is correct for expected cancellation
         catch (OperationCanceledException)
         {
             _logger.Information("Shutdown requested by user");
-            _console.WriteLine("\n[claude-auto-resume] Shutdown requested");
+            _console.WriteLine("\n" + Strings.StatusShutdownRequested);
         }
 #pragma warning restore S6667
     }
@@ -331,7 +340,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         _logger.Information("Detected prompt, auto-responding: {Response}", escapedResponse);
 
         _console.ForegroundColor = ConsoleColor.Cyan;
-        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"\n[claude-auto-resume] Detected prompt, auto-responding: {escapedResponse}"));
+        _console.WriteLine("\n" + string.Format(CultureInfo.InvariantCulture, _statusAutoRespondingFormat, escapedResponse));
         _console.ResetColor();
 
         lock (_bufferLock)
@@ -517,8 +526,8 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
     {
         _console.WriteLine(string.Empty);
         _console.ForegroundColor = ConsoleColor.Yellow;
-        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Rate limit detected (matched: \"{matchedPattern}\")"));
-        _console.WriteLine(string.Create(CultureInfo.InvariantCulture, $"[claude-auto-resume] Waiting {_config.WaitMinutes} minutes before continuing..."));
+        _console.WriteLine(string.Format(CultureInfo.InvariantCulture, _statusRateLimitMatchFormat, matchedPattern));
+        _console.WriteLine(string.Format(CultureInfo.InvariantCulture, _statusWaitingForResumeFormat, _config.WaitMinutes));
         _console.ResetColor();
     }
 
@@ -530,7 +539,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
         while (stopwatch.Elapsed < waitTime && !ct.IsCancellationRequested)
         {
             var remaining = waitTime - stopwatch.Elapsed;
-            _console.Write(string.Create(CultureInfo.InvariantCulture, $"\r[claude-auto-resume] Resuming in: {remaining:mm\\:ss}   "));
+            _console.Write("\r" + string.Format(CultureInfo.InvariantCulture, _statusResumingInFormat, remaining.ToString(@"mm\:ss", CultureInfo.InvariantCulture)) + "   ");
             await Task.Delay(1000, ct).ConfigureAwait(false);
         }
     }
@@ -541,7 +550,7 @@ internal sealed class ClaudeMonitor : IClaudeMonitor
 
         _console.WriteLine(string.Empty);
         _console.ForegroundColor = ConsoleColor.Green;
-        _console.WriteLine("[claude-auto-resume] Sending continue command...");
+        _console.WriteLine(Strings.StatusSendingContinue);
         _console.ResetColor();
 
         var bytes = Encoding.UTF8.GetBytes(_config.ContinueCommand);
